@@ -15,6 +15,11 @@ game.PlayerEntity = me.Entity.extend({
      * update the entity
      */
     update : function (dt) {
+		
+		/* if (me.input.isKeyPressed("pause")) {
+			console.log("it is paused?");
+			me.state.pause();
+		} */
 
         // apply physics to the body (this moves the entity)
         this.body.update(dt);
