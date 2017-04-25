@@ -50,7 +50,7 @@ var game = {
         // add our player entity in the entity pool
         me.pool.register("mainPlayer", game.PlayerEntity);
 		
-		// me.input.bindKey(me.input.KEY.SPACE, "pause", true);
+		me.input.bindKey(me.input.KEY.SPACE, "pause", true);
 
         // Start the game.
 		me.state.change(me.state.MENU);
