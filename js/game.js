@@ -23,9 +23,6 @@ var game = {
 				me.plugin.register.defer(this, me.debug.Panel, "debug", me.input.KEY.V);
 			});
 		}
-
-        // Initialize the audio.
-        me.audio.init("mp3,ogg");
 		
 		// Set a callback to run when loading is complete
 		me.loader.onload = this.loaded.bind(this);
@@ -34,9 +31,9 @@ var game = {
         // (this will also automatically switch to the loading screen)
         me.loader.preload(game.resources);
 		
-		// initialize melonJS, set and display loading screen
+		/* // initialize melonJS, set and display loading screen
 		me.state.set(me.state.LOADING, new game.LoadingScreen());
-		me.state.change(me.state.LOADING);
+		me.state.change(me.state.LOADING); */
     },
 
     // Run on game resources loaded.
@@ -50,8 +47,6 @@ var game = {
         // add our player entity in the entity pool
         me.pool.register("mainPlayer", game.PlayerEntity);
 		
-		me.input.bindKey(me.input.KEY.SPACE, "pause", true);
-
         // Start the game.
 		me.state.change(me.state.MENU);
     }
