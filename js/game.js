@@ -34,6 +34,9 @@ var game = {
 		/* // initialize melonJS, set and display loading screen
 		me.state.set(me.state.LOADING, new game.LoadingScreen());
 		me.state.change(me.state.LOADING); */
+		
+		// set gravity to 0
+		me.sys.gravity = 0;
     },
 
     // Run on game resources loaded.
