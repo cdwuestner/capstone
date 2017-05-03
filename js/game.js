@@ -49,6 +49,8 @@ var game = {
 
         // add our player entity in the entity pool
         me.pool.register("mainPlayer", game.PlayerEntity);
+		me.pool.register("SkeletonWarriorEntity", game.SkeletonWarriorEntity);
+		me.pool.register("SpiritEntity", game.SpiritEntity);
 		
         // Start the game.
 		me.state.change(me.state.MENU);

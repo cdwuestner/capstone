@@ -40,3 +40,57 @@ game.PlayerEntity = me.Entity.extend({
         return true;
     }
 });
+
+
+game.SkeletonWarriorEntity = me.Entity.extend({
+	init : function (x, y, settings) {
+		// define skeleton sprite used
+		this._super(me.Entity, 'init', [x, y, settings]);
+		
+		this.body.setVelocity(3, 15);
+		
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+		
+		this.alwaysUpdate = true;
+		
+		this.renderable.addAnimation("stand", [0]);
+		
+		// Flip for now (delete later!)
+		this.renderable.flipX(true);
+	},
+	
+	update : function (dt) {
+		this.body.vel.x = 0;
+		
+		this.renderable.setCurrentAnimation("stand");
+		
+		return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+
+	}
+});
+
+game.SpiritEntity = me.Entity.extend({
+	init : function (x, y, settings) {
+				this._super(me.Entity, 'init', [x, y, settings]);
+		
+		this.body.setVelocity(3, 15);
+		
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+		
+		this.alwaysUpdate = true;
+		
+		this.renderable.addAnimation("stand", [0]);
+		
+		// Flip for now (delete later!)
+		this.renderable.flipX(true);		
+	},
+	
+	update : function (dt) {
+		this.body.vel.x = 0;
+		
+		this.renderable.setCurrentAnimation("stand");
+		
+		return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+
+	}
+})
