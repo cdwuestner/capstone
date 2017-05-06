@@ -38,6 +38,14 @@ var game = {
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
+          // register our player entity in the object pool
+            me.pool.register("warrior", game.PlayerEntity);
+
+    // enable the keyboard
+         me.input.bindKey(me.input.KEY.LEFT,  "left");
+        me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.X,     "jump", true);
+
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
 
@@ -47,5 +55,6 @@ var game = {
 
         // Display game menu
         me.state.change(me.state.MENU);
+        me.sys.gravity = 0;
     }
 };
