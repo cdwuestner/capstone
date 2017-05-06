@@ -5,8 +5,8 @@ game.SkeletonEntity = me.Entity.extend({
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [_x, _y, {
             image: "skeleton",
-            width: 64,
-            height: 64
+            width: 25.6,
+            height: 31.2
         }]);
         // Add walking and idle animations
         this.addAnimations();
@@ -22,14 +22,14 @@ game.SkeletonEntity = me.Entity.extend({
     },
 
     addAnimations : function(){
-        this.renderable.addAnimation("idle", [26]);
-        this.renderable.addAnimation("left", [117, 118, 119, 120, 121, 122,
-                123, 124, 125], 150);
-        this.renderable.addAnimation("right", [143, 144, 145, 146, 147, 148,
-                149, 150, 151], 150);
-        this.renderable.addAnimation("up", [105, 106, 107, 108, 109, 110,
-                111, 112], 150);
-        this.renderable.addAnimation("down", [131, 132, 133, 134, 135, 136,
-                137, 138], 150);
+        this.renderable.addAnimation("idle", [65]);
+        this.renderable.addAnimation("left", [39, 40, 41, 42, 43, 44, 45, 46],
+                300);
+        this.renderable.addAnimation("right", [52, 53, 54, 55, 56, 57, 58, 59],
+                300);
+        this.renderable.addAnimation("up", [26, 27, 28, 29, 30, 31, 32, 33], 
+                300);
+        this.renderable.addAnimation("down", [13, 14, 15, 16, 17, 18, 19, 20], 
+                300);
     }
 });

@@ -10,7 +10,7 @@ game.TitleScreen = me.ScreenObject.extend({
         });
 		// Load title screen image (https://www.liabeny.es/files/avila.jpg)
 		var backgroundImage = new me.Sprite(0, 0, {
-			image: me.loader.getImage('fortress-in-avila'),
+			image: me.loader.getImage('title'),
 		});
 		// Position and scale image to fit viewport
 		backgroundImage.anchorPoint.set(0, 0);

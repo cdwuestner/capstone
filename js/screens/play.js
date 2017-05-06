@@ -10,12 +10,12 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
-        this.skeleton1 = me.pool.pull("SkeletonEntity", 650, 150);
-        this.skeleton2 = me.pool.pull("SkeletonEntity", 650, 230);
+        this.skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
+        this.skeleton2 = me.pool.pull("SkeletonEntity", 490, 205);
         me.game.world.addChild(this.skeleton1, 5);
         me.game.world.addChild(this.skeleton2, 5);
 
-        this.wizard = me.pool.pull("WizardEntity", 512, 205);
+        this.wizard = me.pool.pull("WizardEntity", 512, 215);
         me.game.world.addChild(this.wizard, 5);
 
         // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
