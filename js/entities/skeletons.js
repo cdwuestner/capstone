@@ -12,11 +12,11 @@ game.SkeletonEntity = me.Entity.extend({
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
 
-        // Temporary key bindings
+        /*// Temporary key bindings
         me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
         me.input.bindKey(me.input.KEY.UP, "up");
-        me.input.bindKey(me.input.KEY.DOWN, "down");
+        me.input.bindKey(me.input.KEY.DOWN, "down");*/
 
         me.input.registerPointerEvent("pointerdown", me.game.viewport, function (event) {
             me.event.publish("pointerdown", [ event ]);
@@ -24,23 +24,128 @@ game.SkeletonEntity = me.Entity.extend({
         
         this.body.setVelocity(.5, .5);
 
+        x = this.pos.x;
+        y = this.pos.y;
+
         this.xp = 0;
         this.level = 1;
         this.health = 100;
         this.attack = 100;
 
+        this.goToBaseOne = false;
+        this.goToBaseTwo = false;
+        this.goToBaseThree = false;
+        this.goToEnemyCastle = true;
+        this.defendCastle = false;
+
         this.alwaysUpdate = true;
     },
     
     update : function(dt){
-       if (me.input.isKeyPressed("left")) {
-           if(!this.renderable.isCurrentAnimation("left")){
-                this.renderable.setCurrentAnimation("left");
+        if(this.goToBaseOne){
+            if(this.pos.x > 310){
+                this.renderable.flipX(false);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else if(this.pos.x < 310){
+                this.renderable.flipX(true);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x += this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
+            }
+            if(this.pos.y > 30){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < 30){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }
+        }
+
+        if(this.goToBaseTwo){
+            if(this.pos.x > 310){
+                this.renderable.flipX(false);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else if(this.pos.x < 310){
+                this.renderable.flipX(true);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x += this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
+            }
+            if(this.pos.y > 225){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < 225){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }
+        }
+
+        if(this.goToBaseThree){
+            if(this.pos.x > 310){
+                this.renderable.flipX(false);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else if(this.pos.x < 310){
+                this.renderable.flipX(true);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x += this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
+            }
+            if(this.pos.y > 415){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < 415){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }
+        }
+
+        if(this.goToEnemyCastle){
+            if(this.pos.x > 65){
+                this.renderable.flipX(false);
+                if(!this.renderable.isCurrentAnimation("walk")){
+                    this.renderable.setCurrentAnimation("walk");
+                }
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
+            }
+            if(this.pos.y > 225){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < 225){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }
+        }
+
+        /*if (me.input.isKeyPressed("left")) {
+           this.renderable.flipX(false);
+           if(!this.renderable.isCurrentAnimation("walk")){
+                this.renderable.setCurrentAnimation("walk");
            }
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
         } else if (me.input.isKeyPressed("right")) {
-            if(!this.renderable.isCurrentAnimation("right")){
-                this.renderable.setCurrentAnimation("right");
+            this.renderable.flipX(true);
+            if(!this.renderable.isCurrentAnimation("walk")){
+                this.renderable.setCurrentAnimation("walk");
             }
             this.body.vel.x += this.body.accel.x * me.timer.tick;
         } else {
@@ -63,7 +168,7 @@ game.SkeletonEntity = me.Entity.extend({
             this.body.vel.y += this.body.accel.y * me.timer.tick;
         } else {
             this.body.vel.y = 0;
-        }
+        }*/
 
         if(this.body.vel.y == 0 && this.body.vel.x == 0){
             this.renderable.setCurrentAnimation("idle");
@@ -76,17 +181,12 @@ game.SkeletonEntity = me.Entity.extend({
         //me.collision.check(this);
 
         // check if we moved (an "idle" animation would definitely be cleaner)
-        if (this.body.vel.x !== 0 || this.body.vel.y !== 0) {
-            this._super(me.Entity, "update", [dt]);
-            return true;
-        }
+        return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
     },
 
     addAnimations : function(){
         this.renderable.addAnimation("idle", [65]);
-        this.renderable.addAnimation("left", [39, 40, 41, 42, 43, 44, 45, 46],
-                300);
-        this.renderable.addAnimation("right", [52, 53, 54, 55, 56, 57, 58, 59],
+        this.renderable.addAnimation("walk", [39, 40, 41, 42, 43, 44, 45, 46],
                 300);
         this.renderable.addAnimation("up", [26, 27, 28, 29, 30, 31, 32, 33], 
                 300);
@@ -105,7 +205,15 @@ game.SkeletonEntity = me.Entity.extend({
         this.attack = level * 100;
     },
 
-    getLevel : function(){
-        return this.level;
-    }
+    /*goToBase : function(base){
+        if(base == 1){
+            while(this.x < 304){
+                this.x++;
+            }
+            while(this.x > 304){
+                this.x--;
+            }
+        }
+        return true;
+    }*/
 });

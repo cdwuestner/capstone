@@ -44,9 +44,10 @@ var game = {
 		me.state.transition("fade", "#000000", 250);
 
         // add entities here
+        me.pool.register("BossEntity", game.BossEntity);
+        me.pool.register("EnemyManager", game.EnemyManager);
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("WizardEntity",  game.WizardEntity);
-        me.pool.register("BossEntity", game.BossEntity);
 
         // Display game menu
         me.state.change(me.state.MENU);

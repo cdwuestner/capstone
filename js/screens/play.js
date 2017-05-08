@@ -10,7 +10,7 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
-        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
+        /* var skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
         this.skeleton2 = me.pool.pull("SkeletonEntity", 490, 205);
         me.game.world.addChild(skeleton1, 5);
         me.game.world.addChild(this.skeleton2, 5);
@@ -19,10 +19,14 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(this.wizard, 5);
 
         this.boss = me.pool.pull("BossEntity", 545, 197)
-        me.game.world.addChild(this.boss, 6);
+        me.game.world.addChild(this.boss, 6);*/
+
+        this.enemyManager = new game.EnemyManager();
+	    this.enemyManager.createInitialEnemies();
+	    me.game.world.addChild(this.enemyManager, 2);
 
         // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
-        var viewport = me.game.viewport;
+        /*var viewport = me.game.viewport;
         viewport.currentTransform.translate(
             viewport.width * viewport.anchorPoint.x,
             viewport.height * viewport.anchorPoint.y
@@ -31,12 +35,14 @@ game.PlayScreen = me.ScreenObject.extend({
         viewport.currentTransform.translate(
             -viewport.width * viewport.anchorPoint.x,
             -viewport.height * viewport.anchorPoint.y
-        );
+        );*/
 
-        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
+        /*this.pointerDown= me.event.subscribe("pointerdown", function (event) {
             console.log(event.pointerId, event.gameX, event.gameY);
             console.log(skeleton1.getLevel());
-});
+        });*/
+        // skeleton1.goToBase(1);
+
     },
 
     // When leaving the game screen
