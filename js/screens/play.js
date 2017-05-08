@@ -10,13 +10,16 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
-        this.skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
+        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
         this.skeleton2 = me.pool.pull("SkeletonEntity", 490, 205);
-        me.game.world.addChild(this.skeleton1, 5);
+        me.game.world.addChild(skeleton1, 5);
         me.game.world.addChild(this.skeleton2, 5);
 
         this.wizard = me.pool.pull("WizardEntity", 512, 215);
         me.game.world.addChild(this.wizard, 5);
+
+        this.boss = me.pool.pull("BossEntity", 545, 197)
+        me.game.world.addChild(this.boss, 6);
 
         // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
         var viewport = me.game.viewport;
@@ -29,12 +32,18 @@ game.PlayScreen = me.ScreenObject.extend({
             -viewport.width * viewport.anchorPoint.x,
             -viewport.height * viewport.anchorPoint.y
         );
+
+        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
+            console.log(event.pointerId, event.gameX, event.gameY);
+            console.log(skeleton1.getLevel());
+});
     },
 
     // When leaving the game screen
     onDestroyEvent: function() {
         /* // remove the HUD from the game world
         me.game.world.removeChild(this.HUD); */
+        me.event.unsubscribe(this.pointerDown);
     }
 
 });

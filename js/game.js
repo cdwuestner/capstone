@@ -31,6 +31,8 @@ var game = {
 
         // set and load game resources.
         me.loader.preload(game.resources);
+
+        me.sys.gravity = 0;
     },
 
     // Run on game resources loaded.
@@ -44,6 +46,7 @@ var game = {
         // add entities here
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("WizardEntity",  game.WizardEntity);
+        me.pool.register("BossEntity", game.BossEntity);
 
         // Display game menu
         me.state.change(me.state.MENU);
