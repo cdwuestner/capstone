@@ -35,7 +35,7 @@ game.SkeletonEntity = me.Entity.extend({
         this.goToBaseOne = false;
         this.goToBaseTwo = false;
         this.goToBaseThree = false;
-        this.goToEnemyCastle = true;
+        this.goToEnemyCastle = false;
         this.defendCastle = false;
 
         this.alwaysUpdate = true;
