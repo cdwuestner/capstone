@@ -10,6 +10,16 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
+        this.healer = me.pool.pull("HealerEntity", 48, 150);
+        me.game.world.addChild(this.healer, 5);
+
+        this.wizzardplayer = me.pool.pull("WizzardPlayerEntity", 48, 150);
+        me.game.world.addChild(this.wizzardplayer, 5);
+
+        this.warrior = me.pool.pull("WarriorEntity", 48, 300);
+        me.game.world.addChild(this.warrior, 5);
+       // me.game.world.addChild(new game.square(100, 100, {width: 50, height: 50}), 1);
+
         this.skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
         this.skeleton2 = me.pool.pull("SkeletonEntity", 490, 205);
         me.game.world.addChild(this.skeleton1, 5);

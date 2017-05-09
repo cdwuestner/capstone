@@ -37,24 +37,33 @@ var game = {
     "loaded" : function () {
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
-
+     
           // register our player entity in the object pool
             me.pool.register("warrior", game.PlayerEntity);
 
     // enable the keyboard
-         me.input.bindKey(me.input.KEY.LEFT,  "left");
-        me.input.bindKey(me.input.KEY.RIGHT, "right");
-        me.input.bindKey(me.input.KEY.X,     "jump", true);
+
 
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
+        me.pool.register("HealerEntity", game.HealerEntity);
 
+        me.input.bindKey(me.input.KEY.LEFT,  "left");
+        me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.UP,  "up");
+        me.input.bindKey(me.input.KEY.DOWN, "down");
+
+        
         // add entities here
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("WizardEntity",  game.WizardEntity);
+        me.pool.register("WizzardPlayerEntity", game.WizardPlayerEntity)
+         me.pool.register("WarriorEntity", game.WarriorEntity)
 
         // Display game menu
         me.state.change(me.state.MENU);
+           me.state.change(me.state.PLAY);
+
         me.sys.gravity = 0;
     }
 };
