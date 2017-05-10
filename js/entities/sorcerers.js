@@ -26,10 +26,16 @@ game.SorcererEntity = me.Entity.extend({
         this.level = 1;
         this.health = 50;
         this.attack = 50;
+
+        this.isSelected = false;
+
+        me.input.registerPointerEvent("pointerdown", me.game.viewport, function (event) {
+            me.event.publish("pointerdown", [ event ]);
+        });
     },
 
     update : function(dt){
-        if(this.attackCastle){
+        /*if(this.attackCastle){
             if(this.pos.x > 70){
                 this.body.vel.x -= this.body.accel.x * me.timer.tick;
             }else{
@@ -88,7 +94,27 @@ game.SorcererEntity = me.Entity.extend({
                     this.body.vel.y = 0;
                 }
             }
+        }*/
+        // Movement using mouse click coordinates
+        if(this.pos.x > this.x){
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        }else if(this.pos.x < this.x){
+            this.body.vel.x += this.body.accel.x * me.timer.tick;
+        }else{
+            this.body.vel.x = 0;
         }
+        if(this.pos.y > this.y){
+            this.body.vel.y -= this.body.accel.y * me.timer.tick;
+        }else if(this.pos.y < this.y){
+            this.body.vel.y += this.body.accel.y * me.timer.tick;
+        }else{
+            this.body.vel.y = 0;
+        }
+        // Added a flicker to show which is selected
+        if(this.isSelected){
+            this.renderable.flicker(150);
+        }
+        // Display correct animation
         this.animate();
         // Apply physics
         this.body.update(dt);
