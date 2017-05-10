@@ -24,7 +24,8 @@ game.SkeletonEntity = me.Entity.extend({
         // Set some starting stats
         this.xp = 0;
         this.level = 1;
-        this.health = 100;
+        this.maxHealth = 100;
+        this.curHealth = 100;
         this.attack = 100;
     },
 
@@ -89,6 +90,7 @@ game.SkeletonEntity = me.Entity.extend({
                 }
             }
         }
+        // Display correct animations
         this.animate();
         // Apply physics
         this.body.update(dt);
@@ -131,5 +133,17 @@ game.SkeletonEntity = me.Entity.extend({
                 this.renderable.setCurrentAnimation("idle");
             }
         }
+    },
+
+    levelUp : function(){
+        this.level++;
+        this.updateStats(this.level);
+        this.xp = 0;
+    },
+
+    updateStats : function(level){
+        this.maxHealth = level * 100;
+        this.curHealth = maxHealth;
+        this.attack = level * 100;
     }
 });

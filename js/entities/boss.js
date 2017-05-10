@@ -8,15 +8,15 @@ game.BossEntity = me.Entity.extend({
             width: 64,
             height: 78
         }]);
-        // Add walking and idle animations
+        // Update even outside viewport
+        this.alwaysUpdate = true;
+        // Add animations
         this.addAnimations();
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
         this.health = 500;
         this.attack = 500;  // Probably too high
-
-        this.alwaysUpdate = true;
     },
     
     update : function(dt){

@@ -24,7 +24,8 @@ game.SorcererEntity = me.Entity.extend({
         // Set some starting stats
         this.xp = 0;
         this.level = 1;
-        this.health = 50;
+        this.maxHealth = 50;
+        this.curHealth = 50;
         this.attack = 50;
     },
 
@@ -89,6 +90,7 @@ game.SorcererEntity = me.Entity.extend({
                 }
             }
         }
+        // Display correct animations
         this.animate();
         // Apply physics
         this.body.update(dt);
@@ -118,5 +120,17 @@ game.SorcererEntity = me.Entity.extend({
                 this.renderable.setCurrentAnimation("idle");
             }
         }
+    },
+
+    levelUp : function(){
+        this.level++;
+        this.updateStats(this.level);
+        this.xp = 0;
+    },
+
+    updateStats : function(level){
+        this.maxHealth = level * 50;
+        this.curHealth = maxHealth;
+        this.attack = level * 50;
     }
 });

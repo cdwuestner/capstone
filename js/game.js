@@ -45,9 +45,10 @@ var game = {
 
         // add entities here
         me.pool.register("BossEntity", game.BossEntity);
-        me.pool.register("EnemyManager", game.EnemyManager);
+        me.pool.register("HealerEntity", game.HealerEntity);
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("SorcererEntity",  game.SorcererEntity);
+        me.pool.register("WizardEntity", game.WizardEntity);
 
         // Display game menu
         me.state.change(me.state.MENU);

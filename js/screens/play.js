@@ -10,6 +10,17 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
+        // Add intial player and enemy units
+        var healer = me.pool.pull("HealerEntity", 105, 200);
+        me.game.world.addChild(healer, 2);
+
+        var wizard1 = me.pool.pull("WizardEntity", 105, 270);
+        me.game.world.addChild(wizard1, 2);
+
+        // Adding a second wizard until warrior can be added
+        var wizard2 = me.pool.pull("WizardEntity", 115, 235);
+        me.game.world.addChild(wizard2, 2);
+
         var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
         me.game.world.addChild(skeleton1, 2);
