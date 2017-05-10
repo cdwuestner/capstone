@@ -10,20 +10,20 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD); */
-        /* var skeleton1 = me.pool.pull("SkeletonEntity", 490, 240);
-        this.skeleton2 = me.pool.pull("SkeletonEntity", 490, 205);
-        me.game.world.addChild(skeleton1, 5);
-        me.game.world.addChild(this.skeleton2, 5);
+        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
+        var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
+        me.game.world.addChild(skeleton1, 2);
+        me.game.world.addChild(skeleton2, 2);
 
-        this.wizard = me.pool.pull("WizardEntity", 512, 215);
-        me.game.world.addChild(this.wizard, 5);
+        var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215);
+        me.game.world.addChild(sorcerer1, 2);
 
-        this.boss = me.pool.pull("BossEntity", 545, 197)
-        me.game.world.addChild(this.boss, 6);*/
+        var boss = me.pool.pull("BossEntity", 545, 197);
+        me.game.world.addChild(boss, 2);
 
-        this.enemyManager = new game.EnemyManager();
-	    this.enemyManager.createInitialEnemies();
-	    me.game.world.addChild(this.enemyManager, 2);
+        //this.enemyManager = new game.EnemyManager();
+	    //this.enemyManager.createInitialEnemies();
+	    //me.game.world.addChild(this.enemyManager, 2);
 
         // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
         /*var viewport = me.game.viewport;
@@ -41,7 +41,6 @@ game.PlayScreen = me.ScreenObject.extend({
             console.log(event.pointerId, event.gameX, event.gameY);
             console.log(skeleton1.getLevel());
         });*/
-        // skeleton1.goToBase(1);
 
     },
 
@@ -49,7 +48,7 @@ game.PlayScreen = me.ScreenObject.extend({
     onDestroyEvent: function() {
         /* // remove the HUD from the game world
         me.game.world.removeChild(this.HUD); */
-        me.event.unsubscribe(this.pointerDown);
+        // me.event.unsubscribe(this.pointerDown);
     }
 
 });

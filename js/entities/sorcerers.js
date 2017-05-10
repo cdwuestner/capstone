@@ -1,12 +1,12 @@
-// Skeleton Entity
-game.SkeletonEntity = me.Entity.extend({
+// Sorcerer Entity
+game.SorcererEntity = me.Entity.extend({
     // Constructor
     init : function(x, y, settings){
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [x, y, {
-            image: "skeleton",
-            width: 25.6,
-            height: 31.3
+            image: "sorcerer",
+            width: 32,
+            height: 32
         }]);
         // Update even outside viewport
         this.alwaysUpdate = true;
@@ -24,13 +24,13 @@ game.SkeletonEntity = me.Entity.extend({
         // Set some starting stats
         this.xp = 0;
         this.level = 1;
-        this.health = 100;
-        this.attack = 100;
+        this.health = 50;
+        this.attack = 50;
     },
 
     update : function(dt){
         if(this.attackCastle){
-            if(this.pos.x > 75){
+            if(this.pos.x > 70){
                 this.body.vel.x -= this.body.accel.x * me.timer.tick;
             }else{
                 this.body.vel.x = 0;
@@ -98,33 +98,20 @@ game.SkeletonEntity = me.Entity.extend({
     },
 
     addAnimations : function(){
-        this.renderable.addAnimation("idle", [65]);
-        this.renderable.addAnimation("walk", [39, 40, 41, 42, 43, 44, 45, 46],
-                300);
-        this.renderable.addAnimation("up", [26, 27, 28, 29, 30, 31, 32, 33], 
-                300);
-        this.renderable.addAnimation("down", [13, 14, 15, 16, 17, 18, 19, 20], 
-                300);
+        this.renderable.addAnimation("idle", [0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4,
+                5], 250);
+        this.renderable.addAnimation("move", [15, 16, 17], 200);
     },
 
     animate : function(){
-        if(this.body.vel.x > 0){
-            this.renderable.flipX(true);
-            if(!this.renderable.isCurrentAnimation("walk")){
-                this.renderable.setCurrentAnimation("walk");
+        if(this.body.vel.x != 0 || this.body.vel.y != 0){
+            if(this.body.vel.x < 0){
+                this.renderable.flipX(false);
+            }else if(this.body.vel.x > 0){
+                this.renderable.flipX(true);
             }
-        }else if(this.body.vel.x < 0){
-            this.renderable.flipX(false);
-            if(!this.renderable.isCurrentAnimation("walk")){
-                this.renderable.setCurrentAnimation("walk");
-            }
-        }else if(this.body.vel.y < 0){
-            if(!this.renderable.isCurrentAnimation("up")){
-                this.renderable.setCurrentAnimation("up");
-            }
-        }else if(this.body.vel.y > 0){
-            if(!this.renderable.isCurrentAnimation("down")){
-                this.renderable.setCurrentAnimation("down");
+            if(!this.renderable.isCurrentAnimation("move")){
+                this.renderable.setCurrentAnimation("move");
             }
         }else{
             if(!this.renderable.isCurrentAnimation("idle")){
