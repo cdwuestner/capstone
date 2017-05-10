@@ -14,19 +14,51 @@ game.HealerEntity = me.Entity.extend({
 
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);
-
+        // Update even outside viewport
+        this.alwaysUpdate = true;
 
         // Add walking and idle animations
-        
-
         this.addAnimations();
         this.renderable.setCurrentAnimation("stand");
 
         
-         this.body.setVelocity(3, 2);
+         this.body.setVelocity(.5, .5);
+
+         this.isSelected = false;
+
+        me.input.registerPointerEvent("pointerdown", me.game.viewport, function(event){
+            me.event.publish("pointerdown", [event]);
+        });
     },
 
-  update : function (dt) {
+    update: function (dt) {
+        if (this.pos.x > this.x) {
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        } else if (this.pos.x < this.x) {
+            this.body.vel.x += this.body.accel.x * me.timer.tick;
+        } else {
+            this.body.vel.x = 0;
+        }
+        if (this.pos.y > this.y) {
+            this.body.vel.y -= this.body.accel.y * me.timer.tick;
+        } else if (this.pos.y < this.y) {
+            this.body.vel.y += this.body.accel.y * me.timer.tick;
+        } else {
+            this.body.vel.y = 0;
+        }
+        // Added a flicker to show which is selected
+        if (this.isSelected) {
+            this.renderable.flicker(150);
+        }
+        console.log(this.body.vel.x, this.body.vel.y);
+        // Apply physics
+        this.body.update(dt);
+        // Only update position if entity has moved
+        return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 ||
+            this.body.vel.y != 0);
+    },
+
+  /*update : function (dt) {
     if (me.input.isKeyPressed('left')) {
 
       // update the entity velocity
@@ -89,7 +121,7 @@ game.HealerEntity = me.Entity.extend({
 
     // return true if we moved or if the renderable was updated
     return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
-  },
+  },*/
 
     addAnimations : function(){
         this.renderable.addAnimation("stand", [19]);
