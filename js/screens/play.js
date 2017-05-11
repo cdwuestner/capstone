@@ -26,9 +26,14 @@ game.PlayScreen = me.ScreenObject.extend({
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
+        var warrior = me.pool.pull("WarriorEntity", 105, 200);
+        me.game.world.addChild(warrior, 2);
+        units.push(warrior);
+
+
         var healer = me.pool.pull("HealerEntity", 105, 200);
         me.game.world.addChild(healer, 2);
-        units.push(healer);
+        units.push(healer);         
 
         var wizard1 = me.pool.pull("WizardEntity", 105, 270);
         me.game.world.addChild(wizard1, 2);

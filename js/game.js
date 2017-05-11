@@ -49,6 +49,7 @@ var game = {
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("SorcererEntity",  game.SorcererEntity);
         me.pool.register("WizardEntity", game.WizardEntity);
+        me.pool.register("WarriorEntity", game.WarriorEntity);
 
         // Display game menu
         me.state.change(me.state.MENU);

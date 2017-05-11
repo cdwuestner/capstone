@@ -30,17 +30,36 @@ game.WizardEntity = me.Entity.extend({
     update: function (dt) {
         if (this.pos.x > this.x) {
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            if (!this.renderable.isCurrentAnimation("left")) {
+              this.renderable.setCurrentAnimation("left");
+            }              
         } else if (this.pos.x < this.x) {
             this.body.vel.x += this.body.accel.x * me.timer.tick;
+            if (!this.renderable.isCurrentAnimation("right")) {
+              this.renderable.setCurrentAnimation("right");
+            } 
+
         } else {
             this.body.vel.x = 0;
+            if (this.body.vel.y == 0) {
+              this.renderable.setCurrentAnimation("stand");
+            }                 
         }
         if (this.pos.y > this.y) {
             this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            if (!this.renderable.isCurrentAnimation("up")) {
+              this.renderable.setCurrentAnimation("up");
+            }             
         } else if (this.pos.y < this.y) {
             this.body.vel.y += this.body.accel.y * me.timer.tick;
+            if (!this.renderable.isCurrentAnimation("down")) {
+              this.renderable.setCurrentAnimation("down");
+            }               
         } else {
             this.body.vel.y = 0;
+            if (this.body.vel.x == 0) {
+              this.renderable.setCurrentAnimation("stand");
+            }             
         }
         // Added a flicker to show which is selected
         if (this.isSelected) {
@@ -53,68 +72,7 @@ game.WizardEntity = me.Entity.extend({
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 ||
             this.body.vel.y != 0);
     },
-    /*   
-     update : function (dt) {
-       if (me.input.isKeyPressed('left')) {
-   
-         // update the entity velocity
-         this.body.vel.x -= this.body.accel.x * me.timer.tick;
-   
-         // change to the walking animation
-         if (!this.renderable.isCurrentAnimation("left")) {
-           this.renderable.setCurrentAnimation("left");
-         }
-       }
-       else if (me.input.isKeyPressed('right')) {
-   
-         // update the entity velocity
-         this.body.vel.x += this.body.accel.x * me.timer.tick;
-   
-         // change to the walking animation
-         if (!this.renderable.isCurrentAnimation("right")) {
-           this.renderable.setCurrentAnimation("right");
-         }
-       }
-   
-       else if (me.input.isKeyPressed('down')) {
-   
-         // update the entity velocity
-         this.body.vel.y += this.body.accel.y * me.timer.tick;
-   
-         // change to the walking animation
-         if (!this.renderable.isCurrentAnimation("down")) {
-           this.renderable.setCurrentAnimation("down");
-         }
-       }    
-       else if (me.input.isKeyPressed('up')) {
-   
-         // update the entity velocity
-         this.body.vel.y += this.body.accel.y * me.timer.tick;
-   
-   
-         // change to the walking animation
-         if (!this.renderable.isCurrentAnimation("up")) {
-           this.renderable.setCurrentAnimation("up");
-         }
-       }
-       else {
-         this.body.vel.x = 0;
-   
-         // change to the standing animation
-         this.renderable.setCurrentAnimation("stand");
-       }
-   
-   
-       // apply physics to the body (this moves the entity)
-       this.body.update(dt);
-   
-       // handle collisions against other shapes
-       me.collision.check(this);
-   
-       // return true if we moved or if the renderable was updated
-       return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
-     },
-   */
+
     addAnimations: function () {
         this.renderable.addAnimation("stand", [19]);
 
