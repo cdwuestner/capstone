@@ -41,15 +41,36 @@ game.PlayScreen = me.ScreenObject.extend({
         var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
         me.game.world.addChild(skeleton1);
+        skeleton1.goToBaseOne = true;
         me.game.world.addChild(skeleton2);
+        skeleton2.goToBaseThree = true;
 
         var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215);
         me.game.world.addChild(sorcerer1);
+        sorcerer1.goToBaseTwo = true;
         
-        skeleton1.goToBaseTwo = true;
-
         var boss = me.pool.pull("BossEntity", 545, 197);
         me.game.world.addChild(boss);
+
+        var enemies = [];
+        var i = 0;
+        var addY;
+        // Adds another enemy every 20 seconds (need to add 20 seconds for one)
+        setInterval(function(){
+            if(i % 2){
+                addY = 125;
+            }else{
+                addY = 350;
+            }
+            if(Math.floor(Math.random() * 5) + 1 > 2){
+                enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
+            }else{
+                enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
+            }
+            me.game.world.addChild(enemies[i]);
+            enemies[i].attackCastle = true;
+            i++;
+        }, 20000);
         // Keep track of which unit is selected
         var unitIndex = 0;
         var currentUnit = units[unitIndex];
@@ -74,6 +95,8 @@ game.PlayScreen = me.ScreenObject.extend({
         this.pointerDown= me.event.subscribe("pointerdown", function (event) {
             currentUnit.x = Math.round(event.gameX);
             currentUnit.y = Math.round(event.gameY);
+            console.log(event.gameY);
+            console.log(" " + event.gameX);
         });
 
     },
