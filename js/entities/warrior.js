@@ -21,8 +21,18 @@ game.WarriorEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(.5, .5);
+        // Set collision type
+        this.body.collisionType = me.collision.types.PLAYER_OBJECT;
 
         this.isSelected = false;
+        this.inBattle = false;
+
+        // Set some starting stats
+        this.xp = 0;
+        this.level = 1;
+        this.maxHealth = 100;
+        this.curHealth = 100;
+        this.attack = 55;
 
         me.input.registerPointerEvent("pointerdown", me.game.viewport, function(event){
             me.event.publish("pointerdown", [event]);
@@ -67,14 +77,12 @@ game.WarriorEntity = me.Entity.extend({
         if (this.isSelected) {
             this.renderable.flicker(150);
         }
-        console.log(this.body.vel.x, this.body.vel.y);
         // Apply physics
         this.body.update(dt);
-        // Only update position if entity has moved
 
         me.collision.check(this);
 
-
+        // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 ||
             this.body.vel.y != 0);
     },
@@ -92,5 +100,44 @@ game.WarriorEntity = me.Entity.extend({
             300);
         this.renderable.addAnimation("right", [28, 29, 30, 31, 32, 33, 34, 35],
             300);
+    },
+
+    levelUp : function(){
+        this.level++;
+        this.updateStats(this.level);
+        this.xp = 0;
+    },
+
+    updateStats : function(level){
+        this.maxHealth = level * 100;
+        this.curHealth = this.maxHealth;
+        this.attack = level * 55;
+    },
+
+    onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
+            // Filter collision detection with enemies
+            this.body.setCollisionMask(me.collision.types.ENEMY_OBJECT);
+            // Battle
+            this.inBattle = true;
+            // Random damage based on attack of other
+            this.curHealth -= Math.floor(Math.random() * other.attack);
+            if(this.curHealth <= 0){
+                this.alive = false;
+                me.game.world.removeChild(this);
+            }
+            console.log("warrior curHealth:" + this.curHealth);
+            this.xp += 25;
+            if(this.xp % 100 == 0){
+                this.levelUp();
+            }
+            this.y = this.pos.y;
+            this.pos.x = this.pos.x - 20;
+            this.x = this.pos.x;
+            this.inBattle = false;
+            // Filter collision detection with enemies
+            this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+        }
+        return false;
     }
 });

@@ -8,6 +8,8 @@ game.SorcererEntity = me.Entity.extend({
             width: 32,
             height: 32
         }]);
+        // Layer
+        this.z = 5;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed
@@ -130,7 +132,7 @@ game.SorcererEntity = me.Entity.extend({
 
     updateStats : function(level){
         this.maxHealth = level * 50;
-        this.curHealth = maxHealth;
+        this.curHealth = this.maxHealth;
         this.attack = level * 50;
     }
 });

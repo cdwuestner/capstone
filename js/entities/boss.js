@@ -8,6 +8,8 @@ game.BossEntity = me.Entity.extend({
             width: 64,
             height: 78
         }]);
+        // Layer
+        this.z = 5;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Add animations

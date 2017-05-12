@@ -69,7 +69,6 @@ game.HealerEntity = me.Entity.extend({
         if (this.isSelected) {
             this.renderable.flicker(150);
         }
-        console.log(this.body.vel.x, this.body.vel.y);
         // Apply physics
         this.body.update(dt);
         // Only update position if entity has moved

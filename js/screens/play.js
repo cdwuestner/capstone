@@ -26,33 +26,30 @@ game.PlayScreen = me.ScreenObject.extend({
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
-        var warrior = me.pool.pull("WarriorEntity", 105, 200);
+        var warrior = me.pool.pull("WarriorEntity", 115, 235);
         me.game.world.addChild(warrior, 2);
         units.push(warrior);
-
 
         var healer = me.pool.pull("HealerEntity", 105, 200);
         me.game.world.addChild(healer, 2);
         units.push(healer);         
 
-        var wizard1 = me.pool.pull("WizardEntity", 105, 270);
-        me.game.world.addChild(wizard1, 2);
-        units.push(wizard1);
-        // Adding a second wizard until warrior can be added
-        var wizard2 = me.pool.pull("WizardEntity", 115, 235);
-        me.game.world.addChild(wizard2, 2);
-        units.push(wizard2);
+        var wizard = me.pool.pull("WizardEntity", 105, 270);
+        me.game.world.addChild(wizard, 2);
+        units.push(wizard);
 
         var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
-        me.game.world.addChild(skeleton1, 2);
-        me.game.world.addChild(skeleton2, 2);
+        me.game.world.addChild(skeleton1);
+        me.game.world.addChild(skeleton2);
 
         var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215);
-        me.game.world.addChild(sorcerer1, 2);
+        me.game.world.addChild(sorcerer1);
+        
+        skeleton1.goToBaseTwo = true;
 
         var boss = me.pool.pull("BossEntity", 545, 197);
-        me.game.world.addChild(boss, 2);
+        me.game.world.addChild(boss);
         // Keep track of which unit is selected
         var unitIndex = 0;
         var currentUnit = units[unitIndex];
@@ -85,7 +82,11 @@ game.PlayScreen = me.ScreenObject.extend({
     onDestroyEvent: function() {
         /* // remove the HUD from the game world
         me.game.world.removeChild(this.HUD); */
-        // me.event.unsubscribe(this.pointerDown);
+        
+        // Unbind spacebar when screen is destroyed
+        me.input.unbindKey(me.input.KEY.SPACE);
+        // Unsubscribe from pointer event
+        me.event.unsubscribe(this.pointerDown);
     }
 
 });
