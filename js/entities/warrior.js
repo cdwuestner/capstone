@@ -132,10 +132,10 @@ game.WarriorEntity = me.Entity.extend({
                 this.levelUp();
             }
             this.y = this.pos.y;
-            this.pos.x = this.pos.x - 20;
+            this.pos.x = this.pos.x - 10;
             this.x = this.pos.x;
             this.inBattle = false;
-            // Filter collision detection with enemies
+            // Disable collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
         }
         return false;

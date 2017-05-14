@@ -176,8 +176,12 @@ game.SkeletonEntity = me.Entity.extend({
             if(this.xp % 100 == 0){
                 this.levelUp();
             }
+            this.y = this.pos.y;
+            // Move the skeleton back a bit so that the battle ends
+            this.pos.x = this.pos.x + 10;
+            this.x = this.pos.x;
             this.inBattle = false;
-            // 
+            // Disable collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
         }
         return false;
