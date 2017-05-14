@@ -138,6 +138,9 @@ game.WarriorEntity = me.Entity.extend({
             // Filter collision detection with enemies
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
         }
+        if(other.body.collisionType === me.collision.types.WORLD_SHAPE){
+            return true;
+        }
         return false;
     }
 });
