@@ -36,6 +36,11 @@ var game = {
 
     // Run on game resources loaded.
     "loaded" : function () {
+  /*      game.texture = new me.video.renderer.Texture(
+        me.loader.getJSON("texture"),
+        me.loader.getImage("texture")
+    );
+*/
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
@@ -49,6 +54,8 @@ var game = {
         me.pool.register("SorcererEntity",  game.SorcererEntity);
         me.pool.register("WizardEntity", game.WizardEntity);
         me.pool.register("WarriorEntity", game.WarriorEntity);
+
+        me.pool.register("BaseSprite", game.BaseSprite);
 
         // Display game menu
         me.state.change(me.state.MENU);

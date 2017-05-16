@@ -5,5 +5,10 @@ game.resources = [
     { name: "skeleton",     type: "image",  src: "data/img/sprite/skeleton.png" },
     { name: "sorcerer",     type: "image",  src: "data/img/sprite/sorcerer.png" },
     { name: "warrior",      type: "image",  src: "data/img/sprite/warrior.png" },
-    { name: "wizard",       type: "image",  src: "data/img/sprite/wizard.png" }
+    { name: "wizard",       type: "image",  src: "data/img/sprite/wizard.png" },
+    { name: "baseDefault",  type: "image",  src: "data/img/sprite/baseDefault.png" },    
+    { name: "playerBase",   type: "image",  src: "data/img/sprite/playerBase.png" }, 
+    { name: "enemyBase",   	type: "image",  src: "data/img/sprite/enemyBase.png" },
+    { name : "texture", 		type : "json",  src : "data/img/sprite/bases.json" },
+    { name : "texture", 		type : "image", src : "data/img/sprite/bases.png" }
 ];
