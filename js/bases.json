@@ -1,0 +1,39 @@
+{"frames": [
+
+{
+	"filename": "baseDefault",
+	"frame": {"x":0,"y":0,"w":128,"h":132},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":132},
+	"sourceSize": {"w":128,"h":132},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "enemyBase",
+	"frame": {"x":0,"y":132,"w":128,"h":131},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":131},
+	"sourceSize": {"w":128,"h":131},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "playerBase",
+	"frame": {"x":0,"y":263,"w":128,"h":132},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":132},
+	"sourceSize": {"w":128,"h":132},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "bases.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":512},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ef2445373516dfea4ded8a8b06021462:4b88fc50598f5352d22e47d250d18626:716859a6ee66ad4c43dd3516f0c837b5$"
+}
+}

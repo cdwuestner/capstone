@@ -38,8 +38,15 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(wizard, 2);
         units.push(wizard);
 
-        var base1 = me.pool.pull("BaseSprite", 315, 235);
+        var base1 = me.pool.pull("BaseSprite", 315, 50);
         me.game.world.addChild(base1, 1);
+
+        var base2 = me.pool.pull("BaseSprite", 315, 235);
+        me.game.world.addChild(base2, 1);
+
+        var base3 = me.pool.pull("BaseSprite", 315, 420);
+        me.game.world.addChild(base3, 1);
+
 
         var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
