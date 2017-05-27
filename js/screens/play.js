@@ -87,6 +87,8 @@ game.PlayScreen = me.ScreenObject.extend({
         currentUnit.isSelected = true;
         // Spacebar hotkey to cycle between units
         me.input.bindKey(me.input.KEY.SPACE, "next");
+        // Up key to shoot up
+        me.input.bindKey(me.input.KEY.RIGHT, "right");
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "next"){

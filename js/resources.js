@@ -9,6 +9,6 @@ game.resources = [
     { name: "baseDefault",  type: "image",  src: "data/img/sprite/baseDefault.png" },    
     { name: "playerBase",   type: "image",  src: "data/img/sprite/playerBase.png" }, 
     { name: "enemyBase",   	type: "image",  src: "data/img/sprite/enemyBase.png" },
-    { name: "bases",    type: "image",  src: "data/img/sprite/bases.png" },
-    { name: "bases",    type: "json",  src: "data/img/sprite/bases.json" }
+    { name: "bases",        type: "image",  src: "data/img/sprite/bases.png" },
+    { name: "bases",        type: "json",  src: "data/img/sprite/bases.json" }
     ];

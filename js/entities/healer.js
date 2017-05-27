@@ -68,6 +68,9 @@ game.HealerEntity = me.Entity.extend({
         // Added a flicker to show which is selected
         if (this.isSelected) {
             this.renderable.flicker(150);
+            if(me.input.isKeyPressed("right")){
+                me.game.world.addChild(me.pool.pull("HealingRight", this.pos.x - game.HealingRight.width + 12, this.pos.y - game.HealingRight.height + 8))
+            }
         }
         // Apply physics
         this.body.update(dt);

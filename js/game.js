@@ -63,6 +63,9 @@ game.texture = new me.video.renderer.Texture(
 
        me.pool.register("BaseSprite", game.BaseSprite);
 
+       me.pool.register("MagicRight", game.MagicRight);
+       me.pool.register("HealingRight", game.HealingRight);
+
         // Display game menu
         me.state.change(me.state.MENU);
     }

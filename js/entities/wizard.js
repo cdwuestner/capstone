@@ -64,9 +64,13 @@ game.WizardEntity = me.Entity.extend({
         // Added a flicker to show which is selected
         if (this.isSelected) {
             this.renderable.flicker(150);
+            if(me.input.isKeyPressed("right")){
+                me.game.world.addChild(me.pool.pull("MagicRight", this.pos.x - game.MagicRight.width + 12, this.pos.y - game.MagicRight.height + 8))
+            }
         }
         // Apply physics
         this.body.update(dt);
+        
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 ||
             this.body.vel.y != 0);
