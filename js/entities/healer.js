@@ -22,9 +22,15 @@ game.HealerEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         
-         this.body.setVelocity(.5, .5);
+        this.body.setVelocity(.5, .5);
 
-         this.isSelected = false;
+        this.isSelected = false;
+
+        // Set some starting stats
+        this.xp = 0;
+        this.level = 1;
+        this.maxHealth = 100;
+        this.curHealth = 100;
 
         me.input.registerPointerEvent("pointerdown", me.game.viewport, function(event){
             me.event.publish("pointerdown", [event]);
@@ -93,7 +99,18 @@ game.HealerEntity = me.Entity.extend({
                 300);
         this.renderable.addAnimation("right", [28, 29, 30, 31, 32, 33, 34, 35], 
                 300);
+    },
+
+    draw : function(renderer){
+        // Draw health bar
+        var color = renderer.getColor();
+        renderer.setColor('#d60a29');
+        renderer.fillRect(this.pos.x - 15, this.pos.y + 20, (this.curHealth / this.maxHealth) * 30, 3);
+        renderer.setColor(color);
+        // Call super so that sprite is also drawn
+        this._super(me.Entity, "draw", [renderer]);
     }
+
 });
 
 

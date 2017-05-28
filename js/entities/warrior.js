@@ -139,5 +139,16 @@ game.WarriorEntity = me.Entity.extend({
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
         }
         return false;
+    },
+
+    draw : function(renderer){
+        // Draw health bar
+        var color = renderer.getColor();
+        renderer.setColor('#d60a29');
+        renderer.fillRect(this.pos.x - 15, this.pos.y + 20, (this.curHealth / this.maxHealth) * 30, 3);
+        renderer.setColor(color);
+        // Call super so that sprite is also drawn
+        this._super(me.Entity, "draw", [renderer]);
     }
+
 });

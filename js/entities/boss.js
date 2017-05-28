@@ -17,7 +17,8 @@ game.BossEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
-        this.health = 500;
+        this.curHealth = 500;
+        this.maxHealth = 500;
         this.attack = 500;  // Probably too high
     },
     
@@ -29,5 +30,16 @@ game.BossEntity = me.Entity.extend({
 
     addAnimations : function(){
         this.renderable.addAnimation("stand", [0, 1, 2], 1500);
+    },
+
+    draw : function(renderer){
+        // Draw health bar
+        var color = renderer.getColor();
+        renderer.setColor('#d60a29');
+        renderer.fillRect(this.pos.x - 15, this.pos.y + 75, (this.curHealth / this.maxHealth) * 100, 3);
+        renderer.setColor(color);
+        // Call super so that sprite is also drawn
+        this._super(me.Entity, "draw", [renderer]);
     }
+
 });
