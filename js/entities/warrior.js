@@ -35,6 +35,9 @@ game.WarriorEntity = me.Entity.extend({
         this.curHealth = 100;
         this.attack = 55;
 
+        //in castle
+        this.enemyCastle = false;
+
         me.input.registerPointerEvent("pointerdown", me.game.viewport, function(event){
             me.event.publish("pointerdown", [event]);
         });
@@ -78,6 +81,14 @@ game.WarriorEntity = me.Entity.extend({
         if (this.isSelected) {
             this.renderable.flicker(150);
         }
+
+        // Update if in castle or not
+        if (this.pos.x > 515 && this.pos.x < 630 && this.pos.y > 210 && this.pos.y < 280){
+            this.enemyCastle = true;
+            console.log("In Enemy Castle");
+        }
+
+
         // Apply physics
         this.body.update(dt);
 

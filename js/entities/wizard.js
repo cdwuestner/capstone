@@ -86,6 +86,12 @@ game.WizardEntity = me.Entity.extend({
                 me.game.world.addChild(me.pool.pull("MagicDown", this.pos.x - game.MagicDown.width, this.pos.y - game.MagicDown.height + 22))
             }
         }
+
+        // Update if in castle or not
+        if (this.pos.x > 515 && this.pos.x < 630 && this.pos.y > 210 && this.pos.y < 280){
+            this.enemyCastle = true;
+            console.log(" Wizard ¿In Enemy Castle");
+        }        
         // Apply physics
         this.body.update(dt);
         

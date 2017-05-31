@@ -78,6 +78,9 @@ game.PlayScreen = me.ScreenObject.extend({
         var boss = me.pool.pull("BossEntity", 545, 197);
         me.game.world.addChild(boss);
 
+        var princess = me.pool.pull("PrincessEntity", 55, 210);
+        me.game.world.addChild(princess);
+
         var enemies = [];
         var i = 0;
         var addY;
