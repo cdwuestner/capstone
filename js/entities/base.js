@@ -4,8 +4,8 @@ game.BaseSprite = me.Entity.extend({
 		//call sprite constructor
 		this._super(me.Entity, "init", [x,y, {
 			image: "bases", 
-			width: 16,
-			height: 16,
+			width: 32,
+			height: 32,
 			framewidth: 128,
 			frameheight: 128
 		}]);

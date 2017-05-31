@@ -81,6 +81,13 @@ game.HealerEntity = me.Entity.extend({
                 me.game.world.addChild(me.pool.pull("HealingRight", this.pos.x - game.HealingRight.width + 12, this.pos.y - game.HealingRight.height + 8))
             }
         }
+
+        // Update if in castle or not
+        if (this.pos.x > 515 && this.pos.x < 630 && this.pos.y > 210 && this.pos.y < 280){
+            this.enemyCastle = true;
+            console.log("In Enemy Castle");
+        }
+
         // Apply physics
         this.body.update(dt);
         // Only update position if entity has moved
