@@ -73,8 +73,17 @@ game.WizardEntity = me.Entity.extend({
         // Added a flicker to show which is selected
         if (this.isSelected) {
             this.renderable.flicker(150);
+            if(me.input.isKeyPressed("left")){
+                me.game.world.addChild(me.pool.pull("MagicLeft", this.pos.x - game.MagicLeft.width - 12, this.pos.y - game.MagicLeft.height + 8))
+            }
             if(me.input.isKeyPressed("right")){
                 me.game.world.addChild(me.pool.pull("MagicRight", this.pos.x - game.MagicRight.width + 12, this.pos.y - game.MagicRight.height + 8))
+            }
+            if(me.input.isKeyPressed("up")){
+                me.game.world.addChild(me.pool.pull("MagicUp", this.pos.x - game.MagicUp.width, this.pos.y - game.MagicUp.height - 15))
+            }
+            if(me.input.isKeyPressed("down")){
+                me.game.world.addChild(me.pool.pull("MagicDown", this.pos.x - game.MagicDown.width, this.pos.y - game.MagicDown.height + 22))
             }
         }
         // Apply physics
@@ -108,7 +117,7 @@ game.WizardEntity = me.Entity.extend({
     draw : function(renderer){
         // Draw health bar
         var color = renderer.getColor();
-        renderer.setColor('#d60a29');
+        renderer.setColor('#21b72a');
         renderer.fillRect(this.pos.x - 15, this.pos.y + 20, (this.curHealth / this.maxHealth) * 30, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn

@@ -157,7 +157,7 @@ game.SorcererEntity = me.Entity.extend({
     draw : function(renderer){
         // Draw health bar
         var color = renderer.getColor();
-        renderer.setColor('#d60a29');
+        renderer.setColor('#21b72a');
         renderer.fillRect(this.pos.x, this.pos.y + 35, (this.curHealth / this.maxHealth) * 30, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn

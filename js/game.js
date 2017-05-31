@@ -53,7 +53,7 @@ game.texture = new me.video.renderer.Texture(
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
 
-        // add entities here
+        // Entities
         me.pool.register("BossEntity", game.BossEntity);
         me.pool.register("HealerEntity", game.HealerEntity);
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
@@ -62,9 +62,16 @@ game.texture = new me.video.renderer.Texture(
         me.pool.register("WarriorEntity", game.WarriorEntity);
 
        me.pool.register("BaseSprite", game.BaseSprite);
-
+       // Magic
+       me.pool.register("MagicLeft", game.MagicLeft);
        me.pool.register("MagicRight", game.MagicRight);
+       me.pool.register("MagicUp", game.MagicUp);
+       me.pool.register("MagicDown", game.MagicDown);
+       // Healing
+       me.pool.register("HealingLeft", game.HealingLeft);
        me.pool.register("HealingRight", game.HealingRight);
+       me.pool.register("HealingUp", game.HealingUp);
+       me.pool.register("HealingDown", game.HealingDown);
 
         // Display game menu
         me.state.change(me.state.MENU);

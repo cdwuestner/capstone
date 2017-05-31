@@ -103,8 +103,11 @@ game.PlayScreen = me.ScreenObject.extend({
         currentUnit.isSelected = true;
         // Spacebar hotkey to cycle between units
         me.input.bindKey(me.input.KEY.SPACE, "next");
-        // Up key to shoot up
+        // Arrow keys for magic use
+        me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.UP, "up");
+        me.input.bindKey(me.input.KEY.DOWN, "down");
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "next"){
@@ -136,6 +139,11 @@ game.PlayScreen = me.ScreenObject.extend({
         
         // Unbind spacebar when screen is destroyed
         me.input.unbindKey(me.input.KEY.SPACE);
+        // Unbind arrow keys
+        me.input.unbindKey(me.input.KEY.LEFT);
+        me.input.unbindKey(me.input.KEY.RIGHT);
+        me.input.unbindKey(me.input.KEY.UP);
+        me.input.unbindKey(me.input.KEY.DOWN);
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
     }

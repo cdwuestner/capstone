@@ -77,8 +77,17 @@ game.HealerEntity = me.Entity.extend({
         // Added a flicker to show which is selected
         if (this.isSelected) {
             this.renderable.flicker(150);
+            if(me.input.isKeyPressed("left")){
+                me.game.world.addChild(me.pool.pull("HealingLeft", this.pos.x - game.HealingLeft.width - 12, this.pos.y - game.HealingLeft.height + 8))
+            }
             if(me.input.isKeyPressed("right")){
                 me.game.world.addChild(me.pool.pull("HealingRight", this.pos.x - game.HealingRight.width + 12, this.pos.y - game.HealingRight.height + 8))
+            }
+            if(me.input.isKeyPressed("up")){
+                me.game.world.addChild(me.pool.pull("HealingUp", this.pos.x - game.HealingUp.width, this.pos.y - game.HealingUp.height - 15))
+            }
+            if(me.input.isKeyPressed("down")){
+                me.game.world.addChild(me.pool.pull("HealingDown", this.pos.x - game.HealingDown.width, this.pos.y - game.HealingDown.height + 22))
             }
         }
         // Apply physics
@@ -114,7 +123,7 @@ game.HealerEntity = me.Entity.extend({
     draw : function(renderer){
         // Draw health bar
         var color = renderer.getColor();
-        renderer.setColor('#d60a29');
+        renderer.setColor('#21b72a');
         renderer.fillRect(this.pos.x - 15, this.pos.y + 20, (this.curHealth / this.maxHealth) * 30, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn
