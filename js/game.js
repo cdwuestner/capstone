@@ -55,6 +55,7 @@ game.texture = new me.video.renderer.Texture(
 
         // add entities here
         me.pool.register("BossEntity", game.BossEntity);
+        me.pool.register("PrincessEntity", game.PrincessEntity);
         me.pool.register("HealerEntity", game.HealerEntity);
         me.pool.register("SkeletonEntity", game.SkeletonEntity);
         me.pool.register("SorcererEntity",  game.SorcererEntity);
