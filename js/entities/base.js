@@ -10,7 +10,7 @@ game.BaseSprite = me.Entity.extend({
 			frameheight: 128
 		}]);
 
-    this.z = 0;
+
 
         this.renderable = game.texture.createAnimationFromName([
             "baseDefault", "enemyBase", "playerBase"
@@ -20,8 +20,10 @@ game.BaseSprite = me.Entity.extend({
 
 		this.renderable.scale(.3, .3);
 
+    this.alwaysUpdate = true;
+
     // define a standing animation (using the first frame)
-    this.renderable.addAnimation("default",  [0]);
+    this.renderable.addAnimation("baseDefault",  [0]);
 
     //enemy captured base
     this.renderable.addAnimation("enemy", [1]);
@@ -30,37 +32,25 @@ game.BaseSprite = me.Entity.extend({
     this.renderable.addAnimation("base", [2]);
 
     // set the standing animation as default
-    this.renderable.setCurrentAnimation("default");
+    this.renderable.setCurrentAnimation("baseDefault");
 
     this.body.collisionType = me.collision.types.WORLD_SHAPE;
 
-      this.maxHealth = 100;
-      this.curHealth = this.maxHealth;
+
+   // this.inBattle = false;
 
 
 
-
-
-
-    //set collision type
-  //  this.body.collisionType = me.collision.types.WORLD_SHAPE;
-    this.inBattle = false;
-
-//	this.renderable = game.texture.createAnimationFromName([
-    
-  //  	"base/walk/0001"
-//	]);
-
-	    this.alwaysUpdate = true;
 
   },
 update : function (dt) {
 
 
-
+        // Apply physics
+        this.body.update(dt);
 
     // call the parent function
-  this._super(me.Entity, "update", [dt]);
+ // this._super(me.Entity, "update", [dt]);
     // handle collisions against other shapes
    me.collision.check(this);
     return true;
@@ -74,17 +64,20 @@ update : function (dt) {
 
   if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
                 
-    this.renderable.setCurrentAnimation("enemy");        
+    this.renderable.setCurrentAnimation("enemy");
+    return false;    
 
            
   } else if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
         
         this.renderable.setCurrentAnimation("base");
+        return false;
 
-  } 
+ 
 
-    return false;
+  
   }
+}
 
    
 

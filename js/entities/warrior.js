@@ -10,6 +10,7 @@ game.WarriorEntity = me.Entity.extend({
             height: 1,
             framewidth: 64,
             frameheight: 64
+
         }]);
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);

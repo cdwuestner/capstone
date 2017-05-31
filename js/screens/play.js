@@ -34,7 +34,9 @@ game.PlayScreen = me.ScreenObject.extend({
         var bx2 = Math.floor(Math.random() * (450 - 150)) + 150;  
         var bx3 =Math.floor(Math.random() * (450 - 150)) + 150;
 
-
+        console.log("base1" + by1 + ", " + bx1);
+        console.log("base2" + by2 + ", " + bx2);
+        console.log("base3" + by3 + ", " + bx3);
 
         // Make an array to store player units
         var units = [];
@@ -61,14 +63,15 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(base3, 1);
 
 
-        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205);
-        var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240);
+        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205, bx1, by1);
+        var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240, bx3, by3);
         me.game.world.addChild(skeleton1);
         skeleton1.goToBaseOne = true;
         me.game.world.addChild(skeleton2);
         skeleton2.goToBaseThree = true;
 
-        var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215);
+        //add paramters of base it is supposed to go to for AI. In this case base 2
+        var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215, bx2, by2);
         me.game.world.addChild(sorcerer1);
         sorcerer1.goToBaseTwo = true;
         

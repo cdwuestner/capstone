@@ -1,8 +1,8 @@
 // Sorcerer Entity
 game.SorcererEntity = me.Entity.extend({
     // Constructor
-    init : function(x, y, settings){
-        // Call super (Entity) constructor
+    init : function(x, y, base_x, base_y, settings){
+        // Call super (Entity) constructor, add two paramters for base that it is going to go t o
         this._super(me.Entity, "init", [x, y, {
             image: "sorcerer",
             width: 32,
@@ -14,6 +14,8 @@ game.SorcererEntity = me.Entity.extend({
         this.alwaysUpdate = true;
         // Set movement speed
         this.body.setVelocity(.5, .5);
+        this.base_x = base_x;
+        this.base_y = base_y;
 
         this.attackCastle = false;
         this.defendCastle = false;
@@ -30,6 +32,7 @@ game.SorcererEntity = me.Entity.extend({
         this.maxHealth = 50;
         this.curHealth = 50;
         this.attack = 50;
+       
 
 
     },
@@ -62,14 +65,24 @@ game.SorcererEntity = me.Entity.extend({
                 this.body.vel.y = 0;
             }
         }else if(this.goToBaseOne || this.goToBaseTwo || this.goToBaseThree){
-            if(this.pos.x > 310){
+            if(this.pos.x > this.base_x){
                 this.body.vel.x -= this.body.accel.x * me.timer.tick;
-            }else if(this.pos.x < 310){
+            }else if(this.pos.x < this.base_x){
                 this.body.vel.x += this.body.accel.x * me.timer.tick;
             }else{
                 this.body.vel.x = 0;
             }
-            if(this.goToBaseOne){
+             
+                if(this.pos.y > this.base_y){
+                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
+                }else if(this.pos.y < this.base_y){
+                    this.body.vel.y += this.body.accel.y * me.timer.tick;
+                }else{
+                    this.body.vel.y = 0;
+                }
+
+
+/*            if(this.goToBaseOne){
                 if(this.pos.y > 30){
                     this.body.vel.y -= this.body.accel.y * me.timer.tick;
                 }else if(this.pos.y < 30){
@@ -93,7 +106,7 @@ game.SorcererEntity = me.Entity.extend({
                 }else{
                     this.body.vel.y = 0;
                 }
-            }
+            }*/
         }
         // Display correct animations
         this.animate();
