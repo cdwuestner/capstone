@@ -21,6 +21,9 @@ game.HealerEntity = me.Entity.extend({
         this.addAnimations();
         this.renderable.setCurrentAnimation("stand");
 
+        //set collision type
+        this.body.collisionType = me.collision.types.PLAYER_OBJECT;
+
         
         this.body.setVelocity(.5, .5);
 
@@ -100,6 +103,13 @@ game.HealerEntity = me.Entity.extend({
         this.renderable.addAnimation("right", [28, 29, 30, 31, 32, 33, 34, 35], 
                 300);
     },
+
+    onCollision : function(response, other){
+
+        return false;
+    },
+
+
 
     draw : function(renderer){
         // Draw health bar

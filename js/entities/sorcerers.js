@@ -23,12 +23,15 @@ game.SorcererEntity = me.Entity.extend({
         // Add all animations and set at "idle"
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
+        this.body.collisionType = me.collision.types.ENEMY_OBJECT;
         // Set some starting stats
         this.xp = 0;
         this.level = 1;
         this.maxHealth = 50;
         this.curHealth = 50;
         this.attack = 50;
+
+
     },
 
     update : function(dt){
@@ -96,6 +99,8 @@ game.SorcererEntity = me.Entity.extend({
         this.animate();
         // Apply physics
         this.body.update(dt);
+
+        me.collision.check(this);
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 || 
                 this.body.vel.y != 0);
@@ -144,6 +149,15 @@ game.SorcererEntity = me.Entity.extend({
         renderer.setColor(color);
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);
+    },
+
+    onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.WORLD_SHAPE){
+            this.pos.sub(response.overlapV);
+
+            return true;
+        }
+        return false;
     }
 
 });

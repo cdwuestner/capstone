@@ -22,6 +22,19 @@ game.PlayScreen = me.ScreenObject.extend({
             -viewport.width * viewport.anchorPoint.x,
             -viewport.height * viewport.anchorPoint.y
         );*/
+        //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
+       
+        //for y coorindate
+        var by1 = Math.floor(Math.random() * (420 - 50)) + 50;
+        var by2 = Math.floor(Math.random() * (420 - 50)) + 50;
+        var by3 = Math.floor(Math.random() * (420 - 50)) + 50;
+
+        //for x coordinate
+        var bx1 = Math.floor(Math.random() * (450 - 150)) + 150;
+        var bx2 = Math.floor(Math.random() * (450 - 150)) + 150;  
+        var bx3 =Math.floor(Math.random() * (450 - 150)) + 150;
+
+
 
         // Make an array to store player units
         var units = [];
@@ -38,13 +51,13 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(wizard, 2);
         units.push(wizard);
 
-        var base1 = me.pool.pull("BaseSprite", 315, 50);
+        var base1 = me.pool.pull("BaseSprite", bx1, by1);
         me.game.world.addChild(base1, 1);
 
-        var base2 = me.pool.pull("BaseSprite", 315, 235);
+        var base2 = me.pool.pull("BaseSprite", bx2, by2);
         me.game.world.addChild(base2, 1);
 
-        var base3 = me.pool.pull("BaseSprite", 315, 420);
+        var base3 = me.pool.pull("BaseSprite", bx3, by3);
         me.game.world.addChild(base3, 1);
 
 
