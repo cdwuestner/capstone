@@ -13,7 +13,7 @@ game.SorcererEntity = me.Entity.extend({
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed
-        this.body.setVelocity(.5, .5);
+        this.body.setVelocity(1, 1);
         this.base_x = base_x;
         this.base_y = base_y;
 
@@ -29,9 +29,9 @@ game.SorcererEntity = me.Entity.extend({
         // Set some starting stats
         this.xp = 0;
         this.level = 1;
-        this.maxHealth = 50;
-        this.curHealth = 50;
-        this.attack = 50;
+        this.maxHealth = 75;
+        this.curHealth = 75;
+        this.attack = 60;
        
 
 
@@ -112,7 +112,7 @@ game.SorcererEntity = me.Entity.extend({
         this.animate();
         // Apply physics
         this.body.update(dt);
-
+        // Check for collisions
         me.collision.check(this);
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 || 
@@ -165,10 +165,44 @@ game.SorcererEntity = me.Entity.extend({
     },
 
     onCollision : function(response, other){
-        if(other.body.collisionType === me.collision.types.WORLD_SHAPE){
-            this.pos.sub(response.overlapV);
-
-            return true;
+        if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
+            this.curHealth -= 15;
+            if(this.curHealth < 0){
+                me.game.world.removeChild(this);
+            }
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
+            // Temporarily filter collision detection with players
+            this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT);
+            // Random damage based on attack of player unit
+            this.curHealth -= Math.floor(Math.random() * other.attack);
+            // Remove enemy unit if its health is 0
+            if(this.curHealth <= 0){
+                this.alive = false;
+                me.game.world.removeChild(this);
+            }
+            // Move enemy back a bit based on current movement
+            if(this.body.vel.x > 0){
+                this.pos.x -= 10;
+            }
+            if(this.body.vel.x < 0){
+                this.pos.x += 10;
+            }
+            if(this.body.vel.y > 0){
+                this.pos.y -= 10;
+            }
+            if(this.body.vel.y < 0){
+                this.pos.y += 10;
+            }
+            this.x = this.pos.x;
+            this.y = this.pos.y;
+            // Disable collision filter
+            this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT){
+            return false;
         }
         return false;
     }

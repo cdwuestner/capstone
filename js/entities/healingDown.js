@@ -4,7 +4,7 @@ game.HealingDown = me.Entity.extend({
         this._super(me.Entity, "init", [x, y, {width: game.HealingDown.width, height: game.HealingDown.height}]);
         this.z = 5;
         this.body.setVelocity(0, 5);
-        this.body.collisionType = me.collision.types.PROJECTILE_OBJECT;
+        this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
         this.renderable = new (me.Renderable.extend({
             init : function(){
                 this._super(me.Renderable, "init", [0, 0, game.HealingDown.width, game.HealingDown.height]);
@@ -31,8 +31,21 @@ game.HealingDown = me.Entity.extend({
         me.collision.check(this);
 
         return true;
-    }
+    },
 
+    onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
+            me.game.world.removeChild(this);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.WORLD_SHAPE){
+            return false;
+        }
+    }
+    
 });
 
 game.HealingDown.width = 3;

@@ -36,7 +36,6 @@ var game = {
 
     // Run on game resources loaded.
     "loaded" : function () {
-    console.log("hello");
     console.log(me.loader.getJSON("bases"));
     console.log(me.loader.getImage("bases")); 
 

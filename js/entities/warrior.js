@@ -6,8 +6,8 @@ game.WarriorEntity = me.Entity.extend({
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [x, y, {
             image: "warrior",
-            width: 1,
-            height: 1,
+            width: 25,
+            height: 35,
             framewidth: 64,
             frameheight: 64
 
@@ -91,9 +91,8 @@ game.WarriorEntity = me.Entity.extend({
 
         // Apply physics
         this.body.update(dt);
-
+        // Check for collisions
         me.collision.check(this);
-
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 ||
             this.body.vel.y != 0);
@@ -127,28 +126,44 @@ game.WarriorEntity = me.Entity.extend({
     },
 
     onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT){
+            this.curHealth += 25;
+            if(this.curHealth > this.maxHealth){
+                this.curHealth = this.maxHealth;
+            }
+            return false;
+        }
         if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
-            // Filter collision detection with enemies
+            // Temporarily filter collision detection with players
             this.body.setCollisionMask(me.collision.types.ENEMY_OBJECT);
-            // Battle
-            this.inBattle = true;
-            // Random damage based on attack of other
+            // Random damage based on attack of player unit
             this.curHealth -= Math.floor(Math.random() * other.attack);
+            // Remove enemy unit if its health is 0
             if(this.curHealth <= 0){
                 this.alive = false;
                 me.game.world.removeChild(this);
             }
-            console.log("warrior curHealth:" + this.curHealth);
-            this.xp += 25;
-            if(this.xp % 100 == 0){
-                this.levelUp();
+            // Move enemy back a bit based on current movement
+            if(this.body.vel.x > 0){
+                this.pos.x -= 10;
             }
-            this.y = this.pos.y;
-            this.pos.x = this.pos.x - 10;
+            if(this.body.vel.x < 0){
+                this.pos.x += 10;
+            }
+            if(this.body.vel.y > 0){
+                this.pos.y -= 10;
+            }
+            if(this.body.vel.y < 0){
+                this.pos.y += 10;
+            }
             this.x = this.pos.x;
-            this.inBattle = false;
+            this.y = this.pos.y;
             // Disable collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
+            return false;
         }
         return false;
     },
@@ -157,7 +172,7 @@ game.WarriorEntity = me.Entity.extend({
         // Draw health bar
         var color = renderer.getColor();
         renderer.setColor('#21b72a');
-        renderer.fillRect(this.pos.x - 15, this.pos.y + 20, (this.curHealth / this.maxHealth) * 30, 3);
+        renderer.fillRect(this.pos.x - 3, this.pos.y + 35, (this.curHealth / this.maxHealth) * 30, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);

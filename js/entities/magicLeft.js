@@ -31,6 +31,19 @@ game.MagicLeft = me.Entity.extend({
         me.collision.check(this);
 
         return true;
+    },
+
+    onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
+            me.game.world.removeChild(this);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.WORLD_SHAPE){
+            return false;
+        }
     }
 
 });

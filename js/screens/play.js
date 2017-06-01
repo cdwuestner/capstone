@@ -34,22 +34,18 @@ game.PlayScreen = me.ScreenObject.extend({
         var bx2 = Math.floor(Math.random() * (450 - 150)) + 150;  
         var bx3 =Math.floor(Math.random() * (450 - 150)) + 150;
 
-        console.log("base1" + by1 + ", " + bx1);
-        console.log("base2" + by2 + ", " + bx2);
-        console.log("base3" + by3 + ", " + bx3);
-
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
-        var warrior = me.pool.pull("WarriorEntity", 115, 235);
+        var warrior = me.pool.pull("WarriorEntity", 115, 215);
         me.game.world.addChild(warrior, 2);
         units.push(warrior);
 
-        var healer = me.pool.pull("HealerEntity", 105, 200);
+        var healer = me.pool.pull("HealerEntity", 105, 180);
         me.game.world.addChild(healer, 2);
         units.push(healer);         
 
-        var wizard = me.pool.pull("WizardEntity", 105, 270);
+        var wizard = me.pool.pull("WizardEntity", 105, 250);
         me.game.world.addChild(wizard, 2);
         units.push(wizard);
 
@@ -78,7 +74,7 @@ game.PlayScreen = me.ScreenObject.extend({
         var boss = me.pool.pull("BossEntity", 545, 197);
         me.game.world.addChild(boss);
 
-        var princess = me.pool.pull("PrincessEntity", 55, 210);
+        var princess = me.pool.pull("PrincessEntity", 55, 220);
         me.game.world.addChild(princess);
 
         var enemies = [];
@@ -105,12 +101,12 @@ game.PlayScreen = me.ScreenObject.extend({
         var currentUnit = units[unitIndex];
         currentUnit.isSelected = true;
         // Spacebar hotkey to cycle between units
-        me.input.bindKey(me.input.KEY.SPACE, "next");
+        me.input.bindKey(me.input.KEY.SPACE, "next", true);
         // Arrow keys for magic use
-        me.input.bindKey(me.input.KEY.LEFT, "left");
-        me.input.bindKey(me.input.KEY.RIGHT, "right");
-        me.input.bindKey(me.input.KEY.UP, "up");
-        me.input.bindKey(me.input.KEY.DOWN, "down");
+        me.input.bindKey(me.input.KEY.LEFT, "left", true);
+        me.input.bindKey(me.input.KEY.RIGHT, "right", true);
+        me.input.bindKey(me.input.KEY.UP, "up", true);
+        me.input.bindKey(me.input.KEY.DOWN, "down", true);
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "next"){
@@ -129,8 +125,6 @@ game.PlayScreen = me.ScreenObject.extend({
         this.pointerDown= me.event.subscribe("pointerdown", function (event) {
             currentUnit.x = Math.round(event.gameX);
             currentUnit.y = Math.round(event.gameY);
-            console.log(event.gameY);
-            console.log(" " + event.gameX);
         });
 
     },

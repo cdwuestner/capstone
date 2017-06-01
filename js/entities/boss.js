@@ -20,6 +20,8 @@ game.BossEntity = me.Entity.extend({
         this.curHealth = 500;
         this.maxHealth = 500;
         this.attack = 500;  // Probably too high
+        // Set collision type
+        this.body.collisionType = me.collision.types.ENEMY_OBJECT;
     },
     
     update : function(dt){
@@ -40,6 +42,34 @@ game.BossEntity = me.Entity.extend({
         renderer.setColor(color);
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);
+    },
+
+    onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
+            this.curHealth -= 15;
+            if(this.curHealth < 0){
+                me.game.world.removeChild(this);
+            }
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
+            // Temporarily filter collision detection with players
+            this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT);
+            // Random damage based on attack of player unit
+            this.curHealth -= Math.floor(Math.random() * other.attack);
+            // Remove enemy unit if its health is 0
+            if(this.curHealth <= 0){
+                this.alive = false;
+                me.game.world.removeChild(this);
+            }
+            // Disable collision filter
+            this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT){
+            return false;
+        }
+        return false;
     }
 
 });

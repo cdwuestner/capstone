@@ -171,29 +171,44 @@ game.SkeletonEntity = me.Entity.extend({
     },
 
     onCollision : function(response, other){
+        if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
+            this.curHealth -= 15;
+            if(this.curHealth < 0){
+                me.game.world.removeChild(this);
+            }
+            return false;
+        }
         if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
-            // Filter collision detection with enemies
+            // Temporarily filter collision detection with players
             this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT);
-            // Battle
-            this.inBattle = true;
-            // Random damage based on attack of other
+            // Random damage based on attack of player unit
             this.curHealth -= Math.floor(Math.random() * other.attack);
+            // Remove enemy unit if its health is 0
             if(this.curHealth <= 0){
                 this.alive = false;
                 me.game.world.removeChild(this);
             }
-
-            this.xp += 25;
-            if(this.xp % 100 == 0){
-                this.levelUp();
+            // Move enemy back a bit based on current movement
+            if(this.body.vel.x > 0){
+                this.pos.x -= 10;
             }
-            this.y = this.pos.y;
-            // Move the skeleton back a bit so that the battle ends
-            this.pos.x = this.pos.x + 10;
+            if(this.body.vel.x < 0){
+                this.pos.x += 10;
+            }
+            if(this.body.vel.y > 0){
+                this.pos.y -= 10;
+            }
+            if(this.body.vel.y < 0){
+                this.pos.y += 10;
+            }
             this.x = this.pos.x;
-            this.inBattle = false;
+            this.y = this.pos.y;
             // Disable collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+            return false;
+        }
+        if(other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT){
+            return false;
         }
         return false;
     },
