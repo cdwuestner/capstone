@@ -3,25 +3,7 @@ game.PlayScreen = me.ScreenObject.extend({
     onResetEvent: function() {
         // Add our game board
         me.levelDirector.loadLevel("game_board");
-        /* // reset the score
-        game.data.score = 0; */
 
-        /* // Add our HUD to the game world, add it last so that this is on top of the rest.
-        // Can also be forced by specifying a "Infinity" z value to the addChild function.
-        this.HUD = new game.HUD.Container();
-        me.game.world.addChild(this.HUD); */
-
-        // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
-        /*var viewport = me.game.viewport;
-        viewport.currentTransform.translate(
-            viewport.width * viewport.anchorPoint.x,
-            viewport.height * viewport.anchorPoint.y
-        );
-        viewport.currentTransform.scale(1.5);
-        viewport.currentTransform.translate(
-            -viewport.width * viewport.anchorPoint.x,
-            -viewport.height * viewport.anchorPoint.y
-        );*/
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
        
         //for y coorindate
@@ -38,26 +20,25 @@ game.PlayScreen = me.ScreenObject.extend({
         var units = [];
         // Add intial player and enemy units
         var warrior = me.pool.pull("WarriorEntity", 115, 215);
-        me.game.world.addChild(warrior, 2);
+        me.game.world.addChild(warrior);
         units.push(warrior);
 
         var healer = me.pool.pull("HealerEntity", 105, 180);
-        me.game.world.addChild(healer, 2);
+        me.game.world.addChild(healer);
         units.push(healer);         
 
         var wizard = me.pool.pull("WizardEntity", 105, 250);
-        me.game.world.addChild(wizard, 2);
+        me.game.world.addChild(wizard);
         units.push(wizard);
 
         var base1 = me.pool.pull("BaseSprite", bx1, by1);
-        me.game.world.addChild(base1, 1);
+        me.game.world.addChild(base1, 2);
 
         var base2 = me.pool.pull("BaseSprite", bx2, by2);
-        me.game.world.addChild(base2, 1);
+        me.game.world.addChild(base2, 2);
 
         var base3 = me.pool.pull("BaseSprite", bx3, by3);
-        me.game.world.addChild(base3, 1);
-
+        me.game.world.addChild(base3, 2);
 
         var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205, bx1, by1);
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240, bx3, by3);
@@ -71,10 +52,10 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(sorcerer1);
         sorcerer1.goToBaseTwo = true;
         
-        var boss = me.pool.pull("BossEntity", 545, 197);
+        var boss = me.pool.pull("BossEntity", 545, 210);
         me.game.world.addChild(boss);
 
-        var princess = me.pool.pull("PrincessEntity", 55, 220);
+        var princess = me.pool.pull("PrincessEntity", 35, 210);
         me.game.world.addChild(princess);
 
         var enemies = [];
@@ -127,13 +108,19 @@ game.PlayScreen = me.ScreenObject.extend({
             currentUnit.y = Math.round(event.gameY);
         });
 
+        // reset the score
+        game.data.score = 0;
+
+        // Add our HUD to the game world last so that it is on top of the rest.
+        // Can also be forced by specifying a "Infinity" z value to the addChild function.
+        this.HUD = new game.HUD.Container();
+        me.game.world.addChild(this.HUD, 0, 0);
     },
 
     // When leaving the game screen
     onDestroyEvent: function() {
-        /* // remove the HUD from the game world
-        me.game.world.removeChild(this.HUD); */
-        
+        // remove the HUD from the game world
+        me.game.world.removeChild(this.HUD);
         // Unbind spacebar when screen is destroyed
         me.input.unbindKey(me.input.KEY.SPACE);
         // Unbind arrow keys
@@ -144,5 +131,4 @@ game.PlayScreen = me.ScreenObject.extend({
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
     }
-
 });

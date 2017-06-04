@@ -10,6 +10,8 @@ game.WizardEntity = me.Entity.extend({
             framewidth: 64,
             frameheight: 64
         }]);
+        // Layer
+        this.z = 5;
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);
         // Update even outside viewport
