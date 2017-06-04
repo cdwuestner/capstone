@@ -34,16 +34,18 @@ var game = {
         me.sys.gravity = 0;
     },
 
-    // Run on game resources loaded.
-    "loaded" : function () {
-    console.log(me.loader.getJSON("bases"));
-    console.log(me.loader.getImage("bases")); 
+// Run on game resources loaded.
+"loaded" : function () {
+      //    console.log(me.loader.getJSON("bases"));
+      //   console.log(me.loader.getImage("bases")); 
 
-// load the texture atlas file
+// load the texture atlas file for bases
 game.texture = new me.video.renderer.Texture(
     me.loader.getJSON("bases"),
     me.loader.getImage("bases")
 );
+
+
 
 
         me.state.set(me.state.MENU, new game.TitleScreen());
@@ -51,6 +53,7 @@ game.texture = new me.video.renderer.Texture(
 
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
+
 
         // Entities
         me.pool.register("BossEntity", game.BossEntity);
@@ -75,5 +78,20 @@ game.texture = new me.video.renderer.Texture(
 
         // Display game menu
         me.state.change(me.state.MENU);
+
+
+        //add objects to be saved.  
+        me.save.add({ baseOne : {} });
+        me.save.add({ baseTwo : {} });
+        me.save.add({ baseThree : {} });
+
+
+
+  
+
+
+
+
+
     }
 };
