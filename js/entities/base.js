@@ -1,5 +1,5 @@
 game.BaseSprite = me.Entity.extend({
-	init:function(x,y, settings) {
+	init:function(x,y, capture, settings) {
 
 		//call sprite constructor
 		this._super(me.Entity, "init", [x,y, {
@@ -10,7 +10,7 @@ game.BaseSprite = me.Entity.extend({
 			frameheight: 128
 		}]);
 
-
+    this.z = 2;
 
         this.renderable = game.texture.createAnimationFromName([
             "baseDefault", "enemyBase", "playerBase"
@@ -31,8 +31,18 @@ game.BaseSprite = me.Entity.extend({
     //player captured base
     this.renderable.addAnimation("base", [2]);
 
-    // set the standing animation as default
-    this.renderable.setCurrentAnimation("baseDefault");
+    // set the standing animation as default and the capture flag
+
+    this.capture = capture;
+
+    if(this.capture == "player"){
+          this.renderable.setCurrentAnimation("player");
+    } else if (this.capture == "enemy") {
+      this.renderable.setCurrentAnimation("enemy");
+    } else {
+      this.renderable.setCurrentAnimation("baseDefault");
+    }
+
 
     this.body.collisionType = me.collision.types.WORLD_SHAPE;
 
@@ -65,12 +75,14 @@ update : function (dt) {
   if(other.body.collisionType === me.collision.types.ENEMY_OBJECT){
                 
     this.renderable.setCurrentAnimation("enemy");
+    this.capture = "enemy"
     return false;    
 
            
   } else if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
         
-        this.renderable.setCurrentAnimation("base");
+        this.renderable.setCurrentAnimation("player");
+        this.capture = "player";
         return false;
 
  
