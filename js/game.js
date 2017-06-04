@@ -85,9 +85,7 @@ game.texture = new me.video.renderer.Texture(
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
 
-                me.save.baseOne.capture = base1.capture;
-        me.save.baseOne.capture = base2.capture;
-        me.save.baseOne.capture = base3.capture;
+
 
   
 
