@@ -5,7 +5,6 @@ game.PlayScreen = me.ScreenObject.extend({
         me.levelDirector.loadLevel("game_board");
 
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
-       
 
      //  if(me.save.baseOne){console.log("saved data exists")};
 
@@ -149,6 +148,27 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.RIGHT, "right", true);
         me.input.bindKey(me.input.KEY.UP, "up", true);
         me.input.bindKey(me.input.KEY.DOWN, "down", true);
+        me.input.bindKey(me.input.KEY.W, "wizard", true);
+        me.input.bindKey(me.input.KEY.E, "healer", true);
+        me.input.bindKey(me.input.KEY.R, "warrior", true);
+        
+        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
+            currentUnit.x = Math.round(event.gameX);
+            currentUnit.y = Math.round(event.gameY);
+        });
+
+        // reset the score
+        game.data.storedUnits = 0;
+
+        // Add our HUD to the game world last so that it is on top of the rest.
+        // Can also be forced by specifying a "Infinity" z value to the addChild function.
+        this.HUD = new game.HUD.Container();
+        me.game.world.addChild(this.HUD);
+
+        setInterval(function(){
+            game.data.storedUnits++;
+        }, 20000);
+
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "next"){
@@ -162,20 +182,24 @@ game.PlayScreen = me.ScreenObject.extend({
                 }
                 currentUnit.isSelected = true;
             }
+            if(game.data.storedUnits > 0){
+                if(action == "wizard"){
+                    units[units.length] = me.pool.pull("WizardEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+                if(action == "healer"){
+                    units[units.length] = me.pool.pull("HealerEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+                if(action == "warrior"){
+                    units[units.length] = me.pool.pull("WarriorEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+            }
         });
-        
-        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
-            currentUnit.x = Math.round(event.gameX);
-            currentUnit.y = Math.round(event.gameY);
-        });
-
-        // reset the score
-        game.data.score = 0;
-
-        // Add our HUD to the game world last so that it is on top of the rest.
-        // Can also be forced by specifying a "Infinity" z value to the addChild function.
-        this.HUD = new game.HUD.Container();
-        me.game.world.addChild(this.HUD, 0, 0);
 
         me.save.baseOne.capture = base1.capture;
         me.save.baseOne.capture = base2.capture;
@@ -208,6 +232,9 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.unbindKey(me.input.KEY.RIGHT);
         me.input.unbindKey(me.input.KEY.UP);
         me.input.unbindKey(me.input.KEY.DOWN);
+        me.input.unbindKey(me.input.KEY.W);
+        me.input.unbindKey(me.input.KEY.E);
+        me.input.unbindKey(me.input.KEY.R);
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
     }

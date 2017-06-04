@@ -1,50 +1,45 @@
+// HUD Container
 game.HUD = game.HUD || {};
-// The HUD container
 game.HUD.Container = me.Container.extend({
-    init: function() {
-        // call the constructor
+    init: function () {
         this._super(me.Container, 'init');
-        // persistent across level change
+        // Make persistent across level change
         this.isPersistent = true;
-        // make sure we use screen coordinates
+        // Make sure we use screen coordinates
         this.floating = true;
-        // Make sure it is drawn on top
+        // Keep it on top layer
         this.z = Infinity;
-        // give a name
+        // Name
         this.name = "HUD";
-        // add our child score object at the top left corner
-        this.addChild(new game.HUD.ScoreItem(10, 10));
+        // Add stored unit graphic as child
+        this.addChild(new game.HUD.BuildUnits(0, 0));
     }
 });
-
-// HUD for creating players
-game.HUD.ScoreItem = me.Renderable.extend({
-    // constructor
-    init: function(x, y) {
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-        // white Arial font
-        this.color = me.pool.pull("me.Color", 255, 255, 255);
-        this.font = new me.Font("Arial", 32, this.color);
-        // font aligned right, bottom
-        this.font.textAlign = "center";
-
+// Display how many units can be "built"
+game.HUD.BuildUnits = me.Renderable.extend( {
+    // Constructor
+    init : function (x, y) {
+    // Call parent constructor
+    this._super(me.Renderable, 'init', [x, y, 10, 10]);
+    // Create font
+    this.color = me.pool.pull("me.Color", 255, 255, 255);
+    this.font = new me.Font("Arial", 25, this.color);
+    // Align font
+    this.font.textAlign = "left";
+    this.font.textBaseline = "top";
+    // Local copy of stored units
+    this.storedUnits = 0;
     },
-
-    update : function () {
-        // we don't do anything fancy here, so just
-        // return true if the score has been updated
-        if (this.score !== game.data.score) {
-            this.score = game.data.score;
+    // Update: return true if stored units changes
+    update : function (dt) {
+        if (this.storedUnits !== game.data.storedUnits) {
+            this.storedUnits = game.data.storedUnits;
             return true;
         }
         return false;
     },
-
+    // Draw stored units render
     draw : function (renderer) {
-        // draw it baby !
-		this.font.draw (renderer, game.data.score, me.game.viewport.width + this.pos.x, me.game.viewport.height + this.pos.y);
+	    this.font.draw (renderer, "Stored Units: " + this.storedUnits, 0, 30);
     }
-
 });
