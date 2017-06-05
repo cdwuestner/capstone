@@ -5,8 +5,10 @@ game.BossEntity = me.Entity.extend({
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [x, y, {
             image: "boss",
-            width: 64,
-            height: 78
+            framewidth: 64,
+            frameheight: 78,
+            width: 62,
+            height: 62
         }]);
         // Layer
         this.z = 5;
@@ -38,7 +40,7 @@ game.BossEntity = me.Entity.extend({
         // Draw health bar
         var color = renderer.getColor();
         renderer.setColor('#21b72a');
-        renderer.fillRect(this.pos.x - 15, this.pos.y + 75, (this.curHealth / this.maxHealth) * 100, 3);
+        renderer.fillRect(this.pos.x - 20, this.pos.y + 65, (this.curHealth / this.maxHealth) * 100, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);

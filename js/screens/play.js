@@ -3,27 +3,8 @@ game.PlayScreen = me.ScreenObject.extend({
     onResetEvent: function() {
         // Add our game board
         me.levelDirector.loadLevel("game_board");
-        /* // reset the score
-        game.data.score = 0; */
 
-        /* // Add our HUD to the game world, add it last so that this is on top of the rest.
-        // Can also be forced by specifying a "Infinity" z value to the addChild function.
-        this.HUD = new game.HUD.Container();
-        me.game.world.addChild(this.HUD); */
-
-        // Add zoom effect (https://github.com/melonjs/melonJS/issues/399)
-        /*var viewport = me.game.viewport;
-        viewport.currentTransform.translate(
-            viewport.width * viewport.anchorPoint.x,
-            viewport.height * viewport.anchorPoint.y
-        );
-        viewport.currentTransform.scale(1.5);
-        viewport.currentTransform.translate(
-            -viewport.width * viewport.anchorPoint.x,
-            -viewport.height * viewport.anchorPoint.y
-        );*/
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
-       
 
      //  Pause event occurs when user pushes letter P; saves all data so it will resume at that point when the user unpauses the game. 
         me.input.bindKey(me.input.KEY.P, "pause");
@@ -114,18 +95,19 @@ game.PlayScreen = me.ScreenObject.extend({
         var units = [];
         // Add intial player and enemy units
         var warrior = me.pool.pull("WarriorEntity", 115, 215);
-        me.game.world.addChild(warrior, 2);
+        me.game.world.addChild(warrior);
         units.push(warrior);
 
         var healer = me.pool.pull("HealerEntity", 105, 180);
-        me.game.world.addChild(healer, 2);
+        me.game.world.addChild(healer);
         units.push(healer);         
 
         var wizard = me.pool.pull("WizardEntity", 105, 250);
-        me.game.world.addChild(wizard, 2);
+        me.game.world.addChild(wizard);
         units.push(wizard);
 
         var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
+
         me.game.world.addChild(base1, 1);
         me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 2};
 
@@ -163,6 +145,7 @@ game.PlayScreen = me.ScreenObject.extend({
 
 
 
+
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240, bx3, by3);
         me.game.world.addChild(skeleton1);
         skeleton1.goToBaseOne = true;
@@ -174,10 +157,10 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(sorcerer1);
         sorcerer1.goToBaseTwo = true;
         
-        var boss = me.pool.pull("BossEntity", 545, 197);
+        var boss = me.pool.pull("BossEntity", 545, 210);
         me.game.world.addChild(boss);
 
-        var princess = me.pool.pull("PrincessEntity", 55, 220);
+        var princess = me.pool.pull("PrincessEntity", 35, 210);
         me.game.world.addChild(princess);
 
         var enemies = [];
@@ -217,6 +200,27 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.RIGHT, "right", true);
         me.input.bindKey(me.input.KEY.UP, "up", true);
         me.input.bindKey(me.input.KEY.DOWN, "down", true);
+        me.input.bindKey(me.input.KEY.W, "wizard", true);
+        me.input.bindKey(me.input.KEY.E, "healer", true);
+        me.input.bindKey(me.input.KEY.R, "warrior", true);
+        
+        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
+            currentUnit.x = Math.round(event.gameX);
+            currentUnit.y = Math.round(event.gameY);
+        });
+
+        // reset the score
+        game.data.storedUnits = 0;
+
+        // Add our HUD to the game world last so that it is on top of the rest.
+        // Can also be forced by specifying a "Infinity" z value to the addChild function.
+        this.HUD = new game.HUD.Container();
+        me.game.world.addChild(this.HUD);
+
+        setInterval(function(){
+            game.data.storedUnits++;
+        }, 20000);
+
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "next"){
@@ -230,11 +234,23 @@ game.PlayScreen = me.ScreenObject.extend({
                 }
                 currentUnit.isSelected = true;
             }
-        });
-        
-        this.pointerDown= me.event.subscribe("pointerdown", function (event) {
-            currentUnit.x = Math.round(event.gameX);
-            currentUnit.y = Math.round(event.gameY);
+            if(game.data.storedUnits > 0){
+                if(action == "wizard"){
+                    units[units.length] = me.pool.pull("WizardEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+                if(action == "healer"){
+                    units[units.length] = me.pool.pull("HealerEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+                if(action == "warrior"){
+                    units[units.length] = me.pool.pull("WarriorEntity", 50, 150);
+                    me.game.world.addChild(units[units.length - 1]);
+                    game.data.storedUnits--;
+                }
+            }
         });
 
 
@@ -247,9 +263,8 @@ game.PlayScreen = me.ScreenObject.extend({
 
     // When leaving the game screen
     onDestroyEvent: function() {
-        /* // remove the HUD from the game world
-        me.game.world.removeChild(this.HUD); */
-        
+        // remove the HUD from the game world
+        me.game.world.removeChild(this.HUD);
         // Unbind spacebar when screen is destroyed
         me.input.unbindKey(me.input.KEY.SPACE);
         // Unbind arrow keys
@@ -257,8 +272,10 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.unbindKey(me.input.KEY.RIGHT);
         me.input.unbindKey(me.input.KEY.UP);
         me.input.unbindKey(me.input.KEY.DOWN);
+        me.input.unbindKey(me.input.KEY.W);
+        me.input.unbindKey(me.input.KEY.E);
+        me.input.unbindKey(me.input.KEY.R);
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
     }
-
 });

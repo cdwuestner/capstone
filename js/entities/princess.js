@@ -5,8 +5,10 @@ game.PrincessEntity = me.Entity.extend({
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [x, y, {
             image: "princess",
-            width: 19,
-            height: 36
+            framewidth: 19,
+            frameheight: 36,
+            width: 62,
+            height: 62
         }]);
         // make her bigger
         this.renderable.scale(1.7, 1.7);
@@ -41,7 +43,7 @@ game.PrincessEntity = me.Entity.extend({
         // Draw health bar
         var color = renderer.getColor();
         renderer.setColor('#21b72a');
-        renderer.fillRect(this.pos.x - 45, this.pos.y + 50, (this.curHealth / this.maxHealth) * 100, 3);
+        renderer.fillRect(this.pos.x - 20, this.pos.y + 65, (this.curHealth / this.maxHealth) * 100, 3);
         renderer.setColor(color);
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);
