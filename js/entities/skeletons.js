@@ -10,8 +10,7 @@ game.SkeletonEntity = me.Entity.extend({
         }]);
         // Layer
         this.z = 5;
-        this.x = x;
-        this.y = y;
+
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed
@@ -119,6 +118,9 @@ game.SkeletonEntity = me.Entity.extend({
         this.body.update(dt);
         // Handle any collisions
         me.collision.check(this);
+
+        
+
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 || 
                 this.body.vel.y != 0);

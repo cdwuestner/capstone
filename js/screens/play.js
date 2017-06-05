@@ -16,17 +16,33 @@ game.PlayScreen = me.ScreenObject.extend({
         me.save.baseTwo.capture = base2.capture;
         me.save.baseThree.capture = base3.capture;
 
-        me.save.enemy.skeleton1.x = skeleton1.pos.x;
-        me.save.enemy.skeleton1.y = skeleton1.pos.y;
+        me.save.enemy.sk1.x = skeleton1.pos.x;
+        me.save.enemy.sk1.y = skeleton1.pos.y;
 
-      console.log("saved possition is x " + skeleton1.x);
-      console.log("saved possition is y " + skeleton1.y);
-        
+        me.save.enemy.sk2.x = skeleton2.pos.x;
+        me.save.enemy.sk2.y = skeleton2.pos.y;
+
+        me.save.enemy.so1.x = sorcerer1.pos.x;
+        me.save.enemy.so1.y = sorcerer1.pos.y;
+
+
+
+        for(var a  in enemies){
+            
+        console.log(enemies[a].pos);
+
+        console.log((JSON.stringify(me.save.enemySpawn[1])));
+            
+        //    me.save.enemySpawn[a].x = enemies[a].pos.x;
+        //    me.save.enemySpawn[a].y = enemies[a].pos.x;
+        }
+
+
+
         me.state.change(me.state.READY);
             }
         });
-       
-
+    
    //function to test if an entity is empty
     function isEmpty(value) {
         if(value == undefined || value == "{}"){
@@ -81,16 +97,6 @@ game.PlayScreen = me.ScreenObject.extend({
         console.log(c1 + c2 + c3);
     }
 
-
-
-        console.log(JSON.stringify(me.save.baseOne.x));
-       
-
-       // me.save.add({basex : bx1, basey : by1});
-        
-
-   //     console.log(JSON.stringify(me.save));
-
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
@@ -120,40 +126,86 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(base3, 1);
         me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 2};
 
-
+  
         //declare variables for skeleton 1 
-        var sx1, sx2;
+        var sx1, sy1;
+        console.log(JSON.stringify(me.save.enemy.sk2));
 
-         if(isEmpty(JSON.stringify(me.save.enemy.skeleton1))){
-            sx1 = 205; 
-            sy1 = 490;
+
+         if(isEmpty(JSON.stringify(me.save.enemy.sk1))){
+
+            sx1 = 490; 
+            sy1 = 205;
          } else {
 
-            //somehow theseare filpped don't know why need to fix. 
-            sx1 = me.save.enemy.skeleton1.y;
-            sy1 = me.save.enemy.skeleton1.x;
-            console.log("we out here");
+     
+            sx1 = me.save.enemy.sk1.x;
+            sy1 = me.save.enemy.sk1.y;
          }
 
-        var skeleton1 = me.pool.pull("SkeletonEntity", sy1, sx1, bx1, by1);
+
+        var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
     
-        var saveSkeleton1 = {x : skeleton1.x, y: skeleton1.y};
-        me.save.enemy = [{}];
-        me.save.enemy.push(skeleton1);
-        me.save.enemy.skeleton1 = {};
-        me.save.enemy.skeleton1 = saveSkeleton1;
+        var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y};
+    
+        me.save.enemy.push("sk1");
+        me.save.enemy.sk1 = {};
+        me.save.enemy.sk1 = saveSkeleton1;
+
+        //declare variables for skeleton 1 
+        var sx2, sy2;
+
+         if(isEmpty(JSON.stringify(me.save.enemy.sk2))){
+            sx2 = 490; 
+            sy2 = 240;
+         } else {
+
+         
+            sx2 = me.save.enemy.sk2.x;
+            sy2 = me.save.enemy.sk2.y;
+         }
 
 
+        var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
+
+        var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y};
+        
+        me.save.enemy.push("sk2");
+        me.save.enemy.sk2 = {};
+        me.save.enemy.sk2 = saveSkeleton2;
 
 
-        var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240, bx3, by3);
         me.game.world.addChild(skeleton1);
         skeleton1.goToBaseOne = true;
         me.game.world.addChild(skeleton2);
         skeleton2.goToBaseThree = true;
 
+        //declare variables for sorcer 1 
+        var sox1, soy1;
+        console.log(JSON.stringify(me.save.enemy.so1));
+
+
+         if(isEmpty(JSON.stringify(me.save.enemy.so1))){
+
+            sox1 = 512; 
+            soy1 = 215;
+         } else {
+
+     
+            sox1 = me.save.enemy.so1.x;
+            soy1 = me.save.enemy.so1.y;
+         }
+
+
         //add paramters of base it is supposed to go to for AI. In this case base 2
-        var sorcerer1 = me.pool.pull("SorcererEntity", 512, 215, bx2, by2);
+        var sorcerer1 = me.pool.pull("SorcererEntity", sox1, soy1, bx2, by2);
+        var saveSorcerer1 = {x : sorcerer1.pos.x, y: sorcerer1.pos.y};
+        
+        me.save.enemy.push("so1");
+        me.save.enemy.so1 = {};
+        me.save.enemy.so1 = saveSorcerer1;
+
+
         me.game.world.addChild(sorcerer1);
         sorcerer1.goToBaseTwo = true;
         
@@ -166,9 +218,15 @@ game.PlayScreen = me.ScreenObject.extend({
         var enemies = [];
         var i = 0;
         var addY;
+
+        //this logics doesn't work yet to prevent spawining fo enemeies 
         // Adds another enemy every 20 seconds (need to add 20 seconds for one)
-        if(me.state.isPaused() == false){
-            console.log("hmm");
+
+        if(isEmpty(JSON.stringify(me.save.enemySpawn[1]))){
+
+            console.log(JSON.stringify(me.save.enemySpawn[1]));
+    //    if(me.state.isPaused() == false){
+      //      console.log("hmm");
         setInterval(function(){         
             
             if(i % 2){
@@ -177,18 +235,49 @@ game.PlayScreen = me.ScreenObject.extend({
                 addY = 350;
             }
             if(Math.floor(Math.random() * 5) + 1 > 2){
+
+
                 enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
+               var saveEnemy =  {type : "skeleton", x : 585, y: addY};
+
             }else{
                 enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
+                var saveEnemy = {type : "sorcerer", x : 585, y: addY};
             }
+            me.save.enemySpawn.push(saveEnemy);
+
+            console.log(JSON.stringify(me.save.enemySpawn));
+
             me.game.world.addChild(enemies[i]);
+
             enemies[i].attackCastle = true;
             i++;
         }, 20000);
 
+
     } else {
-        console.log("butt");
-    }
+        console.log("made it to this logic");
+
+        var k = 0;
+        
+        //first spot always get initiated to empty brackets
+        for(var j in me.save.enemySpawn[j]){
+            if(j != 0){
+            var ex = me.save.enemySpawn[j].x;
+            var ey = me.save.enemySpawn[j].y;
+
+            if(me.save.enemySpawn[j].type == "skeleton"){
+                enemies[k] = me.pool.pull("SorcererEntity", ex, ey);
+
+            } else {
+                enemies[k] = me.pool.pull("SorcererEntity", ex, ey);
+            }
+            k++;
+        }
+
+            }
+        }
+    //}
         // Keep track of which unit is selected
         var unitIndex = 0;
         var currentUnit = units[unitIndex];

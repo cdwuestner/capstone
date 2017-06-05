@@ -90,6 +90,10 @@ game.texture = new me.video.renderer.Texture(
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
         me.save.add({ enemy: {} });
+        me.save.enemy = [{}];
+        me.save.add({ enemySpawn: {} });        
+        me.save.enemySpawn = [{}];
+
 
 
 
