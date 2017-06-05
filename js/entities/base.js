@@ -29,11 +29,15 @@ game.BaseSprite = me.Entity.extend({
     this.renderable.addAnimation("enemy", [1]);
 
     //player captured base
-    this.renderable.addAnimation("base", [2]);
+    this.renderable.addAnimation("player", [2]);
+
 
     // set the standing animation as default and the capture flag
 
+
     this.capture = capture;
+
+
 
     if(this.capture == "player"){
           this.renderable.setCurrentAnimation("player");
@@ -47,8 +51,6 @@ game.BaseSprite = me.Entity.extend({
     this.body.collisionType = me.collision.types.WORLD_SHAPE;
 
 
-   // this.inBattle = false;
-
 
 
 
@@ -58,6 +60,7 @@ update : function (dt) {
 
         // Apply physics
         this.body.update(dt);
+        
 
     // call the parent function
  // this._super(me.Entity, "update", [dt]);

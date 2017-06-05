@@ -25,7 +25,26 @@ game.PlayScreen = me.ScreenObject.extend({
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
        
 
-     //  if(me.save.baseOne){console.log("saved data exists")};
+     //  Pause event occurs when user pushes letter P; saves all data so it will resume at that point when the user unpauses the game. 
+        me.input.bindKey(me.input.KEY.P, "pause");
+        this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+            if(action == "pause"){
+                
+        //save the base capture information
+        me.save.baseOne.capture = base1.capture;
+        me.save.baseTwo.capture = base2.capture;
+        me.save.baseThree.capture = base3.capture;
+
+        me.save.enemy.skeleton1.x = skeleton1.pos.x;
+        me.save.enemy.skeleton1.y = skeleton1.pos.y;
+
+      console.log("saved possition is x " + skeleton1.x);
+      console.log("saved possition is y " + skeleton1.y);
+        
+        me.state.change(me.state.READY);
+            }
+        });
+       
 
    //function to test if an entity is empty
     function isEmpty(value) {
@@ -53,7 +72,7 @@ game.PlayScreen = me.ScreenObject.extend({
         bx3 =Math.floor(Math.random() * (450 - 150)) + 150;
 
         //intializes capture to neutral
-        c1 = "enemy";
+        c1 = "neutral";
         c2 = "neutral";
         c3 = "neutral";
 
@@ -63,6 +82,8 @@ game.PlayScreen = me.ScreenObject.extend({
         by1 = me.save.baseOne.y;
         by2 = me.save.baseTwo.y;
         by3 = me.save.baseThree.y;
+
+        
 
 
 
@@ -75,17 +96,11 @@ game.PlayScreen = me.ScreenObject.extend({
         c1 = me.save.baseOne.capture;
         c2 = me.save.baseTwo.capture;
         c3 = me.save.baseThree.capture;
+
+        console.log(c1 + c2 + c3);
     }
 
 
-       // me.save.add({ baseOne : {} });
-        me.save.baseOne = {x: bx1, y: by1, capture: "enemy"};
-
-      //  me.save.add({ baseTwo : {} });
-        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral"};
-
-     //   me.save.add({ baseThree : {} });
-        me.save.baseThree = {x: bx3, y: by3, capture: "neutral"};
 
         console.log(JSON.stringify(me.save.baseOne.x));
        
@@ -112,15 +127,42 @@ game.PlayScreen = me.ScreenObject.extend({
 
         var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
         me.game.world.addChild(base1, 1);
+        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 2};
+
 
         var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
         me.game.world.addChild(base2, 1);
+        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 2};
 
         var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
         me.game.world.addChild(base3, 1);
+        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 2};
 
 
-        var skeleton1 = me.pool.pull("SkeletonEntity", 490, 205, bx1, by1);
+        //declare variables for skeleton 1 
+        var sx1, sx2;
+
+         if(isEmpty(JSON.stringify(me.save.enemy.skeleton1))){
+            sx1 = 205; 
+            sy1 = 490;
+         } else {
+
+            //somehow theseare filpped don't know why need to fix. 
+            sx1 = me.save.enemy.skeleton1.y;
+            sy1 = me.save.enemy.skeleton1.x;
+            console.log("we out here");
+         }
+
+        var skeleton1 = me.pool.pull("SkeletonEntity", sy1, sx1, bx1, by1);
+    
+        var saveSkeleton1 = {x : skeleton1.x, y: skeleton1.y};
+        me.save.enemy = [{}];
+        me.save.enemy.push(skeleton1);
+        me.save.enemy.skeleton1 = {};
+        me.save.enemy.skeleton1 = saveSkeleton1;
+
+
+
         var skeleton2 = me.pool.pull("SkeletonEntity", 490, 240, bx3, by3);
         me.game.world.addChild(skeleton1);
         skeleton1.goToBaseOne = true;
@@ -142,7 +184,10 @@ game.PlayScreen = me.ScreenObject.extend({
         var i = 0;
         var addY;
         // Adds another enemy every 20 seconds (need to add 20 seconds for one)
-        setInterval(function(){
+        if(me.state.isPaused() == false){
+            console.log("hmm");
+        setInterval(function(){         
+            
             if(i % 2){
                 addY = 125;
             }else{
@@ -157,6 +202,10 @@ game.PlayScreen = me.ScreenObject.extend({
             enemies[i].attackCastle = true;
             i++;
         }, 20000);
+
+    } else {
+        console.log("butt");
+    }
         // Keep track of which unit is selected
         var unitIndex = 0;
         var currentUnit = units[unitIndex];
@@ -188,19 +237,6 @@ game.PlayScreen = me.ScreenObject.extend({
             currentUnit.y = Math.round(event.gameY);
         });
 
-        me.save.baseOne.capture = base1.capture;
-        me.save.baseOne.capture = base2.capture;
-        me.save.baseOne.capture = base3.capture;
-      
-        console.log(base1.capture);
-        console.log(base2.capture)
-
-
-        me.save.add({ complexObject : {} });
-        me.save.complexObject = { a : "b", c : [ 1, 2, 3, "d" ], e : { f : [{}] } };
-        me.save.complexObject.c = "foo"; 
-        me.save.complexObject = me.save.complexObject; 
-        console.log(JSON.stringify(me.save.complexObject));
 
         //will be used to remove save data when a new game needs to be started. 
   //      me.save.remove("baseOne");

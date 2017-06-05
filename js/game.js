@@ -50,6 +50,8 @@ game.texture = new me.video.renderer.Texture(
 
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
+        me.state.set(me.state.READY, new game.PauseScreen());
+
 
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
@@ -79,11 +81,15 @@ game.texture = new me.video.renderer.Texture(
         // Display game menu
         me.state.change(me.state.MENU);
 
+        //pause control
+      //  me.state.change(me.state.READY);
+
 
         //add objects to be saved.  
         me.save.add({ baseOne : {} });
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
+        me.save.add({ enemy: {} });
 
 
 
