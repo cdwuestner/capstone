@@ -9,11 +9,11 @@ game.SorcererEntity = me.Entity.extend({
             height: 32
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
-        // Set movement speed
-        this.body.setVelocity(1, 1);
+        // Set movement speed (fastest in game)
+        this.body.setVelocity(.75, .75);
         this.base_x = base_x;
         this.base_y = base_y;
 
@@ -26,9 +26,7 @@ game.SorcererEntity = me.Entity.extend({
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
         this.body.collisionType = me.collision.types.ENEMY_OBJECT;
-        // Set some starting stats
-        this.xp = 0;
-        this.level = 1;
+        // Stats
         this.maxHealth = 75;
         this.curHealth = 75;
         this.attack = 60;

@@ -11,7 +11,7 @@ game.WizardEntity = me.Entity.extend({
             frameheight: 64
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);
         // Update even outside viewport
@@ -27,9 +27,7 @@ game.WizardEntity = me.Entity.extend({
 
         this.isSelected = false;
 
-        // Set some starting stats
-        this.xp = 0;
-        this.level = 1;
+        // Stats
         this.maxHealth = 100;
         this.curHealth = 100;
         // Very low close-range attack power (ranged attack more powerful)

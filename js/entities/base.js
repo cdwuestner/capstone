@@ -10,10 +10,14 @@ game.BaseSprite = me.Entity.extend({
 			frameheight: 128
 		}]);
       //third dimension bases are on; doesn't change throughout gameplay 
-      this.z = 2;
+      this.z = 5;
+
 
       //function to add base animation 
-      this.renderable = game.texture.createAnimationFromName([
+
+
+        this.renderable = game.texture.createAnimationFromName([
+
             "baseDefault", "enemyBase", "playerBase"
         ]);
 

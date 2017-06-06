@@ -13,7 +13,7 @@ game.WarriorEntity = me.Entity.extend({
 
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);
         // Update even outside viewport
@@ -30,12 +30,10 @@ game.WarriorEntity = me.Entity.extend({
         this.isSelected = false;
         this.inBattle = false;
 
-        // Set some starting stats
-        this.xp = 0;
-        this.level = 1;
+        // Stats
         this.maxHealth = 100;
         this.curHealth = 100;
-        this.attack = 55;
+        this.attack = 50;
 
         //in castle
         this.enemyCastle = false;

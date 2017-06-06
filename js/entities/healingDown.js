@@ -2,8 +2,8 @@ game.HealingDown = me.Entity.extend({
 
     init : function(x, y){
         this._super(me.Entity, "init", [x, y, {width: game.HealingDown.width, height: game.HealingDown.height}]);
-        this.z = 5;
-        this.body.setVelocity(0, 5);
+        this.z = 4;
+        this.body.setVelocity(0, 20);
         this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
         this.renderable = new (me.Renderable.extend({
             init : function(){

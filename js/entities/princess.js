@@ -14,7 +14,7 @@ game.PrincessEntity = me.Entity.extend({
         this.renderable.scale(1.7, 1.7);
 
         // Layer
-        this.z = 5;
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Add animations
@@ -22,9 +22,9 @@ game.PrincessEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
-        this.curHealth = 2;
+        this.curHealth = 500;
         this.maxHealth = 500;
-        this.attack = 100;  // Probably too high
+        this.attack = 150;
         // Set collision type
         this.body.collisionType = me.collision.types.PLAYER_OBJECT;
     },

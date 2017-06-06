@@ -9,8 +9,7 @@ game.SkeletonEntity = me.Entity.extend({
             height: 31.3
         }]);
         // Layer
-        this.z = 5;
-
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed
@@ -30,11 +29,9 @@ game.SkeletonEntity = me.Entity.extend({
         // Add all animations and set at "idle"
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
-        // Set some starting stats
-        this.xp = 0;
-        this.level = 1;
-        this.maxHealth = 105;
-        this.curHealth = 105;
+        // Stats
+        this.maxHealth = 100;
+        this.curHealth = 100;
         this.attack = 50;
     },
 

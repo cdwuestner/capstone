@@ -2,8 +2,8 @@ game.MagicRight = me.Entity.extend({
 
     init : function(x, y){
         this._super(me.Entity, "init", [x, y, {width: game.MagicRight.width, height: game.MagicRight.height}]);
-        this.z = 5;
-        this.body.setVelocity(5, 0);
+        this.z = 4;
+        this.body.setVelocity(20, 0);
         this.body.collisionType = me.collision.types.PROJECTILE_OBJECT;
         this.renderable = new (me.Renderable.extend({
             init : function(){

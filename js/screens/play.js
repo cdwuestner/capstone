@@ -99,6 +99,18 @@ game.PlayScreen = me.ScreenObject.extend({
 
     }
 
+        var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
+        me.game.world.addChild(base1);
+        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 5};
+
+        var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
+        me.game.world.addChild(base2);
+        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 5};
+
+        var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
+        me.game.world.addChild(base3);
+        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 5};
+
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
@@ -113,21 +125,6 @@ game.PlayScreen = me.ScreenObject.extend({
         var wizard = me.pool.pull("WizardEntity", 105, 250);
         me.game.world.addChild(wizard);
         units.push(wizard);
-
-        var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
-
-        me.game.world.addChild(base1, 1);
-        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 2};
-
-
-        var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
-        me.game.world.addChild(base2, 1);
-        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 2};
-
-        var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
-        me.game.world.addChild(base3, 1);
-        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 2};
-
   
         //declare variables for skeleton 1 
         var sx1, sy1;
@@ -250,8 +247,10 @@ game.PlayScreen = me.ScreenObject.extend({
       //      console.log("hmm");
         setInterval(function(){         
             
-            if(i % 2){
+            if(i % 3 == 0){
                 addY = 125;
+            }else if(i % 3 == 1){
+                addY = 237.5;
             }else{
                 addY = 350;
             }
@@ -343,10 +342,20 @@ game.PlayScreen = me.ScreenObject.extend({
         //    game.data.storedUnits++;
         //}, 20000);
 
-        // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
-        	if(action == "next"){
+            if(action == "next"){
+                // Go through and eliminate empty indexes from the units array
                 currentUnit.isSelected = false;
+                var count = 0;
+                for(var i = units.length - 1; i >= 0; i--){
+                    if(units[i].curHealth <= 0){
+                        units.splice(i, 1);
+                        if(i < unitIndex){
+                            count++;
+                        }
+                    }
+                }
+                unitIndex -= count;
                 if(unitIndex < units.length - 1){
                     unitIndex++;
                     currentUnit = units[unitIndex];
