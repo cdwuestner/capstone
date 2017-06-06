@@ -4,7 +4,7 @@ game.HUD.Container = me.Container.extend({
     init: function () {
         this._super(me.Container, 'init');
         // Make persistent across level change
-        this.isPersistent = true;
+        // this.isPersistent = true;
         // Make sure we use screen coordinates
         this.floating = true;
         // Keep it on top layer

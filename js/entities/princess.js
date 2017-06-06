@@ -22,7 +22,7 @@ game.PrincessEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
-        this.curHealth = 500;
+        this.curHealth = 2;
         this.maxHealth = 500;
         this.attack = 100;  // Probably too high
         // Set collision type
@@ -65,8 +65,7 @@ game.PrincessEntity = me.Entity.extend({
             this.curHealth -= Math.floor(Math.random() * other.attack);
             // Remove enemy unit if its health is 0
             if(this.curHealth <= 0){
-                this.alive = false;
-                me.game.world.removeChild(this);
+                me.state.change(me.state.GAMEOVER);
             }
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
             return false;

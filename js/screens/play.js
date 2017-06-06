@@ -306,9 +306,15 @@ game.PlayScreen = me.ScreenObject.extend({
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD);
 
-        setInterval(function(){
+        function unitsTracker() {
             game.data.storedUnits++;
-        }, 20000);
+        }
+
+        var myTimer = setInterval(unitsTracker, 20000);
+
+        //setInterval(function(){
+        //    game.data.storedUnits++;
+        //}, 20000);
 
         // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
@@ -364,6 +370,7 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.unbindKey(me.input.KEY.W);
         me.input.unbindKey(me.input.KEY.E);
         me.input.unbindKey(me.input.KEY.R);
+        me.input.unbindKey(me.input.KEY.I);
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
     }

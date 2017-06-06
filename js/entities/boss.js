@@ -19,7 +19,7 @@ game.BossEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
-        this.curHealth = 500;
+        this.curHealth = 2;
         this.maxHealth = 500;
         this.attack = 500;  // Probably too high
         // Set collision type
@@ -49,8 +49,8 @@ game.BossEntity = me.Entity.extend({
     onCollision : function(response, other){
         if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
             this.curHealth -= 15;
-            if(this.curHealth < 0){
-                me.game.world.removeChild(this);
+            if(this.curHealth <= 0){
+                me.state.change(me.state.GAME_END);
             }
             return false;
         }
@@ -61,8 +61,7 @@ game.BossEntity = me.Entity.extend({
             this.curHealth -= Math.floor(Math.random() * other.attack);
             // Remove enemy unit if its health is 0
             if(this.curHealth <= 0){
-                this.alive = false;
-                me.game.world.removeChild(this);
+                me.state.change(me.state.GAME_END);
             }
             // Disable collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);

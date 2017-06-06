@@ -51,7 +51,8 @@ game.texture = new me.video.renderer.Texture(
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
         me.state.set(me.state.READY, new game.PauseScreen());
-
+        me.state.set(me.state.GAME_END, new game.VictoryScreen());
+        me.state.set(me.state.GAMEOVER, new game.DefeatScreen());
 
         // Global black transition/background screen
 		me.state.transition("fade", "#000000", 250);
