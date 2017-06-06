@@ -3,7 +3,7 @@ game.HealingUp = me.Entity.extend({
     init : function(x, y){
         this._super(me.Entity, "init", [x, y, {width: game.HealingUp.width, height: game.HealingUp.height}]);
         this.z = 4;
-        this.body.setVelocity(0, 5);
+        this.body.setVelocity(0, 20);
         this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
         this.renderable = new (me.Renderable.extend({
             init : function(){
