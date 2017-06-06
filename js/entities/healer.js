@@ -12,7 +12,7 @@ game.HealerEntity = me.Entity.extend({
     
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         //shrink players to gameboardsize
         this.renderable.scale(.6, .6);
         // Update even outside viewport

@@ -10,7 +10,7 @@ game.BaseSprite = me.Entity.extend({
 			frameheight: 128
 		}]);
 
-    this.z = 2;
+    this.z = 5;
 
         this.renderable = game.texture.createAnimationFromName([
             "baseDefault", "enemyBase", "playerBase"

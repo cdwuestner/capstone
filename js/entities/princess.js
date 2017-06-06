@@ -14,7 +14,7 @@ game.PrincessEntity = me.Entity.extend({
         this.renderable.scale(1.7, 1.7);
 
         // Layer
-        this.z = 5;
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Add animations

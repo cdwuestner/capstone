@@ -9,8 +9,7 @@ game.SkeletonEntity = me.Entity.extend({
             height: 31.3
         }]);
         // Layer
-        this.z = 5;
-
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed

@@ -9,7 +9,7 @@ game.SorcererEntity = me.Entity.extend({
             height: 32
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed (fastest in game)

@@ -11,7 +11,7 @@ game.BossEntity = me.Entity.extend({
             height: 62
         }]);
         // Layer
-        this.z = 5;
+        this.z = 7;
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Add animations

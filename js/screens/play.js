@@ -113,19 +113,16 @@ game.PlayScreen = me.ScreenObject.extend({
         units.push(wizard);
 
         var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
-
-        me.game.world.addChild(base1, 1);
-        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 2};
-
+        me.game.world.addChild(base1);
+        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 5};
 
         var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
-        me.game.world.addChild(base2, 1);
-        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 2};
+        me.game.world.addChild(base2);
+        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 5};
 
         var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
-        me.game.world.addChild(base3, 1);
-        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 2};
-
+        me.game.world.addChild(base3);
+        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 5};
   
         //declare variables for skeleton 1 
         var sx1, sy1;
