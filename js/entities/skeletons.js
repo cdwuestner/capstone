@@ -1,113 +1,68 @@
 // Skeleton Entity
 game.SkeletonEntity = me.Entity.extend({
     // Constructor
-    init : function(x, y,base_x, base_y, settings){
+    // Two parameters for base it is being sent to
+    init : function(x, y, base_x, base_y, settings){
         // Call super (Entity) constructor
         this._super(me.Entity, "init", [x, y, {
             image: "skeleton",
             width: 25.6,
             height: 31.3
         }]);
-        // Layer
+        // Set layer
         this.z = 7;
-        // Update even outside viewport
+        // Update even when outside viewport
         this.alwaysUpdate = true;
         // Set movement speed
-        this.body.setVelocity(.5, .5);
+        this.body.setVelocity(.25, .25);
         // Set collision type
         this.body.collisionType = me.collision.types.ENEMY_OBJECT;
-
+        // Base coordinates to go to
         this.base_x = base_x;
         this.base_y = base_y;        
-
-        this.inBattle = false;
+        // Possible AI instructions
         this.attackCastle = false;
-        this.defendCastle = false;
         this.goToBaseOne = false;
         this.goToBaseTwo = false;
         this.goToBaseThree = false;
-        // Add all animations and set at "idle"
+        // Add all animations and set at "idle" animation
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
-        // Stats
+        // Unit's stats
         this.maxHealth = 100;
         this.curHealth = 100;
         this.attack = 50;
     },
-
+    // Update position on gameboard based on AI instructions
     update : function(dt){
-        if(this.inBattle){
-            this.body.vel.x = 0;
-            this.body.vel.y = 0;
-        }else{
-            if(this.attackCastle){
-                if(this.pos.x > 75){
-                    this.body.vel.x -= this.body.accel.x * me.timer.tick;
-                }else{
-                    this.body.vel.x = 0;
-                }
-                if(this.pos.y > 240){
-                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                }else if(this.pos.y < 200){
-                    this.body.vel.y += this.body.accel.y * me.timer.tick;
-                }else{
-                    this.body.vel.y = 0;
-                }
-            }else if(this.defendCastle){
-                if(this.pos.x < 510){
-                    this.body.vel.x += this.body.accel.x * me.timer.tick;
-                }else{
-                    this.body.vel.x = 0;
-                }
-                if(this.pos.y > 240){
-                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                }else if(this.pos.y < 200){
-                    this.body.vel.y += this.body.accel.y * me.timer.tick;
-                }else{
-                    this.body.vel.y = 0;
-                }
-            }else if(this.goToBaseOne || this.goToBaseTwo || this.goToBaseThree){
-                if(this.pos.x > this.base_x){
-                    this.body.vel.x -= this.body.accel.x * me.timer.tick;
-                }else if(this.pos.x < this.base_x){
-                    this.body.vel.x += this.body.accel.x * me.timer.tick;
-                }else{
-                    this.body.vel.x = 0;
-                }
-
-                if(this.pos.y > this.base_y){
-                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                }else if(this.pos.y < this.base_y){
-                    this.body.vel.y += this.body.accel.y * me.timer.tick;
-                }else{
-                    this.body.vel.y = 0;
-                }                
-/*                if(this.goToBaseOne){
-                    if(this.pos.y > 30){
-                        this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                    }else if(this.pos.y < 30){
-                        this.body.vel.y += this.body.accel.y * me.timer.tick;
-                    }else{
-                        this.body.vel.y = 0;
-                    }
-                }else if(this.goToBaseTwo){
-                    if(this.pos.y > 225){
-                        this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                    }else if(this.pos.y < 225){
-                        this.body.vel.y += this.body.accel.y * me.timer.tick;
-                    }else{
-                        this.body.vel.y = 0;
-                    }
-                }else if(this.goToBaseThree){
-                    if(this.pos.y > 410){
-                        this.body.vel.y -= this.body.accel.y * me.timer.tick;
-                    }else if(this.pos.y < 410){
-                        this.body.vel.y += this.body.accel.y * me.timer.tick;
-                    }else{
-                        this.body.vel.y = 0;
-                    }
-                }*/
+        if(this.attackCastle){
+            if(this.pos.x > 75){
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
             }
+            if(this.pos.y > 240){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < 200){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }
+        }else if(this.goToBaseOne || this.goToBaseTwo || this.goToBaseThree){
+            if(this.pos.x > this.base_x){
+                this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            }else if(this.pos.x < this.base_x){
+                this.body.vel.x += this.body.accel.x * me.timer.tick;
+            }else{
+                this.body.vel.x = 0;
+            }
+            if(this.pos.y > this.base_y){
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            }else if(this.pos.y < this.base_y){
+                this.body.vel.y += this.body.accel.y * me.timer.tick;
+            }else{
+                this.body.vel.y = 0;
+            }                
         }
         // Display correct animations
         this.animate();
@@ -115,14 +70,11 @@ game.SkeletonEntity = me.Entity.extend({
         this.body.update(dt);
         // Handle any collisions
         me.collision.check(this);
-
-        
-
         // Only update position if entity has moved
         return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x != 0 || 
                 this.body.vel.y != 0);
     },
-
+    // Add animations based on spritesheet frames
     addAnimations : function(){
         this.renderable.addAnimation("idle", [65]);
         this.renderable.addAnimation("walk", [39, 40, 41, 42, 43, 44, 45, 46],
@@ -132,7 +84,7 @@ game.SkeletonEntity = me.Entity.extend({
         this.renderable.addAnimation("down", [13, 14, 15, 16, 17, 18, 19, 20], 
                 300);
     },
-
+    // Use correct animation based on current movement
     animate : function(){
         if(this.body.vel.x > 0){
             this.renderable.flipX(true);
@@ -158,27 +110,17 @@ game.SkeletonEntity = me.Entity.extend({
             }
         }
     },
-
-    levelUp : function(){
-        this.level++;
-        this.updateStats(this.level);
-        this.xp = 0;
-    },
-
-    updateStats : function(level){
-        this.maxHealth = level * 105;
-        this.curHealth = this.maxHealth;
-        this.attack = level * 50;
-    },
-
+    // Handle collisions with other objects
     onCollision : function(response, other){
+        // Collisions with wizard magic
         if(other.body.collisionType === me.collision.types.PROJECTILE_OBJECT){
-            this.curHealth -= 15;
-            if(this.curHealth < 0){
+            this.curHealth -= Math.floor(Math.random() * 15);
+            if(this.curHealth <= 0){
                 me.game.world.removeChild(this);
             }
             return false;
         }
+        // Collisions with player units (warriors, wizards, healers, princess)
         if(other.body.collisionType === me.collision.types.PLAYER_OBJECT){
             // Temporarily filter collision detection with players
             this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT);
@@ -191,29 +133,30 @@ game.SkeletonEntity = me.Entity.extend({
             }
             // Move enemy back a bit based on current movement
             if(this.body.vel.x > 0){
-                this.pos.x -= 10;
+                this.pos.x -= 20;
             }
             if(this.body.vel.x < 0){
-                this.pos.x += 10;
+                this.pos.x += 20;
             }
             if(this.body.vel.y > 0){
-                this.pos.y -= 10;
+                this.pos.y -= 20;
             }
             if(this.body.vel.y < 0){
-                this.pos.y += 10;
+                this.pos.y += 20;
             }
             this.x = this.pos.x;
             this.y = this.pos.y;
-            // Disable collision filter
+            // Remove collision filter
             this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
             return false;
         }
+        // Collisions with healer magic
         if(other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT){
             return false;
         }
         return false;
     },
-
+    // Draw a health bar plus the sprite
     draw : function(renderer){
         // Draw health bar
         var color = renderer.getColor();
@@ -223,5 +166,4 @@ game.SkeletonEntity = me.Entity.extend({
         // Call super so that sprite is also drawn
         this._super(me.Entity, "draw", [renderer]);
     }
-
 });
