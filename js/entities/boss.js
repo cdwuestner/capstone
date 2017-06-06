@@ -19,9 +19,9 @@ game.BossEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
 
         this.body.setVelocity(0, 0);
-        this.curHealth = 2;
+        this.curHealth = 500;
         this.maxHealth = 500;
-        this.attack = 500;  // Probably too high
+        this.attack = 150;
         // Set collision type
         this.body.collisionType = me.collision.types.ENEMY_OBJECT;
     },

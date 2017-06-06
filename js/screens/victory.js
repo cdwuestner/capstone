@@ -12,6 +12,5 @@ game.VictoryScreen = me.ScreenObject.extend({
 		me.game.world.addChild(backgroundImage, Infinity);
 	},
 	// When leaving the title screen
-	onDestroyEvent : function() {
-	}
+	onDestroyEvent : function() {   }
 });

@@ -27,9 +27,7 @@ game.WizardEntity = me.Entity.extend({
 
         this.isSelected = false;
 
-        // Set some starting stats
-        this.xp = 0;
-        this.level = 1;
+        // Stats
         this.maxHealth = 100;
         this.curHealth = 100;
         // Very low close-range attack power (ranged attack more powerful)
