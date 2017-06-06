@@ -126,12 +126,12 @@ game.SkeletonEntity = me.Entity.extend({
             this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT);
             // Random damage based on attack of player unit
             this.curHealth -= Math.floor(Math.random() * other.attack);
-            // Remove enemy unit if its health is 0
+            // Remove unit if its health is 0
             if(this.curHealth <= 0){
                 this.alive = false;
                 me.game.world.removeChild(this);
             }
-            // Move enemy back a bit based on current movement
+            // Move back a bit based on current movement
             if(this.body.vel.x > 0){
                 this.pos.x -= 20;
             }
@@ -156,14 +156,14 @@ game.SkeletonEntity = me.Entity.extend({
         }
         return false;
     },
-    // Draw a health bar plus the sprite
+    // Draw a health bar plus the entity
     draw : function(renderer){
         // Draw health bar
         var color = renderer.getColor();
         renderer.setColor('#21b72a');
         renderer.fillRect(this.pos.x, this.pos.y + 30, (this.curHealth / this.maxHealth) * 30, 3);
         renderer.setColor(color);
-        // Call super so that sprite is also drawn
+        // Call super so that entity is also drawn
         this._super(me.Entity, "draw", [renderer]);
     }
 });
