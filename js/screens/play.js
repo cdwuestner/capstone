@@ -226,8 +226,10 @@ game.PlayScreen = me.ScreenObject.extend({
       //      console.log("hmm");
         setInterval(function(){         
             
-            if(i % 2){
+            if(i % 3 == 0){
                 addY = 125;
+            }else if(i % 3 == 1){
+                addY = 237.5;
             }else{
                 addY = 350;
             }
