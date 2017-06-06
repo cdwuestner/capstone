@@ -315,10 +315,20 @@ game.PlayScreen = me.ScreenObject.extend({
         //    game.data.storedUnits++;
         //}, 20000);
 
-        // Remember to eliminate empty indexes from array after units are killed
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
-        	if(action == "next"){
+            if(action == "next"){
+                // Go through and eliminate empty indexes from the units array
                 currentUnit.isSelected = false;
+                var count = 0;
+                for(var i = units.length - 1; i >= 0; i--){
+                    if(units[i].curHealth <= 0){
+                        units.splice(i, 1);
+                        if(i < unitIndex){
+                            count++;
+                        }
+                    }
+                }
+                unitIndex -= count;
                 if(unitIndex < units.length - 1){
                     unitIndex++;
                     currentUnit = units[unitIndex];
