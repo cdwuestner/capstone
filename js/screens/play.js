@@ -97,6 +97,18 @@ game.PlayScreen = me.ScreenObject.extend({
         console.log(c1 + c2 + c3);
     }
 
+        var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
+        me.game.world.addChild(base1);
+        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 5};
+
+        var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
+        me.game.world.addChild(base2);
+        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 5};
+
+        var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
+        me.game.world.addChild(base3);
+        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 5};
+
         // Make an array to store player units
         var units = [];
         // Add intial player and enemy units
@@ -111,18 +123,6 @@ game.PlayScreen = me.ScreenObject.extend({
         var wizard = me.pool.pull("WizardEntity", 105, 250);
         me.game.world.addChild(wizard);
         units.push(wizard);
-
-        var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
-        me.game.world.addChild(base1);
-        me.save.baseOne = {x: bx1, y: by1, capture: "neutral", z: 5};
-
-        var base2 = me.pool.pull("BaseSprite", bx2, by2, c2);
-        me.game.world.addChild(base2);
-        me.save.baseTwo = {x: bx2, y: by2, capture: "neutral", z: 5};
-
-        var base3 = me.pool.pull("BaseSprite", bx3, by3, c3);
-        me.game.world.addChild(base3);
-        me.save.baseThree = {x: bx3, y: by3, capture: "neutral", z: 5};
   
         //declare variables for skeleton 1 
         var sx1, sy1;
