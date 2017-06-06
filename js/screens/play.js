@@ -18,24 +18,28 @@ game.PlayScreen = me.ScreenObject.extend({
 
         me.save.enemy.sk1.x = skeleton1.pos.x;
         me.save.enemy.sk1.y = skeleton1.pos.y;
+        me.save.enemy.sk1.curHealth = skeleton1.curHealth;
 
         me.save.enemy.sk2.x = skeleton2.pos.x;
         me.save.enemy.sk2.y = skeleton2.pos.y;
+        me.save.enemy.sk1.curHealth = skeleton2.curHealth;
 
         me.save.enemy.so1.x = sorcerer1.pos.x;
         me.save.enemy.so1.y = sorcerer1.pos.y;
+        me.save.enemy.so1.curHealth = sorcerer1.curHealth;
 
 
+        me.save.enemySpawnLength = enemies.length;
 
-        for(var a  in enemies){
+            for(var a = 0; a < enemies.length; a++){
+
+               console.log(enemies[a].pos.x);
+                me.save.enemySpawn[a + 1].x = enemies[a].pos.x;
+                me.save.enemySpawn[a + 1].y = enemies[a].pos.y;
+
+                console.log("Inside loop " + JSON.stringify(me.save.enemySpawn[a+ 1]));
             
-        console.log(enemies[a].pos);
-
-        console.log((JSON.stringify(me.save.enemySpawn[1])));
-            
-        //    me.save.enemySpawn[a].x = enemies[a].pos.x;
-        //    me.save.enemySpawn[a].y = enemies[a].pos.x;
-        }
+                            }
 
 
 
@@ -54,9 +58,11 @@ game.PlayScreen = me.ScreenObject.extend({
     var bx1, bx2, bx3, by1, by2, by3, c1, c2, c3;
 
 
-    console.log("inital base posistion " + JSON.stringify(me.save));
+    //console.log("inital base posistion " + JSON.stringify(me.save.baseOne));
 
+    //generates new values if the bases are empty
     if(isEmpty(JSON.stringify(me.save.baseOne))){
+        
             //for y coorindate of each of the bases
         by1 = Math.floor(Math.random() * (420 - 50)) + 50;
         by2 = Math.floor(Math.random() * (420 - 50)) + 50;
@@ -80,21 +86,17 @@ game.PlayScreen = me.ScreenObject.extend({
         by2 = me.save.baseTwo.y;
         by3 = me.save.baseThree.y;
 
-        
-
-
 
         //for x coordinate of each of the bases
         bx1 = me.save.baseOne.x;
         bx2 = me.save.baseTwo.x;
         bx3 = me.save.baseThree.x;
 
-
+        //for the capture of each othe b
         c1 = me.save.baseOne.capture;
         c2 = me.save.baseTwo.capture;
         c3 = me.save.baseThree.capture;
 
-        console.log(c1 + c2 + c3);
     }
 
         var base1 = me.pool.pull("BaseSprite", bx1, by1, c1);
@@ -126,60 +128,79 @@ game.PlayScreen = me.ScreenObject.extend({
   
         //declare variables for skeleton 1 
         var sx1, sy1;
-        console.log(JSON.stringify(me.save.enemy.sk2));
 
-
+        //initate values based on saved data or not 
          if(isEmpty(JSON.stringify(me.save.enemy.sk1))){
 
             sx1 = 490; 
             sy1 = 205;
-         } else {
+            var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
+    
+            var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y, curHealth : skeleton1.curHealth};
+    
+            me.save.enemy.push("sk1");
+            me.save.enemy.sk1 = {};
+            me.save.enemy.sk1 = saveSkeleton1;
 
+            me.game.world.addChild(skeleton1);
+            skeleton1.goToBaseOne = true;
+
+         } else {
      
             sx1 = me.save.enemy.sk1.x;
             sy1 = me.save.enemy.sk1.y;
+            var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
+    
+            var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y, curHealth : me.save.enemy.curHealth};
+    
+            me.save.enemy.push("sk1");
+            me.save.enemy.sk1 = {};
+            me.save.enemy.sk1 = saveSkeleton1;
+
+            me.game.world.addChild(skeleton1);
+            skeleton1.goToBaseOne = true;
+          //  skeleton1.curHealth = me.save.enemy.sk1.curHealth;
          }
 
-
-        var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
-    
-        var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y};
-    
-        me.save.enemy.push("sk1");
-        me.save.enemy.sk1 = {};
-        me.save.enemy.sk1 = saveSkeleton1;
-
-        //declare variables for skeleton 1 
+        //initate values based on saved data or not 
         var sx2, sy2;
 
          if(isEmpty(JSON.stringify(me.save.enemy.sk2))){
             sx2 = 490; 
             sy2 = 240;
+
+            var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
+
+            var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y, curHealth : skeleton2.curHealth};
+        
+            me.save.enemy.push("sk2");
+            me.save.enemy.sk2 = {};
+            me.save.enemy.sk2 = saveSkeleton2;
+
+            me.game.world.addChild(skeleton2);
+            skeleton2.goToBaseThree = true;
+
          } else {
 
-         
             sx2 = me.save.enemy.sk2.x;
             sy2 = me.save.enemy.sk2.y;
+
+            var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
+
+            var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y, curHealth : skeleton2.curHealth};
+        
+            me.save.enemy.push("sk2");
+            me.save.enemy.sk2 = {};
+            me.save.enemy.sk2 = saveSkeleton2;
+
+            me.game.world.addChild(skeleton2);
+            skeleton2.goToBaseThree = true;
          }
 
 
-        var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
-
-        var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y};
-        
-        me.save.enemy.push("sk2");
-        me.save.enemy.sk2 = {};
-        me.save.enemy.sk2 = saveSkeleton2;
-
-
-        me.game.world.addChild(skeleton1);
-        skeleton1.goToBaseOne = true;
-        me.game.world.addChild(skeleton2);
-        skeleton2.goToBaseThree = true;
-
         //declare variables for sorcer 1 
         var sox1, soy1;
-        console.log(JSON.stringify(me.save.enemy.so1));
+     //   console.log(JSON.stringify(me.save.enemy.so1));
 
 
          if(isEmpty(JSON.stringify(me.save.enemy.so1))){
@@ -255,28 +276,34 @@ game.PlayScreen = me.ScreenObject.extend({
 
 
     } else {
-        console.log("made it to this logic");
 
         var k = 0;
-        
-        //first spot always get initiated to empty brackets
-        for(var j in me.save.enemySpawn[j]){
-            if(j != 0){
-            var ex = me.save.enemySpawn[j].x;
-            var ey = me.save.enemySpawn[j].y;
 
-            if(me.save.enemySpawn[j].type == "skeleton"){
-                enemies[k] = me.pool.pull("SorcererEntity", ex, ey);
+        console.log("enemy length" + JSON.stringify(me.save.enemySpawnLength));
+        var length = JSON.parse(me.save.enemySpawnLength);
+        //first spot always get initiated to empty brackets
+        for(var a = 0; a < length; a++){
+            
+            var ex = me.save.enemySpawn[a+1].x;
+            var ey = me.save.enemySpawn[a+1].y;
+            console.log("where the skeleton should be " + ex + " " + ey);
+
+            if(me.save.enemySpawn[a].type == "skeleton"){
+                enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
 
             } else {
-                enemies[k] = me.pool.pull("SorcererEntity", ex, ey);
+                enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
             }
+
+            me.game.world.addChild(enemies[a]);
+
+            enemies[a].attackCastle = true;
             k++;
-        }
+    
 
             }
         }
-    //}
+   
         // Keep track of which unit is selected
         var unitIndex = 0;
         var currentUnit = units[unitIndex];

@@ -1,13 +1,34 @@
 game.TitleScreen = me.ScreenObject.extend({
 	// When creating/entering the title screen
 	onResetEvent : function(){
-    	// Change to play state when Enter pressed
+    	// Change to play state when Enter pressed; resume old game
         me.input.bindKey(me.input.KEY.ENTER, "enter");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "enter"){
             	me.state.change(me.state.PLAY);
             }
         });
+        //press e to play a new game in easy mode. 
+        me.input.bindKey(me.input.KEY.E, "easy");
+        this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+        	if(action == "easy"){
+        		//clearing base one tells the program to save all new base data
+        		me.save.baseOne = {};
+        		me.save.hard = false;
+            	me.state.change(me.state.PLAY);
+            }
+        });
+
+        //User presses H instead of enter for hard mode
+        me.input.bindKey(me.input.KEY.H, "hard");
+        this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+        	if(action == "hard"){
+        		//clearing base one tells the program to save all new base data
+        		me.save.baseOne = {};
+        		me.save.hard = true;
+            	me.state.change(me.state.PLAY);
+            }
+        });        
 		// Load title screen image (https://www.liabeny.es/files/avila.jpg)
 		var backgroundImage = new me.Sprite(0, 0, {
 			image: me.loader.getImage('title'),
@@ -39,15 +60,16 @@ game.TitleScreen = me.ScreenObject.extend({
 				this.font = new me.Font("Arial", 24, this.color);
 				this.font.textAlign = "center";
 
-				this.font.draw(renderer, "Press Enter to Begin", me.game.viewport.width / 2,
+				this.font.draw(renderer, "Press Enter to Begin, Press 'E' for easy mode, Press 'H' for hard mode", me.game.viewport.width / 2,
 						me.game.viewport.height * (.55));
 			},
-			// Render 'Press Enter'
+
+			// Render 'Press Enter' (I am not sure if the code below does anything; since the instructiosn are  renedered above)
 			drawEnter : function(renderer){
 				// Choose font characteristics
 				this.font = new me.Font("Arial", 24, this.color);
 
-				this.font.draw(renderer, "Press Enter to Begin", (me.game.viewport.width / 3),
+				this.font.draw(renderer, "Press Enter to Begin; Press 'H' for hard mode", (me.game.viewport.width / 3),
 						me.game.viewport.height * (.55));
 			}
 		})))

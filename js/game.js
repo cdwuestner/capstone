@@ -86,7 +86,10 @@ game.texture = new me.video.renderer.Texture(
       //  me.state.change(me.state.READY);
 
 
-        //add objects to be saved.  
+        //for easy or hard mode
+        me.save.add({ hard: {} });  
+
+        //add objects to be saved.
         me.save.add({ baseOne : {} });
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
@@ -94,6 +97,7 @@ game.texture = new me.video.renderer.Texture(
         me.save.enemy = [{}];
         me.save.add({ enemySpawn: {} });        
         me.save.enemySpawn = [{}];
+        me.save.add ({ enemySpawnLength : {} });
 
 
 

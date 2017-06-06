@@ -9,17 +9,22 @@ game.BaseSprite = me.Entity.extend({
 			framewidth: 128,
 			frameheight: 128
 		}]);
+      //third dimension bases are on; doesn't change throughout gameplay 
+      this.z = 5;
 
-    this.z = 5;
+
+      //function to add base animation 
+
 
         this.renderable = game.texture.createAnimationFromName([
+
             "baseDefault", "enemyBase", "playerBase"
         ]);
 
-
-
+    //sizes the bases
 		this.renderable.scale(.3, .3);
 
+    //makes them react to being captured
     this.alwaysUpdate = true;
 
     // define a standing animation (using the first frame)
@@ -33,12 +38,9 @@ game.BaseSprite = me.Entity.extend({
 
 
     // set the standing animation as default and the capture flag
-
-
     this.capture = capture;
 
-
-
+    //sets animation based on who has captured the base
     if(this.capture == "player"){
           this.renderable.setCurrentAnimation("player");
     } else if (this.capture == "enemy") {
@@ -47,28 +49,21 @@ game.BaseSprite = me.Entity.extend({
       this.renderable.setCurrentAnimation("baseDefault");
     }
 
-
+    //sets collision type. 
     this.body.collisionType = me.collision.types.WORLD_SHAPE;
 
-
-
-
-
   },
-update : function (dt) {
 
+  update : function (dt) {
 
         // Apply physics
-        this.body.update(dt);
+      this.body.update(dt);
         
-
-    // call the parent function
- // this._super(me.Entity, "update", [dt]);
-    // handle collisions against other shapes
-   me.collision.check(this);
-    return true;
+        // handle collisions against other shapes
+      me.collision.check(this);
+      return true;
  
-},
+  },
   /**
    * colision handler
    * (called when colliding with other objects)
@@ -87,10 +82,6 @@ update : function (dt) {
         this.renderable.setCurrentAnimation("player");
         this.capture = "player";
         return false;
-
- 
-
-  
   }
   return false;
 }
