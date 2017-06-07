@@ -29,8 +29,15 @@ game.SkeletonEntity = me.Entity.extend({
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
         // Unit's stats
-        this.maxHealth = 100;
-        this.curHealth = 100;
+        if (me.save.hard == true){
+            this.maxHealth = 200;
+            this.curHealth = 200;
+        } else {
+            this.maxHealth = 100;
+            this.curHealth = 100;
+        }
+
+
         this.attack = 50;
     },
     // Update position on gameboard based on AI instructions

@@ -93,11 +93,16 @@ game.texture = new me.video.renderer.Texture(
         me.save.add({ baseOne : {} });
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
-        me.save.add({ enemy: {} });
-        me.save.enemy = [{}];
+        me.save.add({ sk1: {} });
+        me.save.add({ sk2: {} });
+        me.save.add({ so1: {} });
         me.save.add({ enemySpawn: {} });        
         me.save.enemySpawn = [{}];
+        me.save.add({ playerSpawn: {} });        
+        me.save.playerSpawn = [{}];
         me.save.add ({ enemySpawnLength : {} });
+        me.save.add({boss: {} });
+        me.save.add( {princess : {} });
 
 
 

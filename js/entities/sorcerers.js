@@ -29,6 +29,14 @@ game.SorcererEntity = me.Entity.extend({
         this.addAnimations();
         this.renderable.setCurrentAnimation("idle");
         // Unit's stats
+        if (me.save.hard == true){
+            this.maxHealth = 150;
+            this.curHealth = 150;
+        } else {
+            this.maxHealth = 75;
+            this.curHealth = 75;
+        }
+
         this.maxHealth = 75;
         this.curHealth = 75;
         this.attack = 60;

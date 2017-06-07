@@ -12,9 +12,20 @@ game.TitleScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.E, "easy");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "easy"){
-        		//clearing base one tells the program to save all new base data
+        		//clear all saved data
         		me.save.baseOne = {};
-        		me.save.hard = false;
+        		me.save.baseTwo = {}; 
+        		me.save.baseThree = {};
+        		me.save.sk1 = {};
+        		me.save.sk2 = {};
+        		me.save.so1 = {};        		
+				me.save.enemySpawn = [{}];
+        		me.save.enemySpawnLength = {};
+        		me.save.boss = {};
+        		me.save.princess = {};
+        		me.save.playerSpawn = [{}];
+
+				me.save.hard = false;
             	me.state.change(me.state.PLAY);
             }
         });
@@ -23,8 +34,19 @@ game.TitleScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.H, "hard");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
         	if(action == "hard"){
-        		//clearing base one tells the program to save all new base data
+        		//clear all saved data
         		me.save.baseOne = {};
+        		me.save.baseTwo = {}; 
+        		me.save.baseThree = {};
+        		me.save.sk1 = {};
+        		me.save.sk2 = {};
+        		me.save.so1 = {};        		
+				me.save.enemySpawn = [{}];
+        		me.save.enemySpawnLength = {};
+        		me.save.boss = {};
+        		me.save.princess = {};
+				me.save.playerSpawn = [{}];
+
         		me.save.hard = true;
             	me.state.change(me.state.PLAY);
             }
