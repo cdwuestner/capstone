@@ -32,9 +32,11 @@ game.SkeletonEntity = me.Entity.extend({
         if (me.save.hard == true){
             this.maxHealth = 200;
             this.curHealth = 200;
+            this.defaultHealth = 200;
         } else {
             this.maxHealth = 100;
             this.curHealth = 100;
+            this.defaultHealth = 100;
         }
 
 

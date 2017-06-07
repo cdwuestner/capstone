@@ -26,7 +26,8 @@ game.HealerEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("stand");
         // Unit's stats & variables
         this.maxHealth = 100;
-        this.curHealth = 100;        
+        this.curHealth = 100;
+        this.defaultHealth = 100;      
         this.attack = 0;    // no attack
         this.isSelected = false;
         // Register pointer event for movement
@@ -101,13 +102,13 @@ game.HealerEntity = me.Entity.extend({
     },
     // Add animations from spritesheet
     addAnimations : function(){
-        this.renderable.addAnimation("stand", [19]);
+        this.renderable.addAnimation("stand", [18]);
 
-        this.renderable.addAnimation("left", [10, 11, 12, 13, 14, 15, 16, 17, 18],
+        this.renderable.addAnimation("left", [10, 11, 12, 13, 14, 15, 16, 17],
                 300);
-        this.renderable.addAnimation("down", [19, 20, 21, 22, 23, 24, 25, 26, 27],
+        this.renderable.addAnimation("down", [19, 20, 21, 22, 23, 24, 25, 26],
                 300);
-        this.renderable.addAnimation("up", [1, 2, 3, 4, 5, 6, 7, 8, 9], 
+        this.renderable.addAnimation("up", [1, 2, 3, 4, 5, 6, 7, 8], 
                 300);
         this.renderable.addAnimation("right", [28, 29, 30, 31, 32, 33, 34, 35], 
                 300);

@@ -80,7 +80,7 @@ game.PlayScreen = me.ScreenObject.extend({
         //for x coordinate of each of the bases
         bx1 = Math.floor(Math.random() * (450 - 150)) + 150;
         bx2 = Math.floor(Math.random() * (450 - 150)) + 150;  
-        bx3 =Math.floor(Math.random() * (450 - 150)) + 150;
+        bx3 = Math.floor(Math.random() * (450 - 150)) + 150;
 
         //intializes capture to neutral
         c1 = "neutral";
@@ -133,6 +133,8 @@ game.PlayScreen = me.ScreenObject.extend({
         var wizard = me.pool.pull("WizardEntity", 105, 250);
         me.game.world.addChild(wizard);
         units.push(wizard);
+
+        var enemies = [];
   
         //declare variables for skeleton 1 
         var sx1, sy1;
@@ -155,13 +157,13 @@ game.PlayScreen = me.ScreenObject.extend({
             var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y, curHealth : skeleton1.curHealth};         
       
             me.save.sk1 = saveSkeleton1;
-
+            enemies.push(skeleton1);
             me.game.world.addChild(skeleton1);
             skeleton1.goToBaseOne = true;
 
 
         //initate values based on saved data or not 
-        var sx2, sy2;
+        var sx2, sy2;        
 
          if(isEmpty(JSON.stringify(me.save.sk2))){
             sx2 = 490; 
@@ -182,7 +184,7 @@ game.PlayScreen = me.ScreenObject.extend({
             var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y, curHealth : skeleton2.curHealth};
         
             me.save.sk2 = saveSkeleton2;
-
+            enemies.push(skeleton2);
             me.game.world.addChild(skeleton2);
             skeleton2.goToBaseThree = true;
 
@@ -210,7 +212,7 @@ game.PlayScreen = me.ScreenObject.extend({
         
         me.save.so1 = saveSorcerer1;
 
-
+        enemies.push(sorcerer1);
         me.game.world.addChild(sorcerer1);
         
         sorcerer1.goToBaseTwo = true;
@@ -237,8 +239,6 @@ game.PlayScreen = me.ScreenObject.extend({
 
         me.save.princess = {curHealth: princess.curHealth};
 
-        var enemies = [];
-        var i = 0;
         var addY;
 
         //this logics doesn't work yet to prevent spawining fo enemeies 
@@ -249,6 +249,8 @@ game.PlayScreen = me.ScreenObject.extend({
             console.log(JSON.stringify(me.save.enemySpawn[1]));
     //    if(me.state.isPaused() == false){
       //      console.log("hmm");
+      var i = 3;
+
         setInterval(function(){         
             
             if(i % 3 == 0){
@@ -360,9 +362,98 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.E, "healer", true);
         me.input.bindKey(me.input.KEY.R, "warrior", true);
         
+        var baseOneLast = "neutral";
+        var baseTwoLast = "neutral";
+        var baseThreeLast = "neutral";
+
+        var lastPlayerBases = 0;
+        var lastEnemyBases = 0;
+
         this.pointerDown= me.event.subscribe("pointerdown", function (event) {
             currentUnit.x = Math.round(event.gameX);
             currentUnit.y = Math.round(event.gameY);
+
+            if(base1.capture != baseOneLast){
+                baseOneLast = base1.capture;
+                if(base1.capture == "enemy"){
+                    for(var y = 0; y < enemies.length; y++){
+                        enemies[y].maxHealth += 25;
+                        enemies[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < units.length; z++){
+                        units[z].maxHealth = units[z].defaultHealth;
+                        if(units[z].curHealth > units[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+                if(base1.capture == "player"){
+                    for(var y = 0; y < units.length; y++){
+                        units[y].maxHealth += 25;
+                        units[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth = enemies[z].defaultHealth;
+                        if(enemies[z].curHealth > enemies[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+            }
+            if(base2.capture != baseTwoLast){
+                baseTwoLast = base2.capture;
+                if(base2.capture == "enemy"){
+                    for(var y = 0; y < enemies.length; y++){
+                        enemies[y].maxHealth += 25;
+                        enemies[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < units.length; z++){
+                        units[z].maxHealth = units[z].defaultHealth;
+                        if(units[z].curHealth > units[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+                if(base2.capture == "player"){
+                    for(var y = 0; y < units.length; y++){
+                        units[y].maxHealth += 25;
+                        units[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth = enemies[z].defaultHealth;
+                        if(enemies[z].curHealth > enemies[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+            }
+            if(base3.capture != baseThreeLast){
+                baseThreeLast = base3.capture;
+                if(base3.capture == "enemy"){
+                    for(var y = 0; y < enemies.length; y++){
+                        enemies[y].maxHealth += 25;
+                        enemies[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < units.length; z++){
+                        units[z].maxHealth = units[z].defaultHealth;
+                        if(units[z].curHealth > units[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+                if(base3.capture == "player"){
+                    for(var y = 0; y < units.length; y++){
+                        units[y].maxHealth += 25;
+                        units[y].curHealth += 25;
+                    }
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth = enemies[z].defaultHealth;
+                        if(enemies[z].curHealth > enemies[z].maxHealth){
+                            units[z].curHealth = units[z].maxHealth;
+                        }
+                    }
+                }
+            }
         });
 
         // reset the score

@@ -32,13 +32,15 @@ game.SorcererEntity = me.Entity.extend({
         if (me.save.hard == true){
             this.maxHealth = 150;
             this.curHealth = 150;
+            this.defaultHealth = 150;
         } else {
             this.maxHealth = 75;
             this.curHealth = 75;
+            this.defaultHealth = 75;
         }
 
-        this.maxHealth = 75;
-        this.curHealth = 75;
+        //this.maxHealth = 75;
+        //this.curHealth = 75;
         this.attack = 60;
     },
     // Update position on gameboard based on AI instructions

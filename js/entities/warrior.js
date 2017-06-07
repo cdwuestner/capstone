@@ -27,6 +27,7 @@ game.WarriorEntity = me.Entity.extend({
         // Unit's stats & variables
         this.maxHealth = 100;
         this.curHealth = 100;
+        this.defaultHealth = 100;
         this.attack = 50;
         this.isSelected = false;
         this.inBattle = false;
