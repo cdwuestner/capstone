@@ -11,10 +11,25 @@ game.PlayScreen = me.ScreenObject.extend({
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             if(action == "pause"){
 
+                console.log(enemies);
+                // Remove dead enemies from enemies array
+                for(var e = enemies.length; e--;){
+                    if(enemies[e].curHealth <= 0){
+                        enemies.splice(e, 1);
+                    }
+                }
+                
+        //save the base capture information
+        me.save.baseOne.capture = base1.capture;
+        me.save.baseTwo.capture = base2.capture;
+        me.save.baseThree.capture = base3.capture;
+
+
         console.log(enemies.length);
         me.save.enemySpawnLength = enemies.length;
 
             for(var a = 0; a < enemies.length; a++){
+
 
                 me.save.enemySpawn[a] = {x : enemies[a].pos.x, y: enemies[a].pos.y, curHealth : enemies[a].curHealth, type : enemies[a].type};
 
@@ -175,16 +190,17 @@ game.PlayScreen = me.ScreenObject.extend({
         var addY;
 
         //this logics doesn't work yet to prevent spawining fo enemeies 
-        // Adds another enemy every 20 seconds (need to add 20 seconds for one)
 
         if(me.save.enemySpawn.length <= 1){
 
             console.log(JSON.stringify(me.save.enemySpawn[1]));
     //    if(me.state.isPaused() == false){
       //      console.log("hmm");
-      var i = 3;
 
-        setInterval(function(){         
+
+        setInterval(function(){   
+            // Place at end of array, wherever that is
+            var i = enemies.length;
             
             if(i % 3 == 0){
                 addY = 125;
@@ -223,7 +239,6 @@ game.PlayScreen = me.ScreenObject.extend({
             }
 
             enemies[i].attackCastle = true;
-            i++;
 
             console.log(i);
         }, 20000);
@@ -399,8 +414,14 @@ game.PlayScreen = me.ScreenObject.extend({
         //}, 20000);
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+            // Remove dead enemies from enemies array(again to be sure)
+            for(var e = enemies.length; e--;){
+                if(enemies[e].curHealth <= 0){
+                    enemies.splice(e, 1);
+                }
+            }
             if(action == "next"){
-                // Go through and eliminate empty indexes from the units array
+                // Go through and eliminate dead units from the units array
                 currentUnit.isSelected = false;
                 var count = 0;
                 for(var i = units.length - 1; i >= 0; i--){
