@@ -3,13 +3,19 @@ game.PlayScreen = me.ScreenObject.extend({
     onResetEvent: function() {
         // Add our game board
         me.levelDirector.loadLevel("game_board");
+        game.data.spawn = true;
 
+        // reset the score
+        game.data.storedUnits = 0;
+        
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
 
      //  Pause event occurs when user pushes letter P; saves all data so it will resume at that point when the user unpauses the game. 
         me.input.bindKey(me.input.KEY.P, "pause");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             if(action == "pause"){
+
+                game.data.spawn = false;
 
                 console.log(enemies);
                 // Remove dead enemies from enemies array
@@ -200,47 +206,52 @@ game.PlayScreen = me.ScreenObject.extend({
 
         setInterval(function(){   
             // Place at end of array, wherever that is
-            var i = enemies.length;
-            
-            if(i % 3 == 0){
-                addY = 125;
-            }else if(i % 3 == 1){
-                addY = 237.5;
-            }else{
-                addY = 350;
-            }
-            if(Math.floor(Math.random() * 5) + 1 > 2){
+            if(game.data.spawn == true){
+
+                game.data.storedUnits++;
+
+                var i = enemies.length;
+                
+                if(i % 3 == 0){
+                    addY = 125;
+                }else if(i % 3 == 1){
+                    addY = 237.5;
+                }else{
+                    addY = 350;
+                }
+                if(Math.floor(Math.random() * 5) + 1 > 2){
 
 
-                enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
-         //      var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
+                    enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
+            //      var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
 
-            }else{
-                enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
-         //       var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
-            }
-         //   me.save.enemySpawn.push(saveEnemy);
+                }else{
+                    enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
+            //       var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
+                }
+            //   me.save.enemySpawn.push(saveEnemy);
 
-          //  console.log(JSON.stringify(me.save.enemySpawn));
+            //  console.log(JSON.stringify(me.save.enemySpawn));
 
-            me.game.world.addChild(enemies[i]);
+                me.game.world.addChild(enemies[i]);
 
-            //random percent chance enemy will attack base instead of castle 
-            var r = Math.random();
+                //random percent chance enemy will attack base instead of castle 
+                var r = Math.random();
 
-            if (r < 0.7){
+                if (r < 0.7){
+                    enemies[i].attackCastle = true;
+                } else if( r < 0.8) {
+                    enemies[i].goToBaseOne = true;
+                } else if( r < 0.9) {
+                    enemies[i].goToTwo = true;
+                } else {
+                    enemies[i].goToBaseThree = true;
+                }
+
                 enemies[i].attackCastle = true;
-            } else if( r < 0.8) {
-                enemies[i].goToBaseOne = true;
-            } else if( r < 0.9) {
-                enemies[i].goToTwo = true;
-            } else {
-                enemies[i].goToBaseThree = true;
+
+                console.log(i);
             }
-
-            enemies[i].attackCastle = true;
-
-            console.log(i);
         }, 20000);
 
         //there is save data
@@ -395,23 +406,21 @@ game.PlayScreen = me.ScreenObject.extend({
             }
         });
 
-        // reset the score
-        game.data.storedUnits = 0;
-
         // Add our HUD to the game world last so that it is on top of the rest.
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD);
 
-        function unitsTracker() {
-            game.data.storedUnits++;
-        }
-
-        var myTimer = setInterval(unitsTracker, 20000);
-
-        //setInterval(function(){
+        //function unitsTracker() {
         //    game.data.storedUnits++;
-        //}, 20000);
+        //}
+
+        //var myTimer = setInterval(unitsTracker, 20000);
+
+        /*setInterval(function(){
+            if(game.data.spawn == true)
+                game.data.storedUnits++;
+        }, 20000);*/
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             // Remove dead enemies from enemies array(again to be sure)

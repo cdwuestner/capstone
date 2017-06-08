@@ -80,5 +80,6 @@ game.PauseScreen = me.ScreenObject.extend({
 	onDestroyEvent : function() {
 		me.input.unbindKey(me.input.KEY.ENTER);
 		me.event.unsubscribe(this.handler);
+		game.data.spawn = true;
 	}
 });
