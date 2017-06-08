@@ -10,6 +10,13 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.P, "pause");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             if(action == "pause"){
+                console.log(enemies);
+                // Remove dead enemies from enemies array
+                for(var e = enemies.length; e--;){
+                    if(enemies[e].curHealth <= 0){
+                        enemies.splice(e, 1);
+                    }
+                }
                 
         //save the base capture information
         me.save.baseOne.capture = base1.capture;
@@ -40,7 +47,7 @@ game.PlayScreen = me.ScreenObject.extend({
 
             for(var a = 0; a < enemies.length; a++){
 
-            //   console.log(enemies[a].pos.x);
+               // console.log(enemies[a].pos.x);
                 me.save.enemySpawn[a + 1].x = enemies[a].pos.x;
                 me.save.enemySpawn[a + 1].y = enemies[a].pos.y;
                 console.log("saved coordinates of the enemy " + enemies[a].pos.x + " " + enemies[a].pos.y);
@@ -242,16 +249,17 @@ game.PlayScreen = me.ScreenObject.extend({
         var addY;
 
         //this logics doesn't work yet to prevent spawining fo enemeies 
-        // Adds another enemy every 20 seconds (need to add 20 seconds for one)
 
         if(isEmpty(JSON.stringify(me.save.enemySpawn[1]))){
 
             console.log(JSON.stringify(me.save.enemySpawn[1]));
     //    if(me.state.isPaused() == false){
       //      console.log("hmm");
-      var i = 3;
 
-        setInterval(function(){         
+
+        setInterval(function(){   
+            // Place at end of array, wherever that is
+            var i = enemies.length;
             
             if(i % 3 == 0){
                 addY = 125;
@@ -290,7 +298,6 @@ game.PlayScreen = me.ScreenObject.extend({
             }
 
             enemies[i].attackCastle = true;
-            i++;
 
             console.log(i);
         }, 20000);
@@ -475,8 +482,14 @@ game.PlayScreen = me.ScreenObject.extend({
         //}, 20000);
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+            // Remove dead enemies from enemies array(again to be sure)
+            for(var e = enemies.length; e--;){
+                if(enemies[e].curHealth <= 0){
+                    enemies.splice(e, 1);
+                }
+            }
             if(action == "next"){
-                // Go through and eliminate empty indexes from the units array
+                // Go through and eliminate dead units from the units array
                 currentUnit.isSelected = false;
                 var count = 0;
                 for(var i = units.length - 1; i >= 0; i--){
