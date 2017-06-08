@@ -8,10 +8,7 @@ game.TitleScreen = me.ScreenObject.extend({
         		//clear all saved data
         		me.save.baseOne = {};
         		me.save.baseTwo = {}; 
-        		me.save.baseThree = {};
-        		me.save.sk1 = {};
-        		me.save.sk2 = {};
-        		me.save.so1 = {};        		
+        		me.save.baseThree = {};        		
 				me.save.enemySpawn = [{}];
         		me.save.enemySpawnLength = {};
         		me.save.boss = {};
@@ -19,6 +16,7 @@ game.TitleScreen = me.ScreenObject.extend({
         		me.save.playerSpawn = [{}];
 
 				me.save.hard = false;
+				me.save.newGame = true;
             	me.state.change(me.state.PLAY);
             }
         });
@@ -31,9 +29,7 @@ game.TitleScreen = me.ScreenObject.extend({
         		me.save.baseOne = {};
         		me.save.baseTwo = {}; 
         		me.save.baseThree = {};
-        		me.save.sk1 = {};
-        		me.save.sk2 = {};
-        		me.save.so1 = {};        		
+       		
 				me.save.enemySpawn = [{}];
         		me.save.enemySpawnLength = {};
         		me.save.boss = {};
@@ -41,6 +37,7 @@ game.TitleScreen = me.ScreenObject.extend({
 				me.save.playerSpawn = [{}];
 
         		me.save.hard = true;
+        		me.save.newGame = true;
             	me.state.change(me.state.PLAY);
             }
         });        

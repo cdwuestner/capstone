@@ -87,22 +87,27 @@ game.texture = new me.video.renderer.Texture(
 
 
         //for easy or hard mode
-        me.save.add({ hard: {} });  
+        me.save.add({ hard: {} }); 
+
+        //new game or not
+        me.save.add({ newGame: {} }); 
 
         //add objects to be saved.
         me.save.add({ baseOne : {} });
         me.save.add({ baseTwo : {} });
         me.save.add({ baseThree : {} });
-        me.save.add({ sk1: {} });
-        me.save.add({ sk2: {} });
-        me.save.add({ so1: {} });
+
         me.save.add({ enemySpawn: {} });        
         me.save.enemySpawn = [{}];
+
         me.save.add({ playerSpawn: {} });        
         me.save.playerSpawn = [{}];
-        me.save.add ({ enemySpawnLength : {} });
+
+        
         me.save.add({boss: {} });
         me.save.add( {princess : {} });
+        
+        me.save.add( { availableUnits: {} });
 
 
 

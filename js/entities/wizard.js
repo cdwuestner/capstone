@@ -14,6 +14,7 @@ game.WizardEntity = me.Entity.extend({
         this.z = 7;
         // Shrink players to size of gameboard
         this.renderable.scale(.6, .6);
+        this.type = "wizard";
         // Update even outside viewport
         this.alwaysUpdate = true;
         // Set movement speed

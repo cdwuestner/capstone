@@ -13,6 +13,7 @@ game.WarriorEntity = me.Entity.extend({
         }]);
         // Set layer
         this.z = 7;
+        this.type = "warrior";
         // Shrink players to size of gameboard
         this.renderable.scale(.6, .6);
         // Update even outside viewport
