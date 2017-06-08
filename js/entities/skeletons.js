@@ -13,6 +13,10 @@ game.SkeletonEntity = me.Entity.extend({
         this.z = 7;
         // Update even when outside viewport
         this.alwaysUpdate = true;
+
+        //for easy reload
+        this.type = "skeleton";
+
         // Set movement speed
         this.body.setVelocity(.25, .25);
         // Set collision type

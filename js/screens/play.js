@@ -10,43 +10,14 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.P, "pause");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             if(action == "pause"){
-                
-        //save the base capture information
-        me.save.baseOne.capture = base1.capture;
-        me.save.baseTwo.capture = base2.capture;
-        me.save.baseThree.capture = base3.capture;
-
-
-        me.save.sk1.x = skeleton1.pos.x;
-        me.save.sk1.y = skeleton1.pos.y;
-        me.save.sk1.curHealth = skeleton1.curHealth;
-
-
-
-        me.save.sk2.x = skeleton2.pos.x;
-        me.save.sk2.y = skeleton2.pos.y;
-        me.save.sk2.curHealth = skeleton2.curHealth;
-
-//        console.log(skeleton1.curHealth+ " compare to " + skeleton2.curHealth);
-
-        me.save.so1.x = sorcerer1.pos.x;
-        me.save.so1.y = sorcerer1.pos.y;
-        me.save.so1.curHealth = sorcerer1.curHealth;
-
-
 
         console.log(enemies.length);
         me.save.enemySpawnLength = enemies.length;
 
             for(var a = 0; a < enemies.length; a++){
 
-            //   console.log(enemies[a].pos.x);
-                me.save.enemySpawn[a + 1].x = enemies[a].pos.x;
-                me.save.enemySpawn[a + 1].y = enemies[a].pos.y;
-                console.log("saved coordinates of the enemy " + enemies[a].pos.x + " " + enemies[a].pos.y);
+                me.save.enemySpawn[a] = {x : enemies[a].pos.x, y: enemies[a].pos.y, curHealth : enemies[a].curHealth, type : enemies[a].type};
 
-                console.log("Inside loop " + me.save.enemySpawn[a+ 1].skeleton);
-            
                             }
         me.save.boss.curHealth = boss.curHealth;
         me.save.princess.curHealth = princess.curHealth;
@@ -140,83 +111,45 @@ game.PlayScreen = me.ScreenObject.extend({
         var sx1, sy1;
 
         //initate values based on saved data or not 
-         if(isEmpty(JSON.stringify(me.save.sk1))){
-
+         if(me.save.enemySpawn.length <= 1){
+            console.log("queso")
             sx1 = 490; 
             sy1 = 205;
             var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
-
-         } else {
-     
-            sx1 = me.save.sk1.x;
-            sy1 = me.save.sk1.y;
-            var skeleton1 = me.pool.pull("SkeletonEntity", sx1, sy1, bx1, by1);
-
-
-         }
-            var saveSkeleton1 = {x : skeleton1.pos.x, y: skeleton1.pos.y, curHealth : skeleton1.curHealth};         
-      
-            me.save.sk1 = saveSkeleton1;
-            enemies.push(skeleton1);
+            enemies[0] =(skeleton1);
             me.game.world.addChild(skeleton1);
-            skeleton1.goToBaseOne = true;
+            enemies[0].goToBaseOne = true;
+         } 
 
 
         //initate values based on saved data or not 
         var sx2, sy2;        
 
-         if(isEmpty(JSON.stringify(me.save.sk2))){
+         if(me.save.enemySpawn.length <= 1){
             sx2 = 490; 
             sy2 = 240;
-
-            var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
-
-         } else {
-
-            sx2 = me.save.sk2.x;
-            sy2 = me.save.sk2.y;
-
-            var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx3, by3);
-
-            skeleton2.curHealth = me.save.sk2.curHealth;
-         }
-
-            var saveSkeleton2 = {x : skeleton2.pos.x, y: skeleton2.pos.y, curHealth : skeleton2.curHealth};
-        
-            me.save.sk2 = saveSkeleton2;
-            enemies.push(skeleton2);
+            var skeleton2 = me.pool.pull("SkeletonEntity", sx2, sy2, bx2, by2);
+            enemies[1] =(skeleton2);
             me.game.world.addChild(skeleton2);
-            skeleton2.goToBaseThree = true;
+            enemies[1].goToBaseTwo = true;
+         } 
+
 
         //declare variables for sorcer 1 based on saved data or not
         var sox1, soy1;
 
-        if(isEmpty(JSON.stringify(me.save.so1))){
+        if(me.save.enemySpawn.length <= 1){
 
             sox1 = 512; 
             soy1 = 215;
 
-            var sorcerer1 = me.pool.pull("SorcererEntity", sox1, soy1, bx2, by2);               
-         } else {
-
-            sox1 = me.save.so1.x;
-            soy1 = me.save.so1.y;
-
-            var sorcerer1 = me.pool.pull("SorcererEntity", sox1, soy1, bx2, by2);   
-            sorcerer1.curHealth = me.save.so1.curHealth;
-
-         }
-
+            var sorcerer1 = me.pool.pull("SorcererEntity", sox1, soy1, bx3, by3);
+            enemies[2] =(sorcerer1);
+            me.game.world.addChild(sorcerer1);
+            enemies[2].goToBaseThree = true;
+         }               
         
-        var saveSorcerer1 = {x : sorcerer1.pos.x, y: sorcerer1.pos.y, curHealth : sorcerer1.curHealth};
-        
-        me.save.so1 = saveSorcerer1;
 
-        enemies.push(sorcerer1);
-        me.game.world.addChild(sorcerer1);
-        
-        sorcerer1.goToBaseTwo = true;
-        
         var boss = me.pool.pull("BossEntity", 545, 210);
         me.game.world.addChild(boss);
 
@@ -244,7 +177,7 @@ game.PlayScreen = me.ScreenObject.extend({
         //this logics doesn't work yet to prevent spawining fo enemeies 
         // Adds another enemy every 20 seconds (need to add 20 seconds for one)
 
-        if(isEmpty(JSON.stringify(me.save.enemySpawn[1]))){
+        if(me.save.enemySpawn.length <= 1){
 
             console.log(JSON.stringify(me.save.enemySpawn[1]));
     //    if(me.state.isPaused() == false){
@@ -264,13 +197,13 @@ game.PlayScreen = me.ScreenObject.extend({
 
 
                 enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
-               var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
+         //      var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
 
             }else{
                 enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
-                var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
+         //       var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
             }
-            me.save.enemySpawn.push(saveEnemy);
+         //   me.save.enemySpawn.push(saveEnemy);
 
           //  console.log(JSON.stringify(me.save.enemySpawn));
 
@@ -295,39 +228,30 @@ game.PlayScreen = me.ScreenObject.extend({
             console.log(i);
         }, 20000);
 
-
+        //there is save data
     } else {
 
         var k = 1;
 
-        console.log("enemy length " + JSON.stringify(me.save.enemySpawnLength));
+        console.log("enemy one " + JSON.stringify(me.save.enemySpawn[0]));
+        console.log("base one" + JSON.stringify(me.save.baseOne));
         var length = JSON.parse(me.save.enemySpawnLength);
         //first spot always get initiated to empty brackets
         for(var a = 0; a < length; a++){
-            
-            var ex = me.save.enemySpawn[a+1].x;
-            var ey = me.save.enemySpawn[a+1].y;
-            console.log("call back coordinates of the enemy " + ex + " " + ey);
+            var ex = me.save.enemySpawn[a].x;
+            var ey = me.save.enemySpawn[a].y;
 
-            if(me.save.enemySpawn[a+1].skeleton == true){
-                console.log("wine");
-        
+            console.log(JSON.stringify(me.save.enemySpawn[a].type));
+
+            if(me.save.enemySpawn[a].type == "skeleton"){
                 enemies[a] = me.pool.pull("SkeletonEntity", ex, ey);
-                enemies[a].curHealth = me.save.enemySpawn[a+1].curHealth;
-                var saveSkeleton = {x : enemies[a].pos.x, y: enemies[a].pos.y, curHealth : enemies[a].curHealth, skeleton : true};
-        
-                me.save.enemySpawn[a+1] = saveSkeleton;
 
             } else {
                 enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
-                enemies[a].curHealth = me.save.enemySpawn[a+1].curHealth;
-
-                var saveSorcerer = {x : enemies[a].pos.x, y: enemies[a].pos.y, curHealth : enemies[a].curHealth, skeleton: false};
-        
-                me.save.enemySpawn[a+1] = saveSorcerer;
             }
-
-            me.game.world.addChild(enemies[a]);
+                enemies[a].curHealth = me.save.enemySpawn[a].curHealth;
+                 me.game.world.addChild(enemies[a]);
+           
 
             //random percent chance enemy will attack base instead of castle 
             var r = Math.random();

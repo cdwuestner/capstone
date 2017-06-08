@@ -13,6 +13,9 @@ game.SorcererEntity = me.Entity.extend({
         this.z = 7;
         // Update even when outside viewport
         this.alwaysUpdate = true;
+
+        //for easy reload
+        this.type = "sorcerer";
         // Set movement speed (fastest in game)
         this.body.setVelocity(.5, .5);
         // Set collision type
