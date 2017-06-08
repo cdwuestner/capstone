@@ -1,13 +1,6 @@
 game.TitleScreen = me.ScreenObject.extend({
 	// When creating/entering the title screen
 	onResetEvent : function(){
-    	// Change to play state when Enter pressed; resume old game
-        me.input.bindKey(me.input.KEY.ENTER, "enter");
-        this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
-        	if(action == "enter"){
-            	me.state.change(me.state.PLAY);
-            }
-        });
         //press e to play a new game in easy mode. 
         me.input.bindKey(me.input.KEY.E, "easy");
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
@@ -82,7 +75,7 @@ game.TitleScreen = me.ScreenObject.extend({
 				this.font = new me.Font("Arial", 24, this.color);
 				this.font.textAlign = "center";
 
-				this.font.draw(renderer, "Press Enter to Begin, Press 'E' for easy mode, Press 'H' for hard mode", me.game.viewport.width / 2,
+				this.font.draw(renderer, "Press 'E' for easy mode, Press 'H' for hard mode", me.game.viewport.width / 2,
 						me.game.viewport.height * (.55));
 			},
 
@@ -98,7 +91,6 @@ game.TitleScreen = me.ScreenObject.extend({
 	},
 	// When leaving the title screen
 	onDestroyEvent : function() {
-		me.input.unbindKey(me.input.KEY.ENTER);
 		me.event.unsubscribe(this.handler);
 	}
 });

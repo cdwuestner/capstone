@@ -25,7 +25,7 @@ game.PauseScreen = me.ScreenObject.extend({
 
 		// Load title screen image (https://www.liabeny.es/files/avila.jpg)
 		var backgroundImage = new me.Sprite(0, 0, {
-			image: me.loader.getImage('title'),
+			image: me.loader.getImage('pause'),
 		});
 		// Position and scale image to fit viewport
 		backgroundImage.anchorPoint.set(0, 0);
@@ -50,13 +50,13 @@ game.PauseScreen = me.ScreenObject.extend({
 				this.font.textAlign = "center"
 
 				this.font.draw(renderer, "Progress Paused", 
-						me.game.viewport.width / 2, me.game.viewport.height * (.45));
+						me.game.viewport.width / 3, me.game.viewport.height * (.3));
 
 				this.font = new me.Font("Arial", 24, this.color);
 				this.font.textAlign = "center";
 
-				this.font.draw(renderer, "Press Enter to Restart", me.game.viewport.width / 2,
-						me.game.viewport.height * (.55));
+				this.font.draw(renderer, "Press Enter to Restart", me.game.viewport.width / 3,
+						me.game.viewport.height * (.4));
 			},
 			// Render 'Press Enter'
 			drawEnter : function(renderer){
