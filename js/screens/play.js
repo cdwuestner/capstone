@@ -196,7 +196,7 @@ game.PlayScreen = me.ScreenObject.extend({
         me.game.world.addChild(princess);
 
 
-        if(!me.save.newGame == false){
+        if(me.save.newGame == false){
             princess.curHealth = me.save.princess.curHealth;
         }
 
