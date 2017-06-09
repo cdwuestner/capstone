@@ -66,7 +66,7 @@ game.TitleScreen = me.ScreenObject.extend({
 				this.font = new me.Font("Arial", 32, this.color);
 				this.font.textAlign = "center"
 
-				this.font.draw(renderer, "This Game Needs a Title", 
+				this.font.draw(renderer, "Crazy Castles", 
 						me.game.viewport.width / 2, me.game.viewport.height * (.45));
 
 				this.font = new me.Font("Arial", 24, this.color);

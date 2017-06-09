@@ -6,7 +6,11 @@ game.PlayScreen = me.ScreenObject.extend({
         game.data.spawn = true;
 
         // reset the score
-        game.data.storedUnits = 0;
+        if(me.save.newGame == true){
+            game.data.storedUnits = 0;
+        }else{
+            game.data.storedUnits = me.save.storedUnits;
+        }
         
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
 
@@ -55,6 +59,8 @@ game.PlayScreen = me.ScreenObject.extend({
 
         me.save.boss = {curHealth: boss.curHealth};
         me.save.princess = {curHealth: princess.curHealth};
+
+        me.save.storedUnits = game.data.storedUnits;
         
         me.state.change(me.state.READY);
             }
