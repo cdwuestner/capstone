@@ -42,7 +42,7 @@ game.WizardEntity = me.Entity.extend({
             if (!this.renderable.isCurrentAnimation("left")) {
               this.renderable.setCurrentAnimation("left");
             }              
-        } else if (this.pos.x < this.x) {
+        } else if (this.pos.x < this.x && this.pos.x < 605) {
             this.body.vel.x += this.body.accel.x * me.timer.tick;
             if (!this.renderable.isCurrentAnimation("right")) {
               this.renderable.setCurrentAnimation("right");
@@ -59,7 +59,7 @@ game.WizardEntity = me.Entity.extend({
             if (!this.renderable.isCurrentAnimation("up")) {
               this.renderable.setCurrentAnimation("up");
             }             
-        } else if (this.pos.y < this.y) {
+        } else if (this.pos.y < this.y && this.pos.y < 435) {
             this.body.vel.y += this.body.accel.y * me.timer.tick;
             if (!this.renderable.isCurrentAnimation("down")) {
               this.renderable.setCurrentAnimation("down");

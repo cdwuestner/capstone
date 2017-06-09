@@ -5,7 +5,7 @@ game.PlayScreen = me.ScreenObject.extend({
         me.levelDirector.loadLevel("game_board");
         game.data.spawn = true;
 
-        // reset the score
+        // reset the score if new game
         if(me.save.newGame == true){
             game.data.storedUnits = 0;
         }else{
@@ -257,12 +257,12 @@ game.PlayScreen = me.ScreenObject.extend({
                 } else if( r < 0.8) {
                     enemies[i].goToBaseOne = true;
                 } else if( r < 0.9) {
-                    enemies[i].goToTwo = true;
+                    enemies[i].goToBaseTwo = true;
                 } else {
                     enemies[i].goToBaseThree = true;
                 }
 
-                enemies[i].attackCastle = true;
+                //enemies[i].attackCastle = true;
 
                 console.log(i);
             }
@@ -293,17 +293,19 @@ game.PlayScreen = me.ScreenObject.extend({
            
 
             //random percent chance enemy will attack base instead of castle 
-            var r = Math.random();
+            //var r = Math.random();
 
-            if (r < 0.7){
+            /*if (r < 0.7){
                 enemies[a].attackCastle = true;
             } else if( r < 0.8) {
                 enemies[a].goToBaseOne = true;
             } else if( r < 0.9) {
-                enemies[a].goToTwo = true;
+                enemies[a].goToBaseTwo = true;
             } else {
                 enemies[a].goToBaseThree = true;
-            }
+            }*/
+
+            enemies[a].attackCastle = true;
             
     }
             me.game.storedUnits = me.save.availableUnits;
@@ -443,17 +445,6 @@ game.PlayScreen = me.ScreenObject.extend({
         // Can also be forced by specifying a "Infinity" z value to the addChild function.
         this.HUD = new game.HUD.Container();
         me.game.world.addChild(this.HUD);
-
-        //function unitsTracker() {
-        //    game.data.storedUnits++;
-        //}
-
-        //var myTimer = setInterval(unitsTracker, 20000);
-
-        /*setInterval(function(){
-            if(game.data.spawn == true)
-                game.data.storedUnits++;
-        }, 20000);*/
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
             // Remove dead enemies from enemies array(again to be sure)
