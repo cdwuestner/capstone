@@ -240,6 +240,7 @@ game.PlayScreen = me.ScreenObject.extend({
             if(game.data.spawn == true){
 
                 game.data.storedUnits++;
+                var bx, by;
 
                 var i = enemies.length;
                 
@@ -250,15 +251,61 @@ game.PlayScreen = me.ScreenObject.extend({
                 }else{
                     addY = 350;
                 }
+
+                //random percent chance enemy will attack base instead of castle 
+                var r = Math.random();
+                var toAttack;
+
+                if (r < 0.7){
+                    toAttack = "castle";
+                } else if( r < 0.8) {
+                    toAttack = "one";
+                    bx = bx1;
+                    by = by1;
+                } else if( r < 0.9) {
+                    toAttack = "two";
+                    bx = bx2;
+                    by = by2;
+                } else {
+                    toAttack = "three";
+                    bx = bx3;
+                    by = by3;
+
+                }
                 if(Math.floor(Math.random() * 5) + 1 > 2){
 
+                    if(toAttack == "castle"){
+                        enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
+                        enemies[i].attackCastle = true;
+                    } else if (toAttack == "one"){
+                         enemies[i] = me.pool.pull("SkeletonEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseOne = true;
+                }   else if (toAttack == "two"){
+                         enemies[i] = me.pool.pull("SkeletonEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseTwo = true;
+                    
 
-                    enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
-            //      var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
+                    } else {
+                         enemies[i] = me.pool.pull("SkeletonEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseThree = true;
+                    }
 
                 }else{
-                    enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
-            //       var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
+                    if(toAttack == "castle"){
+                        enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
+                        enemies[i].attackCastle = true;
+                    }else if (toAttack == "one"){
+                         enemies[i] = me.pool.pull("SorcererEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseOne = true;
+                }   else if (toAttack == "two"){
+                         enemies[i] = me.pool.pull("SorcererEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseTwo = true;
+
+
+                    } else {
+                         enemies[i] = me.pool.pull("SorcererEntity", 585, addY, bx, by);
+                         enemies[i].goToBaseThree = true;
+                    }
                 }
             //   me.save.enemySpawn.push(saveEnemy);
 
@@ -269,18 +316,7 @@ game.PlayScreen = me.ScreenObject.extend({
                 }
                 me.game.world.addChild(enemies[i]);
 
-                //random percent chance enemy will attack base instead of castle 
-                var r = Math.random();
 
-                if (r < 0.7){
-                    enemies[i].attackCastle = true;
-                } else if( r < 0.8) {
-                    enemies[i].goToBaseOne = true;
-                } else if( r < 0.9) {
-                    enemies[i].goToBaseTwo = true;
-                } else {
-                    enemies[i].goToBaseThree = true;
-                }
 
                 //enemies[i].attackCastle = true;
 
@@ -292,44 +328,85 @@ game.PlayScreen = me.ScreenObject.extend({
     } else {
 
 
-        console.log("enemy one " + JSON.stringify(me.save.enemySpawn[0]));
-        console.log("base one" + JSON.stringify(me.save.baseOne));
+
         var length = JSON.parse(me.save.enemySpawnLength);
         //first spot always get initiated to empty brackets
         for(var a = 0; a < me.save.enemySpawn.length; a++){
             var ex = me.save.enemySpawn[a].x;
             var ey = me.save.enemySpawn[a].y;
+                        //random percent chance enemy will attack base instead of castle 
+            var r = Math.random();
+
+                var toAttack;
+
+                if (r < 0.7){
+                    toAttack = "castle";
+                } else if( r < 0.8) {
+                    toAttack = "one";
+                    bx = bx1;
+                    by = by1;
+                } else if( r < 0.9) {
+                    toAttack = "two";
+                    bx = bx2;
+                    by = by2;
+                } else {
+                    toAttack = "three";
+                    bx = bx3;
+                    by = by3;
+
+                }
 
             console.log(JSON.stringify(me.save.enemySpawn[a].type));
 
-            if(me.save.enemySpawn[a].type == "skeleton"){
-                enemies[a] = me.pool.pull("SkeletonEntity", ex, ey);
 
-            } else {
-                enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
-            }
+
+            if(me.save.enemySpawn[a].type == "skeleton"){
+
+                    if(toAttack == "castle"){
+                        enemies[a] = me.pool.pull("SkeletonEntity", ex, ey);
+                        enemies[a].attackCastle = true;
+                    }else if (toAttack == "one"){
+                         enemies[a] = me.pool.pull("SkeletonEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseOne = true;
+                }   else if (toAttack == "two"){
+                         enemies[a] = me.pool.pull("SkeletonEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseTwo = true;
+                     
+
+                    } else {
+                         enemies[a] = me.pool.pull("SkeletonEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseThree = true;
+                    }
+
+                }else{
+                    if(toAttack == "castle"){
+                        enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
+                        enemies[a].attackCastle = true;
+                    }else if (toAttack == "one"){
+                         enemies[a] = me.pool.pull("SorcererEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseOne = true;
+                }   else if (toAttack == "two"){
+                         enemies[a] = me.pool.pull("SorcererEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseTwo = true;
+                
+
+                    } else {
+                         enemies[a] = me.pool.pull("SorcererEntity", ex, ey, bx, by);
+                         enemies[a].goToBaseThree = true;
+                    }
+                }
+
+
                 enemies[a].curHealth = me.save.enemySpawn[a].curHealth;
                 if(bases == "enemies"){
                     enemies[a].maxHealth = enemies[a].defaultHealth;
                     enemies[a].curHealth = enemies[a].curHealth -= 75;
                 }
+
+
+
                  me.game.world.addChild(enemies[a]);
-           
 
-            //random percent chance enemy will attack base instead of castle 
-            //var r = Math.random();
-
-            /*if (r < 0.7){
-                enemies[a].attackCastle = true;
-            } else if( r < 0.8) {
-                enemies[a].goToBaseOne = true;
-            } else if( r < 0.9) {
-                enemies[a].goToBaseTwo = true;
-            } else {
-                enemies[a].goToBaseThree = true;
-            }*/
-
-            enemies[a].attackCastle = true;
             
     }
             me.game.storedUnits = me.save.availableUnits;
