@@ -214,6 +214,8 @@ game.PlayScreen = me.ScreenObject.extend({
         if(me.save.newGame == true){
 
             console.log(JSON.stringify(me.save.enemySpawn[1]));
+    //    if(me.state.isPaused() == false){
+      //      console.log("hmm");
 
 
         setInterval(function(){   
@@ -235,34 +237,32 @@ game.PlayScreen = me.ScreenObject.extend({
 
 
                     enemies[i] = me.pool.pull("SkeletonEntity", 585, addY);
-
+            //      var saveEnemy =  {skeleton : true, x : 585, y: addY, curHealth: enemies[i].curHealth};
 
                 }else{
                     enemies[i] = me.pool.pull("SorcererEntity", 585, addY);
-
+            //       var saveEnemy = {skeleton : false, x : 585, y: addY, curHealth: enemies[i].curHealth};
                 }
+            //   me.save.enemySpawn.push(saveEnemy);
 
+            //  console.log(JSON.stringify(me.save.enemySpawn));
 
                 me.game.world.addChild(enemies[i]);
 
-
+                //random percent chance enemy will attack base instead of castle 
                 var r = Math.random();
 
                 if (r < 0.7){
                     enemies[i].attackCastle = true;
-                    
                 } else if( r < 0.8) {
                     enemies[i].goToBaseOne = true;
-                    
                 } else if( r < 0.9) {
                     enemies[i].goToBaseTwo = true;
-                    
                 } else {
                     enemies[i].goToBaseThree = true;
-                    
                 }
 
-              
+                //enemies[i].attackCastle = true;
 
                 console.log(i);
             }
@@ -272,14 +272,15 @@ game.PlayScreen = me.ScreenObject.extend({
     } else {
 
 
-
+        console.log("enemy one " + JSON.stringify(me.save.enemySpawn[0]));
+        console.log("base one" + JSON.stringify(me.save.baseOne));
         var length = JSON.parse(me.save.enemySpawnLength);
         //first spot always get initiated to empty brackets
         for(var a = 0; a < me.save.enemySpawn.length; a++){
             var ex = me.save.enemySpawn[a].x;
             var ey = me.save.enemySpawn[a].y;
 
-
+            console.log(JSON.stringify(me.save.enemySpawn[a].type));
 
             if(me.save.enemySpawn[a].type == "skeleton"){
                 enemies[a] = me.pool.pull("SkeletonEntity", ex, ey);
@@ -292,9 +293,9 @@ game.PlayScreen = me.ScreenObject.extend({
            
 
             //random percent chance enemy will attack base instead of castle 
-            var r = Math.random();
+            //var r = Math.random();
 
-            if (r < 0.7){
+            /*if (r < 0.7){
                 enemies[a].attackCastle = true;
             } else if( r < 0.8) {
                 enemies[a].goToBaseOne = true;
@@ -302,7 +303,7 @@ game.PlayScreen = me.ScreenObject.extend({
                 enemies[a].goToBaseTwo = true;
             } else {
                 enemies[a].goToBaseThree = true;
-            }
+            }*/
 
             enemies[a].attackCastle = true;
             
@@ -494,6 +495,11 @@ game.PlayScreen = me.ScreenObject.extend({
             }
         });
 
+
+        //will be used to remove save data when a new game needs to be started. 
+  //      me.save.remove("baseOne");
+    //    me.save.remove("baseTwo");
+      //  me.save.remove("baseThree");
 
     },
 
