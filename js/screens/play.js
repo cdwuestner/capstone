@@ -11,14 +11,19 @@ game.PlayScreen = me.ScreenObject.extend({
         }else{
             game.data.storedUnits = me.save.storedUnits;
         }
+
         
         //vairables for X and Y coordinates. Previous set variables for bases were (315,50), (315,235) (315,420)
 
      //  Pause event occurs when user pushes letter P; saves all data so it will resume at that point when the user unpauses the game. 
         me.input.bindKey(me.input.KEY.P, "pause");
-        this.handler = me.event.subscribe(me.event.KEYDOWN, function(action, keyCode, edge){
+        this.handle = me.event.subscribe(me.event.KEYDOWN, function(action){
             if(action == "pause"){
 
+
+                var test = 0;
+                console.log("test" + test);
+                test++;
                 game.data.spawn = false;
                 me.save.newGame = false;
 
@@ -35,7 +40,12 @@ game.PlayScreen = me.ScreenObject.extend({
         me.save.baseTwo.capture = base2.capture;
         me.save.baseThree.capture = base3.capture;
 
+        //clear save arrays
+        me.save.enemySpawn = [{}];
+        me.save.playerSpawn = [{}];
 
+
+        console.log(enemies[0].pos.x);
         //save the enemy information 
         me.save.enemySpawnLength = enemies.length;
 
@@ -53,6 +63,11 @@ game.PlayScreen = me.ScreenObject.extend({
 
                             }
 
+        //clear game arrays
+     //   enemies = [];
+     //   units = [];
+                            
+
         me.save.availableUnits = game.data.storedUnits;
 
         console.log(JSON.stringify(me.save.availableUnits));
@@ -63,9 +78,11 @@ game.PlayScreen = me.ScreenObject.extend({
         me.save.storedUnits = game.data.storedUnits;
         
         me.state.change(me.state.READY);
+
+
             }
         });
-    
+
    //function to test if an entity is empty
     function isEmpty(value) {
         if(value == undefined || value == "{}"){
@@ -515,15 +532,13 @@ game.PlayScreen = me.ScreenObject.extend({
         });
 
 
-        //will be used to remove save data when a new game needs to be started. 
-  //      me.save.remove("baseOne");
-    //    me.save.remove("baseTwo");
-      //  me.save.remove("baseThree");
 
     },
 
     // When leaving the game screen
     onDestroyEvent: function() {
+        me.event.unsubscribe(this.handle);
+
         // remove the HUD from the game world
         me.game.world.removeChild(this.HUD);
         // Unbind spacebar when screen is destroyed
@@ -536,6 +551,7 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.unbindKey(me.input.KEY.W);
         me.input.unbindKey(me.input.KEY.E);
         me.input.unbindKey(me.input.KEY.R);
+        me.input.unbindKey(me.input.KEY.P);
         me.input.unbindKey(me.input.KEY.I);
         // Unsubscribe from pointer event
         me.event.unsubscribe(this.pointerDown);
