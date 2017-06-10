@@ -289,6 +289,10 @@ game.PlayScreen = me.ScreenObject.extend({
                 enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
             }
                 enemies[a].curHealth = me.save.enemySpawn[a].curHealth;
+                //if(bases == "enemies"){
+                    //enemies[a].maxHealth = enemies[a].defaultHealth;
+                    //enemies[a].curHealth = enemies[a].curHealth -= 75;
+                //}
                  me.game.world.addChild(enemies[a]);
            
 
@@ -351,91 +355,94 @@ game.PlayScreen = me.ScreenObject.extend({
         var baseTwoLast = "neutral";
         var baseThreeLast = "neutral";
 
-        var lastPlayerBases = 0;
-        var lastEnemyBases = 0;
+        var bases = "neutral";
+
+        // var lastPlayerBases = 0;
+        // var lastEnemyBases = 0;
 
         this.pointerDown= me.event.subscribe("pointerdown", function (event) {
+            //console.log(enemies[0].curHealth + ", " + enemies[0].maxHealth);
+            //console.log("Player: " + units[0].curHealth + ", " + units[0].maxHealth);
+            for(var i = 0; i < enemies.length; i++){
+                console.log(enemies[i].curHealth + " " + enemies[i].maxHealth);
+            }
             currentUnit.x = Math.round(event.gameX);
             currentUnit.y = Math.round(event.gameY);
 
-            if(base1.capture != baseOneLast){
-                baseOneLast = base1.capture;
-                if(base1.capture == "enemy"){
-                    for(var y = 0; y < enemies.length; y++){
-                        enemies[y].maxHealth += 25;
-                        enemies[y].curHealth += 25;
-                    }
-                    for(var z = 0; z < units.length; z++){
-                        units[z].maxHealth = units[z].defaultHealth;
-                        if(units[z].curHealth > units[z].maxHealth){
-                            units[z].curHealth = units[z].maxHealth;
-                        }
-                    }
-                }
-                if(base1.capture == "player"){
-                    for(var y = 0; y < units.length; y++){
-                        units[y].maxHealth += 25;
-                        units[y].curHealth += 25;
-                    }
-                    for(var z = 0; z < enemies.length; z++){
-                        enemies[z].maxHealth = enemies[z].defaultHealth;
-                        if(enemies[z].curHealth > enemies[z].maxHealth){
-                            units[z].curHealth = units[z].maxHealth;
-                        }
-                    }
-                }
+            playerBases = 0;
+            enemyBases = 0;
+
+            if(base1.capture == "player"){
+                playerBases++;
             }
-            if(base2.capture != baseTwoLast){
-                baseTwoLast = base2.capture;
-                if(base2.capture == "enemy"){
-                    for(var y = 0; y < enemies.length; y++){
-                        enemies[y].maxHealth += 25;
-                        enemies[y].curHealth += 25;
-                    }
-                    for(var z = 0; z < units.length; z++){
-                        units[z].maxHealth = units[z].defaultHealth;
-                        if(units[z].curHealth > units[z].maxHealth){
-                            units[z].curHealth = units[z].maxHealth;
-                        }
-                    }
-                }
-                if(base2.capture == "player"){
-                    for(var y = 0; y < units.length; y++){
-                        units[y].maxHealth += 25;
-                        units[y].curHealth += 25;
-                    }
-                    for(var z = 0; z < enemies.length; z++){
-                        enemies[z].maxHealth = enemies[z].defaultHealth;
-                        if(enemies[z].curHealth > enemies[z].maxHealth){
-                            units[z].curHealth = units[z].maxHealth;
-                        }
-                    }
-                }
+            if(base1.capture == "enemy"){
+                enemyBases++;
             }
-            if(base3.capture != baseThreeLast){
-                baseThreeLast = base3.capture;
-                if(base3.capture == "enemy"){
-                    for(var y = 0; y < enemies.length; y++){
-                        enemies[y].maxHealth += 25;
-                        enemies[y].curHealth += 25;
+            if(base2.capture == "player"){
+                playerBases++;
+            }
+            if(base2.capture == "enemy"){
+                enemyBases++;
+            }
+            if(base3.capture == "player"){
+                playerBases++;
+            }
+            if(base3.capture == "enemy"){
+                enemyBases++;
+            }
+
+            if(playerBases == 3){
+                if(bases == "neutral"){
+                    for(var z = 0; z < units.length; z++){
+                        units[z].maxHealth += 75;
+                        units[z].curHealth += 75;
+                    }
+                }
+                if(bases == "enemies"){
+                    for(var z = 0; z < units.length; z++){
+                        units[z].maxHealth += 75;
+                        units[z].curHealth += 75;
+                    }
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth -= 75;
+                        if(enemies[z].curHealth > enemies[z].maxHealth){
+                            enemies[z].curHealth = enemies[z].maxHealth;
+                        }
+                    }
+                }
+                bases = "players";
+            }else if(enemyBases == 3){
+                if(bases == "neutral"){
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth += 75;
+                        enemies[z].curHealth += 75;
+                    }
+                }
+                if(bases == "players"){
+                    for(var z = 0; z < enemies.length; z++){
+                        enemies[z].maxHealth += 75;
+                        enemies[z].curHealth += 75;
                     }
                     for(var z = 0; z < units.length; z++){
-                        units[z].maxHealth = units[z].defaultHealth;
+                        units[z].maxHealth -= 75;
                         if(units[z].curHealth > units[z].maxHealth){
                             units[z].curHealth = units[z].maxHealth;
                         }
                     }
                 }
-                if(base3.capture == "player"){
-                    for(var y = 0; y < units.length; y++){
-                        units[y].maxHealth += 25;
-                        units[y].curHealth += 25;
+                bases = "enemies";
+            }else{
+                bases == "neutral";
+                for(var z = 0; z < units.length; z++){
+                    units[z].maxHealth = units[z].defaultHealth;
+                    if(units[z].curHealth > units[z].maxHealth){
+                        units[z].curHealth = units[z].maxHealth;
                     }
-                    for(var z = 0; z < enemies.length; z++){
-                        enemies[z].maxHealth = enemies[z].defaultHealth;
-                        if(enemies[z].curHealth > enemies[z].maxHealth){
-                            units[z].curHealth = units[z].maxHealth;
-                        }
+                }
+                for(var z = 0; z < enemies.length; z++){
+                    enemies[z].maxHealth = enemies[z].defaultHealth;
+                    if(enemies[z].curHealth > enemies[z].maxHealth){
+                        enemies[z].curHealth = enemies[z].maxHealth;
                     }
                 }
             }
@@ -478,17 +485,29 @@ game.PlayScreen = me.ScreenObject.extend({
             if(game.data.storedUnits > 0){
                 if(action == "wizard"){
                     units[units.length] = me.pool.pull("WizardEntity", 50, 150);
+                    if(bases == "players"){
+                        units[units.length - 1].maxHealth += 75;
+                        units[units.length - 1].curHealth += 75;
+                    }
                     me.game.world.addChild(units[units.length - 1]);
                     game.data.storedUnits--;
 
                 }
                 if(action == "healer"){
                     units[units.length] = me.pool.pull("HealerEntity", 50, 150);
+                    if(bases == "players"){
+                        units[units.length - 1].maxHealth += 75;
+                        units[units.length - 1].curHealth += 75;
+                    }
                     me.game.world.addChild(units[units.length - 1]);
                     game.data.storedUnits--;
                 }
                 if(action == "warrior"){
                     units[units.length] = me.pool.pull("WarriorEntity", 50, 150);
+                    if(bases == "players"){
+                        units[units.length - 1].maxHealth += 75;
+                        units[units.length - 1].curHealth += 75;
+                    }
                     me.game.world.addChild(units[units.length - 1]);
                     game.data.storedUnits--;
                 }
