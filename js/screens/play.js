@@ -263,7 +263,10 @@ game.PlayScreen = me.ScreenObject.extend({
             //   me.save.enemySpawn.push(saveEnemy);
 
             //  console.log(JSON.stringify(me.save.enemySpawn));
-
+                if(bases == "enemies"){
+                    enemies[i].maxHealth += 75;
+                    enemies[i].curHealth += 75;
+                }
                 me.game.world.addChild(enemies[i]);
 
                 //random percent chance enemy will attack base instead of castle 
@@ -306,10 +309,10 @@ game.PlayScreen = me.ScreenObject.extend({
                 enemies[a] = me.pool.pull("SorcererEntity", ex, ey);
             }
                 enemies[a].curHealth = me.save.enemySpawn[a].curHealth;
-                //if(bases == "enemies"){
-                    //enemies[a].maxHealth = enemies[a].defaultHealth;
-                    //enemies[a].curHealth = enemies[a].curHealth -= 75;
-                //}
+                if(bases == "enemies"){
+                    enemies[a].maxHealth = enemies[a].defaultHealth;
+                    enemies[a].curHealth = enemies[a].curHealth -= 75;
+                }
                  me.game.world.addChild(enemies[a]);
            
 
@@ -347,6 +350,12 @@ game.PlayScreen = me.ScreenObject.extend({
             }
 
                 units[b].curHealth = me.save.playerSpawn[b].curHealth;
+
+                if(bases == "players"){
+                    units[b].maxHealth = units[b].defaultHealth;
+                    units[b].curHealth = units[b].defaultHealth;
+                }
+
                  me.game.world.addChild(units[b]);
             }
 
@@ -380,8 +389,8 @@ game.PlayScreen = me.ScreenObject.extend({
         this.pointerDown= me.event.subscribe("pointerdown", function (event) {
             //console.log(enemies[0].curHealth + ", " + enemies[0].maxHealth);
             //console.log("Player: " + units[0].curHealth + ", " + units[0].maxHealth);
-            for(var i = 0; i < enemies.length; i++){
-                console.log(enemies[i].curHealth + " " + enemies[i].maxHealth);
+            for(var i = 0; i < units.length; i++){
+                console.log(units[i].curHealth + " " + units[i].maxHealth);
             }
             currentUnit.x = Math.round(event.gameX);
             currentUnit.y = Math.round(event.gameY);
